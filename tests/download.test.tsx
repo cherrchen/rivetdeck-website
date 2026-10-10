@@ -27,6 +27,7 @@ describe('DownloadPanel', () => {
     for (const name of ['macOS', 'Windows', 'Linux']) expect(screen.getByRole('heading', { name })).toBeTruthy()
     expect(screen.queryByText(t.recommended)).toBeNull()
     expect(screen.queryByText(t.mobileNotice)).toBeNull()
+    expect(screen.getAllByRole('link').every((link) => !link.getAttribute('href')?.endsWith('.zip'))).toBe(true)
   })
 
   it('explains that phones cannot install once the browser was inspected', () => {
@@ -35,16 +36,33 @@ describe('DownloadPanel', () => {
     expect(screen.getByText(t.mobileNotice)).toBeTruthy()
   })
 
-  it('leads with the Microsoft Store on Windows and offers the GitHub installers second', () => {
-    env = { platform: 'windows', arch: 'x64', checked: true }
+  it.each(['x64', 'arm64', null] as const)('leads with the Microsoft Store on Windows (%s) and offers both installers', (arch) => {
+    env = { platform: 'windows', arch, checked: true }
     const { container } = render(<DownloadPanel t={t} newTab={newTab} />)
     const recommended = container.firstElementChild as HTMLElement
     fireEvent.click(within(recommended).getByRole('button', { name: t.action.other }))
     const links_ = within(recommended).getAllByRole('link')
     expect(links_[0]?.getAttribute('href')).toBe(links.rivetdeck.microsoftStore)
     expect(links_[0]?.textContent).toContain(t.store.action)
-    expect(links_[1]?.getAttribute('href')).toMatch(/win-x64\.exe$/)
-    expect(within(recommended).getByText(t.store.githubHeading)).toBeTruthy()
+    expect(links_[0]?.getAttribute('target')).toBe('_blank')
+    expect(within(recommended).getByRole('link', { name: /Windows \(ARM64\)/ }).getAttribute('href')).toMatch(/win-arm64\.exe$/)
+    expect(within(recommended).getByRole('link', { name: /Windows \(x64\)/ }).getAttribute('href')).toMatch(/win-x64\.exe$/)
+  })
+
+  it.each(['x64', 'arm64', null] as const)('shows the Chinese Windows download labels (%s)', (arch) => {
+    env = { platform: 'windows', arch, checked: true }
+    const zh = getDictionary('zh')
+    render(<DownloadPanel t={zh.home.download} newTab={zh.common.opensInNewTab} />)
+    const primary = screen.getByRole('link', { name: /从 Microsoft Store 获取/ })
+    expect(primary.getAttribute('href')).toBe(links.rivetdeck.microsoftStore)
+    expect(screen.queryByRole('region')).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: '其他下载' }))
+    const dropdown = screen.getByRole('region', { name: '其他下载' })
+    expect(within(dropdown).getAllByRole('list')).toHaveLength(1)
+    expect(within(dropdown).getAllByRole('link')).toHaveLength(8)
+    expect(within(dropdown).getByRole('link', { name: /Windows 版（x64）/ }).getAttribute('href')).toMatch(/win-x64\.exe$/)
+    expect(within(dropdown).getByRole('link', { name: /Windows 版（arm64）/ }).getAttribute('href')).toMatch(/win-arm64\.exe$/)
+    expect(within(dropdown).getAllByRole('link').every((link) => !link.getAttribute('href')?.endsWith('.zip'))).toBe(true)
   })
 
   it('recommends the matching macOS build and hints at Intel when the architecture is unknown', () => {
@@ -72,9 +90,13 @@ describe('DownloadPanel', () => {
     fireEvent.click(toggle)
     const dropdown = screen.getByRole('region', { name: t.action.other })
     expect(toggle.getAttribute('aria-expanded')).toBe('true')
-    expect(within(dropdown).getAllByRole('heading').map((h) => h.textContent)).toEqual(['LinuxOther downloads', 'macOS', 'Windows'])
-    expect(within(dropdown).getAllByRole('link')).toHaveLength(10)
-    expect(within(dropdown).getByRole('link', { name: /Microsoft Store/ }).getAttribute('target')).toBe('_blank')
+    expect(within(dropdown).queryAllByRole('heading')).toHaveLength(0)
+    expect(within(dropdown).getAllByRole('list')).toHaveLength(1)
+    const options = within(dropdown).getAllByRole('link')
+    expect(options).toHaveLength(8)
+    expect(options.every((link) => !link.getAttribute('href')?.endsWith('.zip'))).toBe(true)
+    expect(within(dropdown).getByRole('link', { name: /macOS \(Apple Silicon\)/ }).getAttribute('href')).toMatch(/mac-arm64\.dmg$/)
+    expect(within(dropdown).getByRole('link', { name: /Linux \(ARM64\) · DEB/ }).getAttribute('href')).toMatch(/linux-arm64\.deb$/)
 
     fireEvent.keyDown(dropdown, { key: 'Escape' })
     expect(toggle.getAttribute('aria-expanded')).toBe('false')

@@ -12,7 +12,7 @@ import { useEnvironment } from './use-environment'
 
 type T = Dictionary['home']['download']
 
-/** "Apple Silicon · DMG", "x64 · installer", or the Store listing's name. */
+/** Platform and architecture identify each build; Linux also needs the package format. */
 function optionLabel(option: DownloadOption, t: T): string {
   if (option.channel === 'store') return t.store.kind
   const arch =
@@ -23,7 +23,8 @@ function optionLabel(option: DownloadOption, t: T): string {
       : option.arch === 'arm64'
         ? t.arch.arm64
         : t.arch.x64
-  return `${arch} · ${t.formats[option.format as keyof T['formats']]}`
+  const label = fmt(t.action.version, { platform: t.platforms[option.platform].name, arch })
+  return option.platform === 'linux' ? `${label} · ${t.formats[option.format as keyof T['formats']]}` : label
 }
 
 function fileName(option: DownloadOption): string {
@@ -31,7 +32,7 @@ function fileName(option: DownloadOption): string {
 }
 
 /** One download as a full-width row; the first row of a group is drawn as the primary action. */
-function OptionRow({ option, t, primary = false, joined = false, newTab }: { option: DownloadOption; t: T; primary?: boolean; joined?: boolean; newTab: string }) {
+function OptionRow({ option, t, primary = false, joined = false, flat = false, newTab }: { option: DownloadOption; t: T; primary?: boolean; joined?: boolean; flat?: boolean; newTab: string }) {
   const subtle = primary ? 'opacity-70' : 'text-fg-subtle'
   const isStore = option.channel === 'store'
   return (
@@ -39,12 +40,12 @@ function OptionRow({ option, t, primary = false, joined = false, newTab }: { opt
       href={option.href}
       {...(isStore ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       className={`flex items-center justify-between gap-3 border px-3.5 py-2.5 text-sm transition-colors ${joined ? 'min-w-0 flex-1 rounded-l-lg' : 'rounded-lg'} ${
-        primary ? 'border-inverse-bg bg-inverse-bg text-inverse-fg hover:bg-inverse-hover' : 'border-border hover:bg-bg-subtle'
+        primary ? 'border-inverse-bg bg-inverse-bg text-inverse-fg hover:bg-inverse-hover' : flat ? 'border-transparent hover:bg-bg-subtle' : 'border-border hover:bg-bg-subtle'
       }`}
     >
       <span>
         <span className="block font-medium">{isStore ? t.store.action : optionLabel(option, t)}</span>
-        <span className={`block font-mono text-xs ${subtle}`}>{isStore ? t.store.note : fileName(option)}</span>
+        {!flat ? <span className={`block font-mono text-xs ${subtle}`}>{isStore ? t.store.note : fileName(option)}</span> : null}
       </span>
       {option.bytes ? <span className={`shrink-0 font-mono text-xs ${subtle}`}>{formatSize(option.bytes)}</span> : null}
       {isStore ? <span className="sr-only">{newTab}</span> : null}
@@ -61,7 +62,7 @@ function AllPlatforms({ t, newTab }: { t: T; newTab: string }) {
           <h3 className="text-lg font-medium tracking-[-0.02em]">{t.platforms[id].name}</h3>
           <p className="mt-1 text-sm text-fg-subtle">{t.platforms[id].note}</p>
           <ul className="mt-5 flex flex-1 flex-col gap-2">
-            {DOWNLOADS[id].map((option, i) => (
+            {DOWNLOADS[id].filter((option) => option.format !== 'zip').map((option, i) => (
               <li key={option.file ?? option.channel}>
                 <OptionRow option={option} t={t} primary={i === 0} newTab={newTab} />
               </li>
@@ -75,7 +76,6 @@ function AllPlatforms({ t, newTab }: { t: T; newTab: string }) {
 
 function Recommended({ platform, arch, t, newTab }: { platform: PlatformId; arch: ReturnType<typeof useEnvironment>['arch']; t: T; newTab: string }) {
   const choice = recommend(platform, arch)
-  const isStore = choice.primary.channel === 'store'
   const intelNote = platform === 'macos' ? (arch === 'x64' ? t.macHintIntel : arch === null ? t.macHint : null) : null
   const intel = DOWNLOADS.macos.find((o) => o.format === 'dmg' && o.arch === 'x64')
   const [open, setOpen] = useState(false)
@@ -130,23 +130,17 @@ function Recommended({ platform, arch, t, newTab }: { platform: PlatformId; arch
           aria-label={t.action.other}
           className="absolute top-full left-0 z-20 mt-2 max-h-96 w-full overflow-y-auto overscroll-contain rounded-xl border border-border bg-surface p-3 shadow-card"
         >
-          {[platform, ...PLATFORM_ORDER.filter((id) => id !== platform)].map((id) => (
-            <section key={id} className="border-border py-3 first:pt-0 last:pb-0 [&+section]:border-t">
-              <h4 className="mb-2 px-1 text-sm font-medium">
-                {t.platforms[id].name}
-                {id === platform ? <span className="ml-2 font-normal text-fg-subtle">{isStore ? t.store.githubHeading : t.action.other}</span> : null}
-              </h4>
-              <ul className="space-y-2" onClick={(event) => {
-                if ((event.target as HTMLElement).closest('a')) setOpen(false)
-              }}>
-                {(id === platform ? choice.others : DOWNLOADS[id]).map((option) => (
-                  <li key={option.file ?? option.channel}>
-                    <OptionRow option={option} t={t} newTab={newTab} />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
+          <ul onClick={(event) => {
+            if ((event.target as HTMLElement).closest('a')) setOpen(false)
+          }}>
+            {PLATFORM_ORDER.flatMap((id) => DOWNLOADS[id])
+              .filter((option) => option.format !== 'zip' && option.channel !== 'store')
+              .map((option) => (
+                <li key={option.file}>
+                  <OptionRow option={option} t={t} flat newTab={newTab} />
+                </li>
+              ))}
+          </ul>
         </div>
       </div>
       {intelNote ? (

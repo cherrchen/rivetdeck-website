@@ -167,7 +167,7 @@ const en = {
       },
       arch: { appleSilicon: 'Apple Silicon', intel: 'Intel', x64: 'x64', arm64: 'ARM64' },
       formats: { dmg: 'DMG', zip: 'ZIP', exe: 'installer', appimage: 'AppImage', deb: 'DEB' },
-      action: { download: 'Download {kind}', other: 'Other downloads' },
+      action: { download: 'Download {kind}', other: 'Other downloads', version: '{platform} ({arch})' },
       macHint: 'Starts with Apple Silicon. On an Intel Mac, use the <a>Intel build</a>.',
       macHintIntel: 'Detected an Intel Mac. The Apple Silicon build is under other downloads.',
       verify: 'Verify downloads with <sums>{file}</sums>. Release notes and the Store (.appx) packages are on the <release>release page</release>. After installing, finish provider setup in the Harness UI before you start an agent session.',
