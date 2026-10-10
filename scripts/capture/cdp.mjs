@@ -105,7 +105,7 @@ export async function connect(port = 9333) {
       await send('Input.dispatchKeyEvent', { type: 'keyUp', key, code })
     },
     /** Capture one element (plus padding) at the current device scale factor. */
-    async screenshotElement(path, selector, { pad = 24, scale = 2 } = {}) {
+    async screenshotElement(path, selector, { pad = 24, inset = 0, scale = 2 } = {}) {
       const box = await api.eval(`(() => {
         const el = document.querySelector(${JSON.stringify(selector)})
         if (!el) return null
@@ -114,10 +114,10 @@ export async function connect(port = 9333) {
       })()`)
       if (!box) throw new Error(`no element: ${selector}`)
       const clip = {
-        x: Math.max(0, box.x - pad),
-        y: Math.max(0, box.y - pad),
-        width: box.width + pad * 2,
-        height: box.height + pad * 2,
+        x: Math.max(0, box.x - pad + inset),
+        y: Math.max(0, box.y - pad + inset),
+        width: box.width + pad * 2 - inset * 2,
+        height: box.height + pad * 2 - inset * 2,
         scale: 1,
       }
       await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: scale, mobile: false })

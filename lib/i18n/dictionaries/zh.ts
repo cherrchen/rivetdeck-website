@@ -199,7 +199,7 @@ const zh: Dictionary = {
     cta: '安装',
     footer: {
       plugin: { title: '插件', features: '功能', security: '安全', install: '安装', compatibility: '兼容性' },
-      docs: { title: '文档', readme: 'README', architecture: '架构', contract: '兼容性约定（ADR-0009）', changelog: '更新日志' },
+      docs: { title: '文档', readme: 'README', architecture: '架构', changelog: '更新日志' },
       source: { title: '源码', repo: 'GitHub 仓库', npm: 'npm 包', issues: '反馈问题' },
       ecosystem: { title: '生态', harness: 'DeepSeek Harness', rivetdeck: 'Rivetdeck 桌面应用' },
       note: 'Multi-root Workspace 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
@@ -383,9 +383,11 @@ const zh: Dictionary = {
       lead: '插件通过 DSH 插件管理器安装。它已发布到 npm，适用于 web 和 desktop 两种 profile。',
       step1: { title: '安装插件包', body: '在受支持的 DSH 运行时中执行。Electron 桌面版请替换 profile。' },
       tabs: {
-        label: 'DSH profile',
-        web: { label: 'Web profile', note: '在浏览器或无头服务器中运行 DSH。' },
-        desktop: { label: 'Desktop profile', note: 'Electron 桌面版，安装方式相同。' },
+        label: '安装来源',
+        npm: { label: 'npm', note: '推荐。安装预构建产物，首次 add 需要回答一次 allowBuilds。' },
+        tarball: { label: 'tarball', note: '预构建离线包，适合内网。也可从 GitHub Release 下载同名 tgz。' },
+        github: { label: 'GitHub', note: '拉取源码并由 prepare 现场构建。需要两次 allowBuilds，请锁定标签。' },
+        local: { label: '本地源码', note: '链接本地 checkout，适合开发调试。无 TTY 时需要 export CI=true。' },
       },
       step2: {
         title: '批准一次性的构建步骤',
@@ -398,7 +400,7 @@ const zh: Dictionary = {
       },
       other: {
         title: '其他来源与说明',
-        tarball: '也可以从 tarball、本地路径或 <code>github:cherrchen/dsh-plugin-multi-root-workspace</code> 安装（请固定标签）。详见 <readme>README</readme>。',
+        tarball: '以上命令以 web profile 为例。Electron 桌面版把 <code>--profile web</code> 换成 <code>--profile desktop</code>。从 GitHub 安装需要回答两次 <code>allowBuilds</code>。详见 <readme>README</readme>。',
         source: '从源码检出运行 DSH？请用 <code>pnpm dsh</code> 代替 <code>dsh</code>。',
         rivetdeck: '该插件没有随 Rivetdeck 一同打包。它需要单独安装，并显示在应用的“已安装插件”中。',
       },

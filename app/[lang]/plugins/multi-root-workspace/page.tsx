@@ -71,7 +71,6 @@ export default async function MultiRootPage({ params }: PageProps<'/[lang]/plugi
       links: [
         { label: t.footer.docs.readme, href: links.multiRoot.readme },
         { label: t.footer.docs.architecture, href: links.multiRoot.architecture },
-        { label: t.footer.docs.contract, href: links.multiRoot.adr.compat },
         { label: t.footer.docs.changelog, href: links.multiRoot.changelog },
       ],
     },
@@ -86,8 +85,8 @@ export default async function MultiRootPage({ params }: PageProps<'/[lang]/plugi
     {
       title: t.footer.ecosystem.title,
       links: [
-        { label: t.footer.ecosystem.harness, href: links.upstream },
         { label: t.footer.ecosystem.rivetdeck, href: localePath(lang, '/') },
+        { label: t.footer.ecosystem.harness, href: links.upstream },
       ],
     },
   ]
@@ -458,12 +457,12 @@ function Compatibility({ dict }: { dict: Dictionary }) {
   return (
     <Section id="compatibility" eyebrow={t.eyebrow} title={t.title} lead={fmt(t.lead, { version: COMPAT_PLUGIN_VERSION })}>
       <CompatTable t={t} />
-      <p className="mt-6 max-w-3xl text-sm leading-6 text-fg-subtle">
+      <p className="mt-6 text-sm leading-6 text-pretty break-keep text-fg-subtle">
         <Rich
           text={t.footnote}
           tags={{
             contract: (c) => (
-              <a className="text-fg underline underline-offset-2" href={links.multiRoot.adr.compat} target="_blank" rel="noopener noreferrer">
+              <a className="whitespace-nowrap text-fg underline underline-offset-2" href={links.multiRoot.adr.compat} target="_blank" rel="noopener noreferrer">
                 {c}
                 <span className="sr-only">{newTab}</span>
               </a>

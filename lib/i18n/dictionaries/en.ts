@@ -208,7 +208,7 @@ const en = {
     cta: 'Install',
     footer: {
       plugin: { title: 'Plugin', features: 'Features', security: 'Security', install: 'Install', compatibility: 'Compatibility' },
-      docs: { title: 'Docs', readme: 'README', architecture: 'Architecture', contract: 'Compatibility contract (ADR-0009)', changelog: 'Changelog' },
+      docs: { title: 'Docs', readme: 'README', architecture: 'Architecture', changelog: 'Changelog' },
       source: { title: 'Source', repo: 'GitHub repository', npm: 'npm package', issues: 'Report an issue' },
       ecosystem: { title: 'Ecosystem', harness: 'DeepSeek Harness', rivetdeck: 'Rivetdeck desktop app' },
       note: 'Multi-root Workspace is an independent, MIT-licensed plugin for DSH (DeepSeek Harness). It is not made, endorsed or supported by DeepSeek. “DeepSeek Harness” is a trademark of DeepSeek and is used here only to describe compatibility.',
@@ -407,9 +407,11 @@ const en = {
       lead: 'The plugin installs through the DSH plugin manager. It is published on npm and works with the web and desktop profiles.',
       step1: { title: 'Install the package', body: 'Run this with a supported DSH runtime. Replace the profile for Electron desktop.' },
       tabs: {
-        label: 'DSH profile',
-        web: { label: 'Web profile', note: 'Run DSH in the browser or headless server.' },
-        desktop: { label: 'Desktop profile', note: 'Electron desktop; the install method is identical.' },
+        label: 'Install source',
+        npm: { label: 'npm', note: 'Recommended. Pre-built artifacts; the first add needs one allowBuilds answer.' },
+        tarball: { label: 'tarball', note: 'Pre-built offline package. You can also download the same tgz from the GitHub Release.' },
+        github: { label: 'GitHub', note: 'Pulls source and builds it through prepare. Needs two allowBuilds answers; pin a tag.' },
+        local: { label: 'local', note: 'Links a local checkout for development. Without a TTY, export CI=true first.' },
       },
       step2: {
         title: 'Approve the one-time build step',
@@ -422,7 +424,7 @@ const en = {
       },
       other: {
         title: 'Other sources and notes',
-        tarball: 'Also installable from a tarball, a local path, or <code>github:cherrchen/dsh-plugin-multi-root-workspace</code> (pin a tag). See the <readme>README</readme>.',
+        tarball: 'Commands above use the web profile. For Electron desktop, replace <code>--profile web</code> with <code>--profile desktop</code>. GitHub installs need two <code>allowBuilds</code> answers. See the <readme>README</readme>.',
         source: 'Running DSH from a source checkout? Use <code>pnpm dsh</code> instead of <code>dsh</code>.',
         rivetdeck: 'The plugin is not bundled with Rivetdeck. It installs separately and appears in the app’s Installed plugins.',
       },

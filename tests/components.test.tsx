@@ -31,14 +31,22 @@ describe('CopyButton', () => {
 })
 
 describe('InstallTabs', () => {
-  it('switches the profile used by the install command', () => {
+  it('shows the four README install sources and switches the command block', () => {
     render(<InstallTabs t={dict.multiRoot.install.tabs} copy={copy} />)
-    const web = screen.getByRole('tabpanel', { name: 'Web profile' })
-    expect(web.textContent).toContain('--profile web add @dsh-electron/dsh-plugin-multi-root-workspace')
-    fireEvent.click(screen.getByRole('tab', { name: 'Desktop profile' }))
-    const desktop = screen.getByRole('tabpanel', { name: 'Desktop profile' })
-    expect(desktop.textContent).toContain('--profile desktop add @dsh-electron/dsh-plugin-multi-root-workspace')
-    expect(screen.getByRole('tab', { name: 'Desktop profile' }).getAttribute('aria-selected')).toBe('true')
+    expect(screen.getByRole('tabpanel', { name: 'npm' }).textContent).toContain(
+      '--profile web add @dsh-electron/dsh-plugin-multi-root-workspace',
+    )
+    fireEvent.click(screen.getByRole('tab', { name: 'tarball' }))
+    expect(screen.getByRole('tabpanel', { name: 'tarball' }).textContent).toContain('pnpm pack @dsh-electron/dsh-plugin-multi-root-workspace')
+    expect(screen.getByRole('tabpanel', { name: 'tarball' }).textContent).toContain('dsh-electron-dsh-plugin-multi-root-workspace-0.1.5.tgz')
+    fireEvent.click(screen.getByRole('tab', { name: 'GitHub' }))
+    expect(screen.getByRole('tabpanel', { name: 'GitHub' }).textContent).toContain(
+      'github:cherrchen/dsh-plugin-multi-root-workspace#v0.1.5',
+    )
+    fireEvent.click(screen.getByRole('tab', { name: 'local' }))
+    expect(screen.getByRole('tabpanel', { name: 'local' }).textContent).toContain('git clone https://github.com/cherrchen/dsh-plugin-multi-root-workspace.git')
+    expect(screen.getByRole('tabpanel', { name: 'local' }).textContent).toContain('pnpm build')
+    expect(screen.getByRole('tab', { name: 'local' }).getAttribute('aria-selected')).toBe('true')
   })
 })
 
