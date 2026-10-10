@@ -104,7 +104,6 @@ export default async function MultiRootPage({ params }: PageProps<'/[lang]/plugi
             </span>
             <span className="hidden min-[420px]:inline">Multi-root Workspace</span>
             <span className="min-[420px]:hidden">Multi-root</span>
-            <span className="hidden rounded border border-border-strong px-1.5 py-0.5 font-mono text-[10px] font-normal text-fg-subtle sm:inline">{t.pluginTag}</span>
           </a>
         }
         items={nav}

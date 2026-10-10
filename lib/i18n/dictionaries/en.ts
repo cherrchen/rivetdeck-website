@@ -203,7 +203,6 @@ const en = {
       keywords: ['DeepSeek Harness', 'DSH plugin', 'multi-root workspace', 'monorepo', 'coding agent', 'sandbox'],
     },
     brandHome: 'Multi-root Workspace home',
-    pluginTag: 'DSH plugin',
     nav: { features: 'Features', security: 'Security', install: 'Install', compatibility: 'Compatibility', github: 'GitHub', npm: 'npm' },
     cta: 'Install',
     footer: {

@@ -194,7 +194,6 @@ const zh: Dictionary = {
       keywords: ['DeepSeek Harness', 'DSH 插件', '多根工作区', 'monorepo', '编程智能体', '沙箱'],
     },
     brandHome: 'Multi-root Workspace 首页',
-    pluginTag: 'DSH 插件',
     nav: { features: '功能', security: '安全', install: '安装', compatibility: '兼容性', github: 'GitHub', npm: 'npm' },
     cta: '安装',
     footer: {
