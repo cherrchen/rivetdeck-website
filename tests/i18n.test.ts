@@ -60,6 +60,13 @@ describe('routeRequest', () => {
     expect(routeRequest({ pathname: '/en', acceptLanguage: 'zh' })).toEqual({ kind: 'redirect', pathname: '/', status: 308, setCookie: 'en' })
     expect(routeRequest({ pathname: '/en/plugins/multi-root-workspace' })).toMatchObject({ pathname: '/plugins/multi-root-workspace', status: 308 })
   })
+
+  it('serves the default locale when the proxy re-enters on its own rewrite', () => {
+    expect(routeRequest({ pathname: '/en', internalRewrite: true, acceptLanguage: 'zh' })).toEqual({ kind: 'next' })
+    expect(routeRequest({ pathname: '/en/plugins/multi-root-workspace', internalRewrite: true })).toEqual({ kind: 'next' })
+    expect(routeRequest({ pathname: '/zh', internalRewrite: true })).toEqual({ kind: 'next', setCookie: 'zh' })
+    expect(routeRequest({ pathname: '/', internalRewrite: true, acceptLanguage: 'en' })).toEqual({ kind: 'rewrite', pathname: '/en' })
+  })
 })
 
 describe('locale helpers', () => {

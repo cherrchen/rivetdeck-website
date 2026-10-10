@@ -5,6 +5,12 @@ import { routeRequest } from '@/lib/i18n/routing'
 const ONE_YEAR = 60 * 60 * 24 * 365
 
 /**
+ * Marks the request Next issues when it follows a locale rewrite, so the second
+ * proxy pass serves `/en/...`.
+ */
+const LOCALE_REWRITE = 'x-rivetdeck-locale-rewrite'
+
+/**
  * Locale routing. English is served at the unprefixed URLs and other locales
  * under their prefix; see `routeRequest` for the rules. Responses depend on the
  * language header and the choice cookie, so they say so in `Vary`.
@@ -14,13 +20,16 @@ export function proxy(request: NextRequest) {
     pathname: request.nextUrl.pathname,
     cookie: request.cookies.get(LOCALE_COOKIE)?.value,
     acceptLanguage: request.headers.get('accept-language'),
+    internalRewrite: request.headers.get(LOCALE_REWRITE) === '1',
   })
 
   let response: NextResponse
   if (decision.kind === 'rewrite') {
     const url = request.nextUrl.clone()
     url.pathname = decision.pathname
-    response = NextResponse.rewrite(url)
+    const headers = new Headers(request.headers)
+    headers.set(LOCALE_REWRITE, '1')
+    response = NextResponse.rewrite(url, { request: { headers } })
   } else if (decision.kind === 'redirect') {
     const url = request.nextUrl.clone()
     url.pathname = decision.pathname

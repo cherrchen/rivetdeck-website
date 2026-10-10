@@ -39,7 +39,8 @@ export type RouteDecision =
  *
  * - `/zh/...`  is served as is and remembered as the visitor's choice.
  * - `/en/...`  redirects to the unprefixed path and remembers English, so the
- *   explicit choice is not undone by the browser language.
+ *   explicit choice is not undone by the browser language. When Next runs the
+ *   proxy again on the rewritten `/en/...` URL, that internal request is served.
  * - anything else is unprefixed: the remembered choice wins, then
  *   `Accept-Language`; a non-default locale redirects to its prefix, the
  *   default locale is rewritten to `/en/...` internally and keeps its URL.
@@ -48,16 +49,20 @@ export function routeRequest({
   pathname,
   cookie,
   acceptLanguage,
+  internalRewrite = false,
 }: {
   pathname: string
   cookie?: string | undefined
   acceptLanguage?: string | null | undefined
+  /** True when this call is Next re-entering the proxy on a locale rewrite. */
+  internalRewrite?: boolean
 }): RouteDecision {
   const [, first = '', ...rest] = pathname.split('/')
   const tail = rest.length ? `/${rest.join('/')}` : ''
 
   if (isLocale(first)) {
     if (first === defaultLocale) {
+      if (internalRewrite) return { kind: 'next' }
       return { kind: 'redirect', pathname: tail || '/', status: 308, setCookie: defaultLocale }
     }
     return cookie === first ? { kind: 'next' } : { kind: 'next', setCookie: first }

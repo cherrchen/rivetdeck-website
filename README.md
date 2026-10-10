@@ -71,6 +71,9 @@ How a request is routed (`proxy.ts`, pure logic in `lib/i18n/routing.ts`):
    `Accept-Language` (q-values respected; `zh-TW`, `zh-HK` etc. map to `zh`).
    English is served in place; Chinese redirects (307) to `/zh/...`.
 
+Next follows the English rewrite with another proxy call, and that call is
+served.
+
 The language switcher in the header sets the cookie, so an explicit choice
 always beats the browser language. Every page declares `hreflang` alternates and
 `x-default` (`lib/i18n/metadata.ts`), and the sitemap lists each locale.
