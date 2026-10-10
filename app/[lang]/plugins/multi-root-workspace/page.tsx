@@ -20,7 +20,7 @@ import { fmt } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
 import { COMPAT_PLUGIN_VERSION } from '@/lib/multi-root-compat'
 import { SHOTS } from '@/lib/screenshots'
-import { links, MULTI_ROOT_PACKAGE } from '@/lib/site'
+import { links, MULTI_ROOT_PACKAGE, withBasePath } from '@/lib/site'
 
 const PATH = '/plugins/multi-root-workspace'
 
@@ -98,7 +98,7 @@ export default async function MultiRootPage({ params }: PageProps<'/[lang]/plugi
         path={PATH}
         common={dict.common}
         brand={
-          <a href={localePath(lang, PATH)} className="flex items-center gap-2.5 font-semibold tracking-[-0.02em]" aria-label={t.brandHome}>
+          <a href={withBasePath(localePath(lang, PATH))} className="flex items-center gap-2.5 font-semibold tracking-[-0.02em]" aria-label={t.brandHome}>
             <span className="text-accent">
               <RootsMark />
             </span>

@@ -30,17 +30,63 @@ pnpm build && pnpm start
 
 | Variable | Use |
 | --- | --- |
+| `NEXT_PUBLIC_BASE_PATH` | Public path prefix; empty for a root site, `/rivetdeck-website` for this repository on GitHub Pages. |
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for canonical URLs, Open Graph, `sitemap.xml` and `robots.txt`. On Vercel, `VERCEL_PROJECT_PRODUCTION_URL` is the fallback; locally the site uses `http://localhost:3000`. |
 
 No other variables, database or CMS are used.
 
 ## Deploy
 
+### GitHub Pages
+
+The repository is prepared for `https://cherrchen.github.io/rivetdeck-website/`.
+The workflow in `.github/workflows/pages.yml` checks pull requests and deploys
+pushes to `main` (or a manual **Run workflow**) using GitHub Actions.
+
+To activate the first deployment:
+
+1. In the repository, open **Settings → Pages → Build and deployment** and select
+   **GitHub Actions** as the source.
+2. Commit and push the deployment changes to `main`.
+3. Open **Actions → Deploy GitHub Pages** and check that both jobs succeed.
+
+No deployment token or repository secret is required. The deploy job uses the
+built-in GitHub token with `pages: write` and `id-token: write` permissions;
+`github-pages` environment rules still apply.
+
+```sh
+pnpm build:pages   # Exports to out/ with this repository's Pages URL by default
+```
+
+The build uses an ignored `.pages-build/` workspace to export real English routes
+at `/` and `/plugins/multi-root-workspace`, plus the Chinese `/zh/` routes.
+It omits the server proxy and catch-all route, exports `404.html`, disables
+server image optimization, and adds `.nojekyll`. All page URLs below the Pages
+origin include the `/rivetdeck-website` prefix. On Pages, unprefixed routes always
+serve English; visitors choose Chinese using the language switcher. Server-side
+cookie/header language negotiation remains available with the normal Next.js
+build. Social images are generated at build time and are English only.
+
+For another repository or a custom domain, set repository **Settings → Secrets
+and variables → Actions → Variables**:
+
+| Variable | Default | Custom domain example |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | `https://cherrchen.github.io` | `https://example.com` |
+| `PAGES_BASE_PATH` | `/rivetdeck-website` | `/` (root site) |
+
+`NEXT_PUBLIC_SITE_URL` is an origin, without the repository path. Configure the
+custom domain separately in **Settings → Pages**. Local root-domain exports use
+`NEXT_PUBLIC_BASE_PATH='' NEXT_PUBLIC_SITE_URL=https://example.com pnpm build:pages`.
+Rebuild after changing the path: it is embedded in browser bundles.
+
+### Vercel / Next.js server
+
 Import the repository into Vercel as a Next.js project and set
-`NEXT_PUBLIC_SITE_URL` to the production origin. Every page and locale is
-prerendered statically; `proxy.ts` runs in front of the cache and only decides
-which locale to serve. The Open Graph images are generated at build time and are
-English only (no CJK font is bundled).
+`NEXT_PUBLIC_SITE_URL` to the production origin. Leave `NEXT_PUBLIC_BASE_PATH`
+empty. Every page and locale is prerendered statically; `proxy.ts` runs in front
+of the cache and only decides which locale to serve. Use `pnpm build && pnpm start`
+for a local production server; `pnpm start` does not serve the Pages `out/` export.
 
 ## Where content comes from
 

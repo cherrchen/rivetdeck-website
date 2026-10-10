@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next'
 import { defaultLocale, localeConfig, localePath, locales } from '@/lib/i18n/config'
-import { getSiteUrl } from '@/lib/site'
+import { siteUrl } from '@/lib/site'
+
+export const dynamic = 'force-static'
 
 const PAGES = [
   { path: '/', priority: 1 },
@@ -9,8 +11,7 @@ const PAGES = [
 
 /** One entry per page and locale; each lists every language version so crawlers can pair them. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = getSiteUrl()
-  const abs = (locale: (typeof locales)[number], path: string) => new URL(localePath(locale, path), base).toString()
+  const abs = (locale: (typeof locales)[number], path: string) => siteUrl(localePath(locale, path))
 
   return PAGES.flatMap(({ path, priority }) =>
     locales.map((locale) => ({

@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { getDictionary } from '@/lib/i18n/dictionaries'
 import { isLocale, localeConfig, locales } from '@/lib/i18n/config'
 import { getSiteUrl } from '@/lib/site'
-import '../globals.css'
+import '@/app/globals.css'
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),

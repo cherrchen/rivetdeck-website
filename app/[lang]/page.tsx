@@ -20,7 +20,7 @@ import { fmt, formatDate } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
 import { RELEASE, assetUrl } from '@/lib/releases'
 import { SHOTS } from '@/lib/screenshots'
-import { links } from '@/lib/site'
+import { links, withBasePath } from '@/lib/site'
 
 const PATH = '/'
 
@@ -206,10 +206,10 @@ function Plugins({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         </div>
         <div className="mt-10 grid gap-6 border-t border-border pt-10 sm:grid-cols-2">
           <Frame caption={t.tryThemes.captionNordic}>
-            <Image src="/screenshots/app-theme-nordic-dark.png" alt={dict.shots.nordicDark} width={2880} height={1800} sizes="(min-width: 1400px) 620px, 100vw" loading="lazy" className="h-auto w-full" />
+            <Image src={withBasePath('/screenshots/app-theme-nordic-dark.png')} alt={dict.shots.nordicDark} width={2880} height={1800} sizes="(min-width: 1400px) 620px, 100vw" loading="lazy" className="h-auto w-full" />
           </Frame>
           <Frame caption={t.tryThemes.captionClaude}>
-            <Image src="/screenshots/app-theme-claude-light.png" alt={dict.shots.claudeLight} width={2880} height={1800} sizes="(min-width: 1400px) 620px, 100vw" loading="lazy" className="h-auto w-full" />
+            <Image src={withBasePath('/screenshots/app-theme-claude-light.png')} alt={dict.shots.claudeLight} width={2880} height={1800} sizes="(min-width: 1400px) 620px, 100vw" loading="lazy" className="h-auto w-full" />
           </Frame>
         </div>
       </div>

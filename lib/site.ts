@@ -1,5 +1,15 @@
 /** Site-wide constants: canonical origin and every external link used by the pages. */
 
+/** Next adds this prefix to Link URLs; plain anchors and image sources need it explicitly. */
+export function withBasePath(path: string): string {
+  return `${process.env.NEXT_PUBLIC_BASE_PATH || ''}${path}`
+}
+
+/** Absolute public URL, including the repository path on GitHub Pages. */
+export function siteUrl(path: string): string {
+  return new URL(withBasePath(path), getSiteUrl()).toString()
+}
+
 /**
  * Canonical origin. `NEXT_PUBLIC_SITE_URL` wins; otherwise the Vercel production
  * hostname, then localhost. No production domain is hard-coded.

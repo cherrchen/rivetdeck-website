@@ -1,5 +1,6 @@
 'use client'
 
+import { withBasePath } from '@/lib/site'
 import { fmt } from '@/lib/i18n/format'
 import { LOCALE_COOKIE, localeConfig, localePath, locales, type Locale } from '@/lib/i18n/config'
 
@@ -17,7 +18,7 @@ export function LanguageSwitcher({ locale, path, labelTemplate }: { locale: Loca
         .map((target) => (
           <a
             key={target}
-            href={localePath(target, path)}
+            href={withBasePath(localePath(target, path))}
             hrefLang={localeConfig[target].hreflang}
             lang={localeConfig[target].htmlLang}
             aria-label={fmt(labelTemplate, { language: localeConfig[target].label })}

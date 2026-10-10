@@ -1,3 +1,4 @@
+import { withBasePath } from '@/lib/site'
 import type { Metadata } from 'next'
 import { defaultLocale, localeConfig, localePath, locales, type Locale } from './config'
 
@@ -23,9 +24,13 @@ export function pageMetadata({
   siteName: string
   keywords?: readonly string[]
 }): Metadata {
-  const url = localePath(locale, path)
-  const languages: Record<string, string> = { 'x-default': localePath(defaultLocale, path) }
-  for (const l of locales) languages[localeConfig[l].hreflang] = localePath(l, path)
+  const url = withBasePath(localePath(locale, path))
+  const languages: Record<string, string> = { 'x-default': withBasePath(localePath(defaultLocale, path)) }
+  for (const l of locales) languages[localeConfig[l].hreflang] = withBasePath(localePath(l, path))
+
+  const images = process.env.GITHUB_PAGES === 'true'
+    ? [withBasePath(path === '/' ? '/social/rivetdeck.png' : '/social/multi-root-workspace.png')]
+    : undefined
 
   return {
     title,
@@ -34,6 +39,7 @@ export function pageMetadata({
     alternates: { canonical: url, languages },
     openGraph: {
       type: 'website',
+      ...(images ? { images } : {}),
       url,
       siteName,
       title,
@@ -41,6 +47,6 @@ export function pageMetadata({
       locale: localeConfig[locale].ogLocale,
       alternateLocale: locales.filter((l) => l !== locale).map((l) => localeConfig[l].ogLocale),
     },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: { card: 'summary_large_image', title, description, ...(images ? { images } : {}) },
   }
 }

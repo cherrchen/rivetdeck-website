@@ -1,3 +1,4 @@
+import { withBasePath } from '@/lib/site'
 import Image from 'next/image'
 import type { ScreenshotSpec } from '@/lib/screenshots'
 
@@ -31,8 +32,8 @@ export function Screenshot({
   }
   return (
     <>
-      <Image {...common} alt={alt} src={`/screenshots/${shot.name}-light.png`} priority={priority} loading={priority ? undefined : 'lazy'} className={`${common.className} dark:hidden`} />
-      <Image {...common} alt={alt} src={`/screenshots/${shot.name}-dark.png`} loading="lazy" className={`${common.className} hidden dark:block`} />
+      <Image {...common} alt={alt} src={withBasePath(`/screenshots/${shot.name}-light.png`)} priority={priority} loading={priority ? undefined : 'lazy'} className={`${common.className} dark:hidden`} />
+      <Image {...common} alt={alt} src={withBasePath(`/screenshots/${shot.name}-dark.png`)} loading="lazy" className={`${common.className} hidden dark:block`} />
     </>
   )
 }

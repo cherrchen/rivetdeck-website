@@ -157,3 +157,6 @@ scripts/capture/_scratch*.mjs
 out/
 next-env.d.ts
 .vercel
+
+# Isolated GitHub Pages build workspace
+.pages-build/
