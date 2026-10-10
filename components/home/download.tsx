@@ -93,81 +93,71 @@ function Recommended({ platform, arch, t, newTab }: { platform: PlatformId; arch
   }, [open])
 
   return (
-    <div className="rounded-xl border border-border bg-surface p-6 sm:p-10">
-      <div className="flex flex-wrap items-center gap-2 text-[13px] text-fg-subtle">
-        <span>{t.recommended}</span>
-        <span aria-hidden="true">·</span>
-        <span>{fmt(t.detected, { platform: t.platforms[platform].name })}</span>
-      </div>
-      <h3 className="mt-3 text-2xl font-medium tracking-[-0.03em]">Rivetdeck · {t.platforms[platform].name}</h3>
-      <p className="mt-1 text-sm text-fg-subtle">{t.platforms[platform].note}</p>
-
-      <div className="mt-6 max-w-xl">
-        <div
-          ref={control}
-          className="relative"
-          onKeyDown={(event) => {
-            if (event.key === 'Escape' && open) {
-              setOpen(false)
-              toggle.current?.focus()
-            }
-          }}
-          onBlur={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false)
-          }}
-        >
-          <div className="flex">
-            <OptionRow option={choice.primary} t={t} primary joined newTab={newTab} />
-            <button
-              ref={toggle}
-              type="button"
-              aria-label={t.action.other}
-              aria-expanded={open}
-              aria-controls={menuId}
-              onClick={() => setOpen(!open)}
-              className="flex w-14 shrink-0 cursor-pointer items-center justify-center rounded-r-lg border border-inverse-bg border-l-inverse-fg/20 bg-inverse-bg text-inverse-fg transition-colors hover:bg-inverse-hover"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={`transition-transform ${open ? 'rotate-180' : ''}`}>
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </button>
-          </div>
-          <div
-            id={menuId}
-            hidden={!open}
-            role="region"
+    <div className="max-w-xl">
+      <div
+        ref={control}
+        className="relative"
+        onKeyDown={(event) => {
+          if (event.key === 'Escape' && open) {
+            setOpen(false)
+            toggle.current?.focus()
+          }
+        }}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false)
+        }}
+      >
+        <div className="flex">
+          <OptionRow option={choice.primary} t={t} primary joined newTab={newTab} />
+          <button
+            ref={toggle}
+            type="button"
             aria-label={t.action.other}
-            className="absolute top-full left-0 z-20 mt-2 max-h-96 w-full overflow-y-auto overscroll-contain rounded-xl border border-border bg-surface p-3 shadow-card"
+            aria-expanded={open}
+            aria-controls={menuId}
+            onClick={() => setOpen(!open)}
+            className="flex w-14 shrink-0 cursor-pointer items-center justify-center rounded-r-lg border border-inverse-bg border-l-inverse-fg/20 bg-inverse-bg text-inverse-fg transition-colors hover:bg-inverse-hover"
           >
-            {[platform, ...PLATFORM_ORDER.filter((id) => id !== platform)].map((id) => (
-              <section key={id} className="border-border py-3 first:pt-0 last:pb-0 [&+section]:border-t">
-                <h4 className="mb-2 px-1 text-sm font-medium">
-                  {t.platforms[id].name}
-                  {id === platform ? <span className="ml-2 font-normal text-fg-subtle">{isStore ? t.store.githubHeading : t.action.other}</span> : null}
-                </h4>
-                <ul className="space-y-2" onClick={(event) => {
-                  if ((event.target as HTMLElement).closest('a')) setOpen(false)
-                }}>
-                  {(id === platform ? choice.others : DOWNLOADS[id]).map((option) => (
-                    <li key={option.file ?? option.channel}>
-                      <OptionRow option={option} t={t} newTab={newTab} />
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={`transition-transform ${open ? 'rotate-180' : ''}`}>
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
         </div>
-        {intelNote ? (
-          <p className="mt-3 text-sm leading-6 text-fg-subtle">
-            {arch === null && intel ? (
-              <Rich text={intelNote} tags={{ a: (c) => <a className="text-fg underline underline-offset-2" href={intel.href}>{c}</a> }} />
-            ) : (
-              intelNote
-            )}
-          </p>
-        ) : null}
+        <div
+          id={menuId}
+          hidden={!open}
+          role="region"
+          aria-label={t.action.other}
+          className="absolute top-full left-0 z-20 mt-2 max-h-96 w-full overflow-y-auto overscroll-contain rounded-xl border border-border bg-surface p-3 shadow-card"
+        >
+          {[platform, ...PLATFORM_ORDER.filter((id) => id !== platform)].map((id) => (
+            <section key={id} className="border-border py-3 first:pt-0 last:pb-0 [&+section]:border-t">
+              <h4 className="mb-2 px-1 text-sm font-medium">
+                {t.platforms[id].name}
+                {id === platform ? <span className="ml-2 font-normal text-fg-subtle">{isStore ? t.store.githubHeading : t.action.other}</span> : null}
+              </h4>
+              <ul className="space-y-2" onClick={(event) => {
+                if ((event.target as HTMLElement).closest('a')) setOpen(false)
+              }}>
+                {(id === platform ? choice.others : DOWNLOADS[id]).map((option) => (
+                  <li key={option.file ?? option.channel}>
+                    <OptionRow option={option} t={t} newTab={newTab} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
       </div>
+      {intelNote ? (
+        <p className="mt-3 text-sm leading-6 text-fg-subtle">
+          {arch === null && intel ? (
+            <Rich text={intelNote} tags={{ a: (c) => <a className="text-fg underline underline-offset-2" href={intel.href}>{c}</a> }} />
+          ) : (
+            intelNote
+          )}
+        </p>
+      ) : null}
     </div>
   )
 }

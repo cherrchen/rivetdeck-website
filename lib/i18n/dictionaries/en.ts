@@ -146,7 +146,7 @@ const en = {
     },
     download: {
       title: 'Download Rivetdeck',
-      lead: 'Version <v>{version}</v>, published {date}. This is a pre-release. On Windows the Microsoft Store comes first; every other link is a file attached to the GitHub release.',
+      lead: 'Version <v>{version}</v>, published {date}. This is a pre-release.',
       recommended: 'Recommended for your system',
       detected: 'Detected: {platform}',
       mobileNotice: 'Rivetdeck is a desktop app. Choose your computer’s system below.',

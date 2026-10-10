@@ -137,7 +137,7 @@ const zh: Dictionary = {
     },
     download: {
       title: '下载 Rivetdeck',
-      lead: '版本 <v>{version}</v>，发布于 {date}。这是预发布版本。Windows 优先提供 Microsoft Store；其余链接都是 GitHub Release 上的附件。',
+      lead: '版本 <v>{version}</v>，发布于 {date}。这是预发布版本。',
       recommended: '为你的系统推荐',
       detected: '已识别：{platform}',
       mobileNotice: 'Rivetdeck 是桌面应用。请在下方选择你电脑的系统。',
