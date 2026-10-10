@@ -8,7 +8,7 @@ import type { ScreenshotSpec } from '@/lib/screenshots'
 export function Screenshot({
   shot,
   alt,
-  sizes = '(min-width: 1200px) 1136px, 100vw',
+  sizes = '(min-width: 1400px) 1336px, 100vw',
   priority = false,
   className = '',
   crop,

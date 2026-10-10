@@ -204,7 +204,7 @@ function Features({ dict }: { dict: Dictionary }) {
           points={t.roots.points}
           visual={
             <Frame caption={t.roots.caption}>
-              <Screenshot shot={SHOTS.foldersDialog} alt={dict.shots.foldersDialog} sizes="(min-width: 1200px) 560px, 100vw" />
+              <Screenshot shot={SHOTS.foldersDialog} alt={dict.shots.foldersDialog} sizes="(min-width: 1400px) 640px, 100vw" />
             </Frame>
           }
         />

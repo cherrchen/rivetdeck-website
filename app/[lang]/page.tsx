@@ -146,7 +146,7 @@ function Hero({ dict }: { dict: Dictionary }) {
 
       <Container>
         <Frame fade>
-          <Screenshot shot={SHOTS.gitDiff} alt={dict.shots.gitDiff} priority crop="aspect-[16/9] object-cover object-top" sizes="(min-width: 1200px) 1136px, 100vw" />
+          <Screenshot shot={SHOTS.gitDiff} alt={dict.shots.gitDiff} priority crop="aspect-[16/9] object-cover object-top" sizes="(min-width: 1400px) 1336px, 100vw" />
         </Frame>
         <p className="mt-3 text-[13px] text-fg-subtle">{t.hero.caption}</p>
       </Container>
@@ -158,14 +158,14 @@ function Features({ dict }: { dict: Dictionary }) {
   const t = dict.home.features
   return (
     <Section id="features" title={t.title}>
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-8">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,1fr)] lg:gap-16">
+        <div>
           <Frame caption={t.caption}>
-            <Screenshot shot={SHOTS.home} alt={dict.shots.home} sizes="(min-width: 1200px) 760px, 100vw" />
+            <Screenshot shot={SHOTS.home} alt={dict.shots.home} sizes="(min-width: 1400px) 680px, 100vw" />
           </Frame>
         </div>
-        <div className="lg:col-span-4">
-          <p className="text-xl leading-[1.45] tracking-[-0.015em] text-fg-subtle">
+        <div>
+          <p className="text-pretty text-xl leading-[1.45] tracking-[-0.015em] text-fg-subtle">
             <Rich text={t.lead} tags={{ b: (c) => <span className="text-fg">{c}</span> }} />
           </p>
           <h3 className="mt-10 text-[13px] text-fg-subtle">{t.listLabel}</h3>
@@ -173,7 +173,7 @@ function Features({ dict }: { dict: Dictionary }) {
             {t.items.map((f) => (
               <div key={f.title}>
                 <dt className="text-sm font-medium">{f.title}</dt>
-                <dd className="mt-1 text-sm leading-6 text-fg-muted">{f.body}</dd>
+                <dd className="mt-1 text-pretty text-sm leading-6 text-fg-muted">{f.body}</dd>
               </div>
             ))}
           </dl>
@@ -190,11 +190,11 @@ function Plugins({ dict, locale }: { dict: Dictionary; locale: Locale }) {
     <Section id="plugins" title={t.title} lead={t.lead}>
       <div className="grid gap-3 lg:grid-cols-2">
         <PluginCard name="Git" status={t.preinstalled} href={links.git.repo} summary={t.gitSummary} sourceLabel={t.sourceOnGithub} newTab={newTab}>
-          <Screenshot shot={SHOTS.gitDiff} alt={dict.shots.gitDiff} crop="aspect-[16/10] object-cover object-right-top" sizes="(min-width: 1200px) 520px, 100vw" />
+          <Screenshot shot={SHOTS.gitDiff} alt={dict.shots.gitDiff} crop="aspect-[16/10] object-cover object-right-top" sizes="(min-width: 1400px) 600px, 100vw" />
         </PluginCard>
 
         <PluginCard name="Theme Studio" status={t.preinstalled} href={links.themeStudio.repo} summary={t.themeStudioSummary} sourceLabel={t.sourceOnGithub} newTab={newTab}>
-          <Screenshot shot={SHOTS.themes} alt={dict.shots.themes} crop="aspect-[16/10] object-cover object-center" sizes="(min-width: 1200px) 520px, 100vw" />
+          <Screenshot shot={SHOTS.themes} alt={dict.shots.themes} crop="aspect-[16/10] object-cover object-center" sizes="(min-width: 1400px) 600px, 100vw" />
         </PluginCard>
       </div>
 
@@ -206,10 +206,10 @@ function Plugins({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         </div>
         <div className="mt-10 grid gap-6 border-t border-border pt-10 sm:grid-cols-2">
           <Frame caption={t.tryThemes.captionNordic}>
-            <Image src="/screenshots/app-theme-nordic-dark.png" alt={dict.shots.nordicDark} width={2880} height={1800} sizes="(min-width: 1200px) 540px, 100vw" loading="lazy" className="h-auto w-full" />
+            <Image src="/screenshots/app-theme-nordic-dark.png" alt={dict.shots.nordicDark} width={2880} height={1800} sizes="(min-width: 1400px) 620px, 100vw" loading="lazy" className="h-auto w-full" />
           </Frame>
           <Frame caption={t.tryThemes.captionClaude}>
-            <Image src="/screenshots/app-theme-claude-light.png" alt={dict.shots.claudeLight} width={2880} height={1800} sizes="(min-width: 1200px) 540px, 100vw" loading="lazy" className="h-auto w-full" />
+            <Image src="/screenshots/app-theme-claude-light.png" alt={dict.shots.claudeLight} width={2880} height={1800} sizes="(min-width: 1400px) 620px, 100vw" loading="lazy" className="h-auto w-full" />
           </Frame>
         </div>
       </div>
@@ -230,7 +230,7 @@ function Plugins({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           </span>
         </div>
         <Frame>
-          <Screenshot shot={SHOTS.folders} alt={dict.shots.folders} sizes="(min-width: 1200px) 600px, 100vw" />
+          <Screenshot shot={SHOTS.folders} alt={dict.shots.folders} sizes="(min-width: 1400px) 650px, 100vw" />
         </Frame>
       </Link>
     </Section>
