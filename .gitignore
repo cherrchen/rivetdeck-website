@@ -147,3 +147,13 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# local capture scratch
+.capture-tmp/
+scripts/capture/_scratch*.mjs
+
+# next
+.next/
+out/
+next-env.d.ts
+.vercel

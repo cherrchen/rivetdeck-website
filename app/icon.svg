@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <style>
+    .deck { fill: #171717 } .disc { fill: #fff }
+    @media (prefers-color-scheme: dark) { .deck { fill: #ededed } .disc { fill: #0a0a0a } }
+  </style>
+  <rect x="1.5" y="1.5" width="21" height="21" rx="6.5" class="deck"/>
+  <circle cx="12" cy="12" r="5.5" class="disc"/>
+  <circle cx="12" cy="12" r="1.8" class="deck"/>
+</svg>

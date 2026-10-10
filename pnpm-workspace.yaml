@@ -1,0 +1,6 @@
+# pnpm 11 refuses to run dependency build scripts until each one is decided.
+# `unrs-resolver` (pulled in by eslint-config-next) only has an optional native
+# fast path; its prebuilt binaries are installed as optional packages, so the
+# install script is not needed.
+allowBuilds:
+  unrs-resolver: false
