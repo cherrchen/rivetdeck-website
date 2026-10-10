@@ -1,0 +1,505 @@
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { SiteFooter } from '@/components/site-footer'
+import { SiteHeader } from '@/components/site-header'
+import { BeforeAfter } from '@/components/multi-root/before-after'
+import { CompatTable } from '@/components/multi-root/compat-table'
+import { InstallTabs } from '@/components/multi-root/install-tabs'
+import { SecurityDiagram } from '@/components/multi-root/security-diagram'
+import { TopologyDiagram } from '@/components/multi-root/topology-diagram'
+import { ButtonLink } from '@/components/ui/button'
+import { CodeBlock } from '@/components/ui/code-block'
+import { Container } from '@/components/ui/container'
+import { RootsMark } from '@/components/ui/logo'
+import { Code, Rich } from '@/components/ui/rich'
+import { Section } from '@/components/ui/section'
+import { Frame, Screenshot } from '@/components/ui/screenshot'
+import { isLocale, localePath } from '@/lib/i18n/config'
+import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
+import { fmt } from '@/lib/i18n/format'
+import { pageMetadata } from '@/lib/i18n/metadata'
+import { COMPAT_PLUGIN_VERSION } from '@/lib/multi-root-compat'
+import { SHOTS } from '@/lib/screenshots'
+import { links, MULTI_ROOT_PACKAGE } from '@/lib/site'
+
+const PATH = '/plugins/multi-root-workspace'
+
+type PageDict = Dictionary['multiRoot']
+
+export async function generateMetadata({ params }: PageProps<'/[lang]/plugins/multi-root-workspace'>): Promise<Metadata> {
+  const { lang } = await params
+  if (!isLocale(lang)) return {}
+  const t = getDictionary(lang).multiRoot.meta
+  return pageMetadata({
+    locale: lang,
+    path: PATH,
+    title: t.title,
+    description: t.description,
+    keywords: t.keywords,
+    siteName: 'Multi-root Workspace for DSH',
+  })
+}
+
+export default async function MultiRootPage({ params }: PageProps<'/[lang]/plugins/multi-root-workspace'>) {
+  const { lang } = await params
+  if (!isLocale(lang)) notFound()
+  const dict = getDictionary(lang)
+  const t = dict.multiRoot
+  const newTab = dict.common.opensInNewTab
+
+  const nav = [
+    { label: t.nav.features, href: '#features' },
+    { label: t.nav.security, href: '#security' },
+    { label: t.nav.install, href: '#install' },
+    { label: t.nav.compatibility, href: '#compatibility' },
+    { label: t.nav.github, href: links.multiRoot.repo, external: true },
+    { label: t.nav.npm, href: links.multiRoot.npm, external: true },
+  ]
+
+  const footerColumns = [
+    {
+      title: t.footer.plugin.title,
+      links: [
+        { label: t.footer.plugin.features, href: '#features' },
+        { label: t.footer.plugin.security, href: '#security' },
+        { label: t.footer.plugin.install, href: '#install' },
+        { label: t.footer.plugin.compatibility, href: '#compatibility' },
+      ],
+    },
+    {
+      title: t.footer.docs.title,
+      links: [
+        { label: t.footer.docs.readme, href: links.multiRoot.readme },
+        { label: t.footer.docs.architecture, href: links.multiRoot.architecture },
+        { label: t.footer.docs.contract, href: links.multiRoot.adr.compat },
+        { label: t.footer.docs.changelog, href: links.multiRoot.changelog },
+      ],
+    },
+    {
+      title: t.footer.source.title,
+      links: [
+        { label: t.footer.source.repo, href: links.multiRoot.repo },
+        { label: t.footer.source.npm, href: links.multiRoot.npm },
+        { label: t.footer.source.issues, href: links.multiRoot.issues },
+      ],
+    },
+    {
+      title: t.footer.ecosystem.title,
+      links: [
+        { label: t.footer.ecosystem.harness, href: links.upstream },
+        { label: t.footer.ecosystem.rivetdeck, href: localePath(lang, '/') },
+      ],
+    },
+  ]
+
+  return (
+    <div data-identity="multi-root">
+      <SiteHeader
+        locale={lang}
+        path={PATH}
+        common={dict.common}
+        brand={
+          <a href={localePath(lang, PATH)} className="flex items-center gap-2.5 font-semibold tracking-[-0.02em]" aria-label={t.brandHome}>
+            <span className="text-accent">
+              <RootsMark />
+            </span>
+            <span className="hidden min-[420px]:inline">Multi-root Workspace</span>
+            <span className="min-[420px]:hidden">Multi-root</span>
+            <span className="hidden rounded border border-border-strong px-1.5 py-0.5 font-mono text-[10px] font-normal text-fg-subtle sm:inline">{t.pluginTag}</span>
+          </a>
+        }
+        items={nav}
+        cta={{ label: t.cta, href: '#install' }}
+      />
+
+      <main id="main">
+        <Hero dict={dict} />
+        <Problem t={t} />
+        <Features dict={dict} />
+        <Security dict={dict} />
+        <Install dict={dict} />
+        <Compatibility dict={dict} />
+        <FinalCta dict={dict} />
+      </main>
+
+      <SiteFooter columns={footerColumns} note={t.footer.note} newTab={newTab} />
+    </div>
+  )
+}
+
+function Hero({ dict }: { dict: Dictionary }) {
+  const t = dict.multiRoot.hero
+  const newTab = dict.common.opensInNewTab
+  return (
+    <section aria-labelledby="mr-hero-title" className="relative overflow-hidden">
+      <div aria-hidden="true" className="grid-bg absolute inset-0 -z-10 opacity-60" />
+      <Container className="pt-16 pb-6 sm:pt-24">
+        <div className="rise flex flex-wrap items-center gap-2 font-mono text-xs text-fg-muted">
+          <a href={links.multiRoot.changelog} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-bg px-3 py-1 hover:text-fg">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />v{COMPAT_PLUGIN_VERSION}
+            <span className="sr-only">
+              {t.changelog}
+              {newTab}
+            </span>
+          </a>
+          <span>MIT · npm · macOS · Linux</span>
+        </div>
+        <h1 id="mr-hero-title" className="rise rise-1 mt-6 max-w-4xl text-[40px] leading-[1.04] font-semibold tracking-[-0.045em] text-balance sm:text-6xl lg:text-7xl">
+          {t.titleLine1}
+          <br />
+          <span className="text-accent">{t.titleLine2}</span>
+        </h1>
+        <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-8 text-fg-muted">{t.lead}</p>
+        <div className="rise rise-3 mt-8 flex flex-wrap items-center gap-3">
+          <ButtonLink href="#install" newTab={newTab}>
+            {t.install}
+          </ButtonLink>
+          <ButtonLink href={links.multiRoot.architecture} variant="secondary" newTab={newTab}>
+            {t.architecture}
+          </ButtonLink>
+        </div>
+        <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-fg-muted">
+          {t.bullets.map((bullet) => (
+            <li key={bullet} className="flex items-center gap-2">
+              <span aria-hidden="true" className="text-accent">
+                ●
+              </span>
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      </Container>
+      <Container className="pt-8 pb-20">
+        <TopologyDiagram t={dict.multiRoot.topology} />
+      </Container>
+    </section>
+  )
+}
+
+function Problem({ t }: { t: PageDict }) {
+  return (
+    <Section id="problem" eyebrow={t.problem.eyebrow} title={t.problem.title} lead={t.problem.lead}>
+      <BeforeAfter t={t.problem} />
+    </Section>
+  )
+}
+
+function Features({ dict }: { dict: Dictionary }) {
+  const t = dict.multiRoot.features
+  const [listComment, manageComment] = t.management.commands
+  const commands = [
+    listComment ?? '',
+    '/workspace-folders',
+    manageComment ?? '',
+    '/workspace-folders add ~/code/another-repo',
+    '/workspace-folders alias 1 payments',
+    '/workspace-folders remove 1',
+    '/workspace-folders reveal 1',
+  ]
+
+  return (
+    <Section id="features" tone="subtle" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
+      <div className="space-y-20">
+        <FeatureRow
+          kicker={t.roots.kicker}
+          title={t.roots.title}
+          body={t.roots.body}
+          points={t.roots.points}
+          visual={
+            <Frame caption={t.roots.caption}>
+              <Screenshot shot={SHOTS.foldersDialog} alt={dict.shots.foldersDialog} sizes="(min-width: 1200px) 560px, 100vw" />
+            </Frame>
+          }
+        />
+
+        <FeatureRow reverse kicker={t.tools.kicker} title={t.tools.title} body={t.tools.body} points={t.tools.points} visual={<ToolsVisual t={t.tools} />} />
+
+        <FeatureRow
+          kicker={t.management.kicker}
+          title={t.management.title}
+          body={t.management.body}
+          points={t.management.points}
+          visual={
+            <CodeBlock
+              title={t.management.codeTitle}
+              prompt=""
+              lines={commands}
+              copyText={commands.filter((line) => !line.startsWith('#')).join('\n')}
+              copy={dict.common.copy}
+            />
+          }
+        />
+
+        <CrossRepo t={t.crossRepo} />
+
+        <InstructionsFeature t={t.instructions} />
+      </div>
+    </Section>
+  )
+}
+
+function FeatureRow({
+  kicker,
+  title,
+  body,
+  points,
+  visual,
+  reverse = false,
+}: {
+  kicker: string
+  title: string
+  body: string
+  points: readonly string[]
+  visual: React.ReactNode
+  reverse?: boolean
+}) {
+  return (
+    <div className="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-14">
+      <div className={reverse ? 'lg:order-2' : undefined}>
+        <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{kicker}</p>
+        <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">{title}</h3>
+        <p className="mt-4 text-[15px] leading-7 text-fg-muted">{body}</p>
+        <ul className="mt-5 space-y-2.5">
+          {points.map((point) => (
+            <li key={point} className="flex gap-3 text-sm leading-6 text-fg-muted">
+              <span aria-hidden="true" className="mt-0.5 text-accent">
+                →
+              </span>
+              {point}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className={`min-w-0 ${reverse ? 'lg:order-1' : ''}`}>{visual}</div>
+    </div>
+  )
+}
+
+function ToolsVisual({ t }: { t: PageDict['features']['tools'] }) {
+  const kept = ['read', 'write', 'edit', 'bash', 'terminal']
+  return (
+    <div className="rounded-xl border border-border-strong bg-bg p-5 sm:p-6">
+      <p className="text-xs font-medium text-fg-subtle">{t.unchanged}</p>
+      <ul className="mt-3 flex flex-wrap gap-2">
+        {kept.map((tool) => (
+          <li key={tool} className="rounded-md border border-border-strong bg-bg-subtle px-3 py-1.5 font-mono text-sm">
+            {tool}
+          </li>
+        ))}
+      </ul>
+      <p className="mt-6 text-xs font-medium text-fg-subtle">{t.notAdded}</p>
+      <ul className="mt-3 flex flex-wrap gap-2">
+        <li className="rounded-md border border-dashed border-border-strong px-3 py-1.5 font-mono text-sm text-fg-subtle line-through decoration-fg-subtle">workspace_*</li>
+      </ul>
+      <p className="mt-6 text-xs font-medium text-fg-subtle">{t.widened}</p>
+      <p className="mt-3 rounded-md border border-accent bg-accent-soft px-3 py-2.5 text-sm">{t.question}</p>
+    </div>
+  )
+}
+
+function CrossRepo({ t }: { t: PageDict['features']['crossRepo'] }) {
+  return (
+    <div>
+      <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{t.kicker}</p>
+      <h3 className="mt-3 max-w-2xl text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">{t.title}</h3>
+      <p className="mt-4 max-w-2xl text-[15px] leading-7 text-fg-muted">{t.body}</p>
+      <ol className="mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+        {t.steps.map((step, i) => (
+          <li key={step.title} className="bg-bg p-5">
+            <span className="grid h-7 w-7 place-items-center rounded-full border border-accent font-mono text-xs text-accent">{i + 1}</span>
+            <h4 className="mt-4 font-medium">{step.title}</h4>
+            <p className="mt-1.5 text-sm leading-6 text-fg-muted">{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}
+
+function InstructionsFeature({ t }: { t: PageDict['features']['instructions'] }) {
+  const roots = [
+    { name: 'web', file: 'AGENTS.md', note: t.notes.primary },
+    { name: 'api', file: 'AGENTS.md', note: t.notes.additional },
+    { name: 'design-system', file: 'CLAUDE.md', note: t.notes.additional },
+  ]
+  return (
+    <div className="grid gap-8 lg:grid-cols-2 lg:gap-14">
+      <div>
+        <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{t.kicker}</p>
+        <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">{t.title}</h3>
+        <p className="mt-4 text-[15px] leading-7 text-fg-muted">{t.body}</p>
+        <figure className="mt-6 rounded-xl border border-border-strong bg-bg p-5" aria-label={t.figure}>
+          <ul className="space-y-2.5">
+            {roots.map((root, i) => (
+              <li key={`${root.name}-${i}`} className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-border bg-bg-subtle px-3 py-2">
+                <span className="font-mono text-sm">
+                  {root.name}/<span className="text-accent">{root.file}</span>
+                </span>
+                <span className="text-xs text-fg-subtle">{root.note}</span>
+              </li>
+            ))}
+          </ul>
+          <figcaption className="mt-3 text-xs text-fg-subtle">{t.exampleRoots}</figcaption>
+        </figure>
+      </div>
+      <div className="rounded-xl border border-border bg-bg p-6">
+        <h4 className="font-medium">{t.limitsTitle}</h4>
+        <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-6 text-fg-muted marker:text-accent">
+          {t.limits.map((limit) => (
+            <li key={limit}>{limit}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+function Security({ dict }: { dict: Dictionary }) {
+  const t = dict.multiRoot.security
+  const newTab = dict.common.opensInNewTab
+  return (
+    <Section id="security" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
+      <SecurityDiagram t={t.diagram} />
+      <ol className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
+        {t.controls.map((control, i) => (
+          <li key={control.title} className="bg-bg p-5">
+            <span className="font-mono text-xs text-accent">{String(i + 1).padStart(2, '0')}</span>
+            <h3 className="mt-2 font-medium">{control.title}</h3>
+            <p className="mt-2 text-sm leading-6 text-fg-muted">{control.body}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-6 rounded-xl border border-border bg-bg-subtle p-5 sm:p-6">
+        <h3 className="font-medium">{t.limits.title}</h3>
+        <ul className="mt-3 space-y-2 text-sm leading-6 text-fg-muted">
+          {t.limits.points.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
+        </ul>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <ButtonLink href={links.multiRoot.architecture} variant="secondary" newTab={newTab}>
+            {t.limits.architecture}
+          </ButtonLink>
+          <ButtonLink href={links.multiRoot.adr.dialect} variant="ghost" newTab={newTab}>
+            {t.limits.dialect}
+          </ButtonLink>
+        </div>
+      </div>
+    </Section>
+  )
+}
+
+function Install({ dict }: { dict: Dictionary }) {
+  const t = dict.multiRoot.install
+  const newTab = dict.common.opensInNewTab
+  const code = { code: (c: string) => <Code>{c}</Code> }
+  return (
+    <Section id="install" tone="subtle" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
+      <ol className="space-y-10">
+        <Step n="1" title={t.step1.title} body={t.step1.body}>
+          <InstallTabs t={t.tabs} copy={dict.common.copy} />
+        </Step>
+        <Step n="2" title={t.step2.title} body={<Rich text={t.step2.body} tags={code} />}>
+          <CodeBlock title="pnpm-workspace.yaml" prompt="" lines={['allowBuilds:', '  koffi: true']} copyText={'allowBuilds:\n  koffi: true'} copy={dict.common.copy} />
+        </Step>
+        <Step n="3" title={t.step3.title} body={t.step3.body}>
+          <CodeBlock
+            title={dict.multiRoot.features.management.codeTitle}
+            prompt=""
+            lines={['/workspace-folders add ~/code/another-repo', '/workspace-folders']}
+            copyText="/workspace-folders add ~/code/another-repo"
+            copy={dict.common.copy}
+          />
+          <p className="mt-3 text-sm text-fg-subtle">{t.step3.note}</p>
+        </Step>
+      </ol>
+
+      <div className="mt-12 rounded-xl border border-border bg-bg p-5 text-sm leading-6 text-fg-muted sm:p-6">
+        <h3 className="font-medium text-fg">{t.other.title}</h3>
+        <ul className="mt-3 space-y-2">
+          <li>
+            <Rich
+              text={t.other.tarball}
+              tags={{
+                ...code,
+                readme: (c) => (
+                  <a className="text-fg underline underline-offset-2" href={`${links.multiRoot.readme}#installation`} target="_blank" rel="noopener noreferrer">
+                    {c}
+                    <span className="sr-only">{newTab}</span>
+                  </a>
+                ),
+              }}
+            />
+          </li>
+          <li>
+            <Rich text={t.other.source} tags={code} />
+          </li>
+          <li>{t.other.rivetdeck}</li>
+        </ul>
+      </div>
+    </Section>
+  )
+}
+
+function Step({ n, title, body, children }: { n: string; title: string; body: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <li className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:gap-12">
+      <div>
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-accent font-mono text-sm text-accent">{n}</span>
+        <h3 className="mt-4 text-xl font-semibold tracking-[-0.02em]">{title}</h3>
+        <p className="mt-2 max-w-md text-sm leading-6 text-fg-muted">{body}</p>
+      </div>
+      <div className="min-w-0">{children}</div>
+    </li>
+  )
+}
+
+function Compatibility({ dict }: { dict: Dictionary }) {
+  const t = dict.multiRoot.compat
+  const newTab = dict.common.opensInNewTab
+  return (
+    <Section id="compatibility" eyebrow={t.eyebrow} title={t.title} lead={fmt(t.lead, { version: COMPAT_PLUGIN_VERSION })}>
+      <CompatTable t={t} />
+      <p className="mt-6 max-w-3xl text-sm leading-6 text-fg-subtle">
+        <Rich
+          text={t.footnote}
+          tags={{
+            contract: (c) => (
+              <a className="text-fg underline underline-offset-2" href={links.multiRoot.adr.compat} target="_blank" rel="noopener noreferrer">
+                {c}
+                <span className="sr-only">{newTab}</span>
+              </a>
+            ),
+          }}
+        />
+      </p>
+    </Section>
+  )
+}
+
+function FinalCta({ dict }: { dict: Dictionary }) {
+  const t = dict.multiRoot.finalCta
+  const newTab = dict.common.opensInNewTab
+  return (
+    <section aria-labelledby="mr-cta-title" className="border-t border-border bg-bg-subtle py-20 sm:py-28">
+      <Container className="text-center">
+        <h2 id="mr-cta-title" className="mx-auto max-w-2xl text-3xl font-semibold tracking-[-0.035em] text-balance sm:text-5xl">
+          {t.title}
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl text-fg-muted">{t.lead}</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <ButtonLink href="#install" newTab={newTab}>
+            {t.install}
+          </ButtonLink>
+          <ButtonLink href={links.multiRoot.repo} variant="secondary" newTab={newTab}>
+            {t.github}
+          </ButtonLink>
+          <ButtonLink href={links.multiRoot.npm} variant="ghost" newTab={newTab}>
+            {MULTI_ROOT_PACKAGE} ↗
+          </ButtonLink>
+        </div>
+      </Container>
+    </section>
+  )
+}

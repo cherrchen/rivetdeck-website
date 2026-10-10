@@ -22,6 +22,8 @@ export const links = {
     license: `${rivetdeckRepo}/blob/develop/LICENSE`,
     brandGuidelines: `${rivetdeckRepo}/blob/develop/BRAND_GUIDELINES.md`,
     issues: `${rivetdeckRepo}/issues`,
+    /** Product page of the Windows Store listing (product id from apps/electron/windows-store.json of the app repository). */
+    microsoftStore: 'https://apps.microsoft.com/detail/9P5FQ7D2PQVQ',
   },
   upstream: 'https://github.com/deepseek-ai/deepseek-harness',
   git: {

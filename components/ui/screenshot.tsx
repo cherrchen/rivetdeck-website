@@ -7,12 +7,15 @@ import type { ScreenshotSpec } from '@/lib/screenshots'
  */
 export function Screenshot({
   shot,
+  alt,
   sizes = '(min-width: 1200px) 1136px, 100vw',
   priority = false,
   className = '',
   crop,
 }: {
   shot: ScreenshotSpec
+  /** Localized description of the capture. */
+  alt: string
   sizes?: string
   priority?: boolean
   className?: string
@@ -28,8 +31,8 @@ export function Screenshot({
   }
   return (
     <>
-      <Image {...common} alt={shot.alt} src={`/screenshots/${shot.name}-light.png`} priority={priority} loading={priority ? undefined : 'lazy'} className={`${common.className} dark:hidden`} />
-      <Image {...common} alt={shot.alt} src={`/screenshots/${shot.name}-dark.png`} loading="lazy" className={`${common.className} hidden dark:block`} />
+      <Image {...common} alt={alt} src={`/screenshots/${shot.name}-light.png`} priority={priority} loading={priority ? undefined : 'lazy'} className={`${common.className} dark:hidden`} />
+      <Image {...common} alt={alt} src={`/screenshots/${shot.name}-dark.png`} loading="lazy" className={`${common.className} hidden dark:block`} />
     </>
   )
 }

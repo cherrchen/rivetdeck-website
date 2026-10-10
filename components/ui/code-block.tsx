@@ -1,4 +1,4 @@
-import { CopyButton } from './copy-button'
+import { CopyButton, type CopyLabels } from './copy-button'
 
 /**
  * Shell/command block. `lines` are rendered verbatim; the copied text is
@@ -9,11 +9,13 @@ export function CodeBlock({
   title,
   copyText,
   prompt = '$',
+  copy,
 }: {
   lines: readonly string[]
   title?: string
   copyText?: string
   prompt?: string
+  copy: CopyLabels
 }) {
   const text =
     copyText ?? lines.filter((l) => l.trim() && !l.trim().startsWith('#')).join('\n')
@@ -21,7 +23,7 @@ export function CodeBlock({
     <figure className="overflow-hidden rounded-lg border border-border bg-bg-subtle">
       <figcaption className="flex items-center justify-between gap-3 border-b border-border px-3 py-2">
         <span className="font-mono text-xs text-fg-subtle">{title ?? 'shell'}</span>
-        <CopyButton text={text} />
+        <CopyButton text={text} labels={copy} />
       </figcaption>
       <pre className="overflow-x-auto px-4 py-3 text-[13px] leading-6 [overflow-wrap:anywhere]" tabIndex={0}>
         <code>

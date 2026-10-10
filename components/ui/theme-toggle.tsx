@@ -5,7 +5,7 @@
  * by the inline script in the root layout; both icons are always rendered and
  * CSS selects one, so there is no hydration mismatch.
  */
-export function ThemeToggle() {
+export function ThemeToggle({ label }: { label: string }) {
   function toggle() {
     const root = document.documentElement
     const next = root.classList.contains('dark') ? 'light' : 'dark'
@@ -21,7 +21,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      aria-label="Toggle light and dark theme"
+      aria-label={label}
       className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-fg-muted transition-colors hover:bg-bg-muted hover:text-fg"
     >
       <svg className="dark:hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

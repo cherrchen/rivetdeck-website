@@ -1,30 +1,35 @@
 /**
- * Rivetdeck release data. Every asset name and size below was read from the
- * GitHub Release `v0.2.0-beta.2` of cherrchen/rivetdeck (published 2026-10-09).
- * Nothing here is invented: a platform without a published asset is not listed.
- * Update this file together with a new release; the download links point at the
- * release asset URLs, never at a mirror.
+ * Rivetdeck release data. Every GitHub asset name and size below was read from
+ * the GitHub Release `v0.2.0-beta.2` of cherrchen/rivetdeck (published
+ * 2026-10-09). Nothing here is invented: a platform without a published asset
+ * is not listed. Update this file together with a new release; the download
+ * links point at the release asset URLs, never at a mirror.
+ *
+ * Windows lists the Microsoft Store first, then the GitHub installers. The
+ * Store build of this release is package version 1.0.47.0 (the release's
+ * `store-request-47.json` names tag `v0.2.0-beta.2` and both architectures;
+ * `store-published-47.json` reports it published).
  */
 
 import { links } from './site'
 
-export interface ReleaseAsset {
-  /** Exact file name on the GitHub Release. */
-  file: string
-  /** Size in bytes, as reported by GitHub. */
-  bytes: number
-  /** What the file is, shown next to the button. */
-  kind: string
-  /** Primary download for its row. */
-  primary?: boolean
-}
+export type PlatformId = 'macos' | 'windows' | 'linux'
+export type Arch = 'arm64' | 'x64'
+export type Channel = 'store' | 'github'
+export type AssetFormat = 'dmg' | 'zip' | 'exe' | 'appimage' | 'deb' | 'store'
 
-export interface PlatformDownloads {
-  id: 'macos' | 'windows' | 'linux'
-  name: string
-  /** Architectures with at least one published installer. */
-  note: string
-  assets: readonly ReleaseAsset[]
+export interface DownloadOption {
+  platform: PlatformId
+  channel: Channel
+  format: AssetFormat
+  /** Architecture of the file; the Store listing serves both and is `universal`. */
+  arch: Arch | 'universal'
+  /** Exact asset name on the GitHub Release; absent for the Store listing. */
+  file?: string
+  /** Size in bytes as reported by GitHub; absent for the Store listing. */
+  bytes?: number
+  /** Where the user goes. */
+  href: string
 }
 
 export const RELEASE = {
@@ -34,6 +39,7 @@ export const RELEASE = {
   publishedAt: '2026-10-09',
   url: `${links.rivetdeck.releases}/tag/v0.2.0-beta.2`,
   checksums: 'SHA256SUMS.txt',
+  storePackageVersion: '1.0.47.0',
 } as const
 
 export function assetUrl(file: string): string {
@@ -44,36 +50,63 @@ export function formatSize(bytes: number): string {
   return `${Math.round(bytes / 1_000_000)} MB`
 }
 
-export const DOWNLOADS: readonly PlatformDownloads[] = [
-  {
-    id: 'macos',
-    name: 'macOS',
-    note: 'Apple Silicon and Intel',
-    assets: [
-      { file: 'Rivetdeck-0.2.0-beta.2-mac-arm64.dmg', bytes: 290_461_425, kind: 'Apple Silicon · DMG', primary: true },
-      { file: 'Rivetdeck-0.2.0-beta.2-mac-x64.dmg', bytes: 297_299_055, kind: 'Intel · DMG' },
-      { file: 'Rivetdeck-0.2.0-beta.2-mac-arm64.zip', bytes: 302_238_853, kind: 'Apple Silicon · ZIP' },
-      { file: 'Rivetdeck-0.2.0-beta.2-mac-x64.zip', bytes: 309_225_560, kind: 'Intel · ZIP' },
-    ],
-  },
-  {
-    id: 'windows',
-    name: 'Windows',
-    note: 'x64 and ARM64 installers',
-    assets: [
-      { file: 'Rivetdeck-0.2.0-beta.2-win-x64.exe', bytes: 358_507_719, kind: 'x64 · installer', primary: true },
-      { file: 'Rivetdeck-0.2.0-beta.2-win-arm64.exe', bytes: 337_997_668, kind: 'ARM64 · installer' },
-    ],
-  },
-  {
-    id: 'linux',
-    name: 'Linux',
-    note: 'AppImage and DEB, x64 and ARM64',
-    assets: [
-      { file: 'Rivetdeck-0.2.0-beta.2-linux-x86_64.AppImage', bytes: 282_779_817, kind: 'x64 · AppImage', primary: true },
-      { file: 'Rivetdeck-0.2.0-beta.2-linux-arm64.AppImage', bytes: 284_281_306, kind: 'ARM64 · AppImage' },
-      { file: 'Rivetdeck-0.2.0-beta.2-linux-amd64.deb', bytes: 212_826_572, kind: 'x64 · DEB' },
-      { file: 'Rivetdeck-0.2.0-beta.2-linux-arm64.deb', bytes: 207_206_540, kind: 'ARM64 · DEB' },
-    ],
-  },
-]
+function github(platform: PlatformId, format: AssetFormat, arch: Arch, suffix: string, bytes: number): DownloadOption {
+  const file = `Rivetdeck-${RELEASE.version}-${suffix}`
+  return { platform, channel: 'github', format, arch, file, bytes, href: assetUrl(file) }
+}
+
+/**
+ * Options per platform in recommendation order: the first entry is the default,
+ * and within a platform, earlier entries are preferred over later ones.
+ */
+export const DOWNLOADS: Record<PlatformId, readonly DownloadOption[]> = {
+  macos: [
+    github('macos', 'dmg', 'arm64', 'mac-arm64.dmg', 290_461_425),
+    github('macos', 'dmg', 'x64', 'mac-x64.dmg', 297_299_055),
+    github('macos', 'zip', 'arm64', 'mac-arm64.zip', 302_238_853),
+    github('macos', 'zip', 'x64', 'mac-x64.zip', 309_225_560),
+  ],
+  windows: [
+    { platform: 'windows', channel: 'store', format: 'store', arch: 'universal', href: links.rivetdeck.microsoftStore },
+    github('windows', 'exe', 'x64', 'win-x64.exe', 358_507_719),
+    github('windows', 'exe', 'arm64', 'win-arm64.exe', 337_997_668),
+  ],
+  linux: [
+    github('linux', 'appimage', 'x64', 'linux-x86_64.AppImage', 282_779_817),
+    github('linux', 'appimage', 'arm64', 'linux-arm64.AppImage', 284_281_306),
+    github('linux', 'deb', 'x64', 'linux-amd64.deb', 212_826_572),
+    github('linux', 'deb', 'arm64', 'linux-arm64.deb', 207_206_540),
+  ],
+}
+
+export const PLATFORM_ORDER: readonly PlatformId[] = ['macos', 'windows', 'linux']
+
+export interface Recommendation {
+  platform: PlatformId
+  /** The one download to offer first. */
+  primary: DownloadOption
+  /** Every other option of the platform, with the user's architecture first. */
+  others: readonly DownloadOption[]
+  /** Architecture the choice was made for: the detected one, or the platform default when the browser cannot tell. */
+  assumedArch: Arch
+}
+
+/**
+ * Chooses the primary download for a platform.
+ *
+ * Windows: the Microsoft Store listing always comes first (it serves both
+ * architectures), and the GitHub installer for the user's architecture is the
+ * first alternative. macOS and Linux: the first option whose architecture
+ * matches; `arch === null` (undetectable) assumes arm64 on macOS and x64 on
+ * Linux, the common cases.
+ */
+export function recommend(platform: PlatformId, arch: Arch | null, options: Record<PlatformId, readonly DownloadOption[]> = DOWNLOADS): Recommendation {
+  const all = options[platform]
+  const assumedArch: Arch = arch ?? (platform === 'macos' ? 'arm64' : 'x64')
+  const first = all[0]
+  if (!first) throw new Error(`No downloads published for ${platform}`)
+  const primary = platform === 'windows' ? (all.find((o) => o.channel === 'store') ?? first) : (all.find((o) => o.arch === assumedArch) ?? first)
+  const rank = (o: DownloadOption) => (o.arch === assumedArch ? 0 : o.arch === 'universal' ? 0 : 1)
+  const others = all.filter((o) => o !== primary).sort((a, b) => rank(a) - rank(b))
+  return { platform, primary, others, assumedArch }
+}

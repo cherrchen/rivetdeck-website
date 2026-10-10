@@ -1,23 +1,33 @@
 import type { ReactNode } from 'react'
+import { LanguageSwitcher } from './language-switcher'
 import { Container } from './ui/container'
 import { MobileMenu, type NavItem } from './ui/mobile-menu'
 import { ThemeToggle } from './ui/theme-toggle'
+import type { Locale } from '@/lib/i18n/config'
+import type { Dictionary } from '@/lib/i18n/dictionaries'
 
 /** Sticky header shared by every page; the brand and links are supplied per page. */
 export function SiteHeader({
   brand,
   items,
   cta,
+  locale,
+  path,
+  common,
 }: {
   brand: ReactNode
   items: readonly NavItem[]
   cta?: { label: string; href: string }
+  locale: Locale
+  /** Unprefixed path of the current page, used by the language switch. */
+  path: string
+  common: Dictionary['common']
 }) {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-bg/85 backdrop-blur supports-[backdrop-filter]:bg-bg/70">
-      <Container className="relative flex h-14 items-center justify-between gap-4">
+      <Container className="relative flex h-14 items-center justify-between gap-3">
         {brand}
-        <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+        <nav aria-label={common.primaryNav} className="hidden items-center gap-1 lg:flex">
           {items.map((item) => (
             <a
               key={item.href}
@@ -26,11 +36,11 @@ export function SiteHeader({
               {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             >
               {item.label}
-              {item.external ? <span className="sr-only"> (opens in a new tab)</span> : null}
+              {item.external ? <span className="sr-only">{common.opensInNewTab}</span> : null}
             </a>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           {cta ? (
             <a
               href={cta.href}
@@ -39,8 +49,12 @@ export function SiteHeader({
               {cta.label}
             </a>
           ) : null}
-          <ThemeToggle />
-          <MobileMenu items={cta ? [...items, { label: cta.label, href: cta.href }] : items} />
+          <LanguageSwitcher locale={locale} path={path} labelTemplate={common.switchLanguage} />
+          <ThemeToggle label={common.themeToggle} />
+          <MobileMenu
+            items={cta ? [...items, { label: cta.label, href: cta.href }] : items}
+            labels={{ open: common.menuOpen, close: common.menuClose, nav: common.mobileNav }}
+          />
         </div>
       </Container>
     </header>

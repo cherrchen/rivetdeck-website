@@ -1,9 +1,12 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import type { Dictionary } from '@/lib/i18n/dictionaries'
+
+export type CopyLabels = Dictionary['common']['copy']
 
 /** Copies `text` to the clipboard and announces the result to assistive technology. */
-export function CopyButton({ text, label = 'Copy command' }: { text: string; label?: string }) {
+export function CopyButton({ text, labels }: { text: string; labels: CopyLabels }) {
   const [state, setState] = useState<'idle' | 'copied' | 'failed'>('idle')
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
@@ -25,7 +28,7 @@ export function CopyButton({ text, label = 'Copy command' }: { text: string; lab
       <button
         type="button"
         onClick={copy}
-        aria-label={label}
+        aria-label={labels.label}
         className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-bg px-2.5 text-xs font-medium text-fg-muted transition-colors hover:bg-bg-muted hover:text-fg"
       >
         {state === 'copied' ? (
@@ -38,10 +41,10 @@ export function CopyButton({ text, label = 'Copy command' }: { text: string; lab
             <path d="M5 15V5a2 2 0 0 1 2-2h10" />
           </svg>
         )}
-        <span aria-hidden="true">{state === 'copied' ? 'Copied' : state === 'failed' ? 'Select & copy' : 'Copy'}</span>
+        <span aria-hidden="true">{state === 'copied' ? labels.copied : state === 'failed' ? labels.failed : labels.copy}</span>
       </button>
       <span role="status" className="sr-only">
-        {state === 'copied' ? 'Copied to clipboard' : state === 'failed' ? 'Copy failed; select the text manually' : ''}
+        {state === 'copied' ? labels.announceCopied : state === 'failed' ? labels.announceFailed : ''}
       </span>
     </>
   )

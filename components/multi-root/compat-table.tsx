@@ -1,4 +1,8 @@
-import { COMPAT_PLATFORMS, COMPAT_PLUGIN_VERSION, COMPAT_ROWS, COMPAT_STATUS_LABEL, type CompatStatus } from '@/lib/multi-root-compat'
+import type { Dictionary } from '@/lib/i18n/dictionaries'
+import { fmt } from '@/lib/i18n/format'
+import { COMPAT_PLATFORMS, COMPAT_PLUGIN_VERSION, COMPAT_ROWS, type CompatStatus } from '@/lib/multi-root-compat'
+
+type T = Dictionary['multiRoot']['compat']
 
 const icon: Record<CompatStatus, string> = { verified: '✓', partial: '◐', unreleased: '◇', unsupported: '✕' }
 const tone: Record<CompatStatus, string> = {
@@ -8,52 +12,52 @@ const tone: Record<CompatStatus, string> = {
   unsupported: 'text-bad border-bad/40',
 }
 
-export function StatusBadge({ status }: { status: CompatStatus }) {
+export function StatusBadge({ status, label }: { status: CompatStatus; label: string }) {
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium whitespace-nowrap ${tone[status]}`}>
       <span aria-hidden="true">{icon[status]}</span>
-      {COMPAT_STATUS_LABEL[status]}
+      {label}
     </span>
   )
 }
 
 /** Support matrix rendered from `lib/multi-root-compat.ts`; status is declared, never computed from semver. */
-export function CompatTable() {
+export function CompatTable({ t }: { t: T }) {
   return (
     <div>
-      <div className="overflow-x-auto rounded-xl border border-border" tabIndex={0} role="region" aria-label="DSH release support matrix">
+      <div className="overflow-x-auto rounded-xl border border-border" tabIndex={0} role="region" aria-label={t.region}>
         <table className="w-full min-w-[640px] border-collapse text-left text-sm">
-          <caption className="sr-only">Supported DSH releases for plugin version {COMPAT_PLUGIN_VERSION} and the development branch</caption>
+          <caption className="sr-only">{fmt(t.caption, { version: COMPAT_PLUGIN_VERSION })}</caption>
           <thead className="bg-bg-subtle text-xs text-fg-subtle">
             <tr>
-              <th scope="col" className="px-4 py-3 font-medium">DSH release</th>
-              <th scope="col" className="px-4 py-3 font-medium">Status</th>
-              <th scope="col" className="px-4 py-3 font-medium">Added in</th>
-              <th scope="col" className="px-4 py-3 font-medium">Notes</th>
+              <th scope="col" className="px-4 py-3 font-medium">{t.columns.release}</th>
+              <th scope="col" className="px-4 py-3 font-medium">{t.columns.status}</th>
+              <th scope="col" className="px-4 py-3 font-medium">{t.columns.since}</th>
+              <th scope="col" className="px-4 py-3 font-medium">{t.columns.notes}</th>
             </tr>
           </thead>
           <tbody>
             {COMPAT_ROWS.map((row) => (
-              <tr key={row.release} className="border-t border-border align-top">
-                <th scope="row" className="px-4 py-3 font-mono text-[13px] font-medium whitespace-nowrap">{row.release}</th>
-                <td className="px-4 py-3"><StatusBadge status={row.status} /></td>
-                <td className="px-4 py-3 font-mono text-xs whitespace-nowrap text-fg-subtle">{row.since}</td>
-                <td className="px-4 py-3 text-fg-muted">{row.note}</td>
+              <tr key={row.id} className="border-t border-border align-top">
+                <th scope="row" className={`px-4 py-3 text-[13px] font-medium ${row.release ? 'font-mono whitespace-nowrap' : ''}`}>{row.release ?? t.otherRelease}</th>
+                <td className="px-4 py-3"><StatusBadge status={row.status} label={t.status[row.status]} /></td>
+                <td className="px-4 py-3 font-mono text-xs whitespace-nowrap text-fg-subtle">{row.since === 'dev' ? t.sinceDev : row.since}</td>
+                <td className="px-4 py-3 text-fg-muted">{t.notes[row.id as keyof typeof t.notes]}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <h3 className="mt-10 text-lg font-semibold tracking-[-0.02em]">Platforms</h3>
+      <h3 className="mt-10 text-lg font-semibold tracking-[-0.02em]">{t.platforms}</h3>
       <ul className="mt-4 grid gap-3 sm:grid-cols-3">
         {COMPAT_PLATFORMS.map((p) => (
-          <li key={p.name} className="rounded-lg border border-border p-4">
+          <li key={p.id} className="rounded-lg border border-border p-4">
             <div className="flex items-center justify-between gap-2">
               <span className="font-medium">{p.name}</span>
-              <StatusBadge status={p.status} />
+              <StatusBadge status={p.status} label={t.status[p.status]} />
             </div>
-            <p className="mt-2 text-sm leading-6 text-fg-muted">{p.mechanism}</p>
+            <p className="mt-2 text-sm leading-6 text-fg-muted">{t.platformNotes[p.id]}</p>
           </li>
         ))}
       </ul>

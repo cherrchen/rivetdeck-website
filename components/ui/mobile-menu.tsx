@@ -8,8 +8,14 @@ export interface NavItem {
   external?: boolean
 }
 
-/** Disclosure menu shown below the `md` breakpoint. Closes on Escape, link activation and outside click. */
-export function MobileMenu({ items }: { items: readonly NavItem[] }) {
+export interface MobileMenuLabels {
+  open: string
+  close: string
+  nav: string
+}
+
+/** Disclosure menu shown below the `lg` breakpoint. Closes on Escape, link activation and outside click. */
+export function MobileMenu({ items, labels }: { items: readonly NavItem[]; labels: MobileMenuLabels }) {
   const [open, setOpen] = useState(false)
   const panelId = useId()
   const root = useRef<HTMLDivElement>(null)
@@ -36,7 +42,7 @@ export function MobileMenu({ items }: { items: readonly NavItem[] }) {
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
-        aria-label={open ? 'Close menu' : 'Open menu'}
+        aria-label={open ? labels.close : labels.open}
         onClick={() => setOpen((v) => !v)}
         className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-fg-muted hover:bg-bg-muted hover:text-fg"
       >
@@ -46,7 +52,7 @@ export function MobileMenu({ items }: { items: readonly NavItem[] }) {
       </button>
       <nav
         id={panelId}
-        aria-label="Mobile"
+        aria-label={labels.nav}
         hidden={!open}
         className="absolute inset-x-0 top-full border-b border-border bg-bg px-5 py-3 shadow-card"
       >

@@ -17,12 +17,15 @@ export function ButtonLink({
   children,
   className = '',
   external,
+  newTab,
 }: {
   href: string
   variant?: Variant
   children: ReactNode
   className?: string
   external?: boolean
+  /** Localized screen-reader suffix for links that open a new tab; required so no locale shows English. */
+  newTab: string
 }) {
   const isExternal = external ?? /^https?:/.test(href)
   return (
@@ -32,7 +35,7 @@ export function ButtonLink({
       {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
       {children}
-      {isExternal ? <span className="sr-only"> (opens in a new tab)</span> : null}
+      {isExternal ? <span className="sr-only">{newTab}</span> : null}
     </a>
   )
 }

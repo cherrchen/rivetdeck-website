@@ -6,7 +6,7 @@ export interface FooterColumn {
   links: readonly { label: string; href: string }[]
 }
 
-export function SiteFooter({ columns, note }: { columns: readonly FooterColumn[]; note: string }) {
+export function SiteFooter({ columns, note, newTab }: { columns: readonly FooterColumn[]; note: string; newTab: string }) {
   return (
     <footer className="border-t border-border bg-bg-subtle">
       <Container className="py-14">
@@ -35,7 +35,7 @@ export function SiteFooter({ columns, note }: { columns: readonly FooterColumn[]
                         {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       >
                         {link.label}
-                        {external ? <span className="sr-only"> (opens in a new tab)</span> : null}
+                        {external ? <span className="sr-only">{newTab}</span> : null}
                       </a>
                     </li>
                   )

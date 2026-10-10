@@ -1,15 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import type { Dictionary } from '@/lib/i18n/dictionaries'
 import { THEMES, type ThemeColors } from '@/lib/themes'
 
 type Mode = 'auto' | 'light' | 'dark'
 
-const MODES: readonly { id: Mode; label: string }[] = [
-  { id: 'auto', label: 'Follow site' },
-  { id: 'light', label: 'Light' },
-  { id: 'dark', label: 'Dark' },
-]
+const MODE_IDS: readonly Mode[] = ['auto', 'light', 'dark']
 
 /** Maps a palette to CSS custom properties; `light-dark()` then follows `color-scheme`. */
 function vars(light: ThemeColors, dark: ThemeColors): React.CSSProperties {
@@ -27,7 +24,7 @@ const swatch = (name: keyof ThemeColors) => ({ background: `var(--t-${name})` })
  * reduced rendering of the app chrome using the real palette values, not a
  * screenshot; real captures appear next to it.
  */
-export function ThemePreview() {
+export function ThemePreview({ t }: { t: Dictionary['themePreview'] }) {
   const [selected, setSelected] = useState('nordic')
   const [mode, setMode] = useState<Mode>('auto')
   const theme = THEMES.find((t) => t.id === selected) ?? THEMES[0]!
@@ -36,16 +33,16 @@ export function ThemePreview() {
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)]">
       <div>
-        <div role="group" aria-label="Theme" className="grid grid-cols-2 gap-2 lg:grid-cols-1">
-          {THEMES.map((t) => {
-            const active = t.id === selected
+        <div role="group" aria-label={t.groupLabel} className="grid grid-cols-2 gap-2 lg:grid-cols-1">
+          {THEMES.map((palette) => {
+            const active = palette.id === selected
             return (
               <button
-                key={t.id}
+                key={palette.id}
                 type="button"
                 aria-pressed={active}
-                onClick={() => setSelected(t.id)}
-                style={{ ...vars(t.light, t.dark), colorScheme: scheme }}
+                onClick={() => setSelected(palette.id)}
+                style={{ ...vars(palette.light, palette.dark), colorScheme: scheme }}
                 className={`flex items-center gap-3 rounded-lg border px-3 py-2.5 text-left text-sm transition-colors ${
                   active ? 'border-fg bg-bg-muted' : 'border-border hover:bg-bg-subtle'
                 }`}
@@ -56,26 +53,26 @@ export function ThemePreview() {
                   <span style={swatch('surface')} />
                   <span style={swatch('text')} />
                 </span>
-                <span className="font-medium">{t.name}</span>
+                <span className="font-medium">{palette.name}</span>
               </button>
             )
           })}
         </div>
         <fieldset className="mt-4 min-w-0">
-          <legend className="mb-2 text-xs font-medium text-fg-subtle">Preview appearance</legend>
+          <legend className="mb-2 text-xs font-medium text-fg-subtle">{t.appearance}</legend>
           <div className="inline-flex rounded-md border border-border p-0.5">
-            {MODES.map((m) => (
-              <label key={m.id} className="cursor-pointer">
+            {MODE_IDS.map((id) => (
+              <label key={id} className="cursor-pointer">
                 <input
                   type="radio"
                   name="preview-mode"
-                  value={m.id}
-                  checked={mode === m.id}
-                  onChange={() => setMode(m.id)}
+                  value={id}
+                  checked={mode === id}
+                  onChange={() => setMode(id)}
                   className="peer sr-only"
                 />
                 <span className="block rounded px-2.5 py-1 text-xs text-fg-muted peer-checked:bg-inverse-bg peer-checked:text-inverse-fg peer-focus-visible:outline-2 peer-focus-visible:outline-accent">
-                  {m.label}
+                  {t.modes[id]}
                 </span>
               </label>
             ))}
@@ -92,26 +89,26 @@ export function ThemePreview() {
           <div className="flex flex-col gap-2 p-3" style={{ background: 'var(--t-sidebar)' }}>
             <div className="font-semibold">Rivetdeck</div>
             <div className="rounded px-2 py-1.5 text-center" style={{ background: 'var(--t-surface)' }}>
-              New Session
+              {t.mock.newSession}
             </div>
-            <div style={{ color: 'var(--t-muted)' }}>Plugins</div>
+            <div style={{ color: 'var(--t-muted)' }}>{t.mock.plugins}</div>
             <div className="mt-1" style={{ color: 'var(--t-muted)' }}>
-              Workspaces
+              {t.mock.workspaces}
             </div>
             <div className="flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-sm" style={swatch('accent')} />
               web
             </div>
             <div className="rounded px-2 py-1" style={{ background: 'var(--t-surface)' }}>
-              New Session
+              {t.mock.newSession}
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-3 p-3">
-            <div className="font-medium">Into the Unknown</div>
+            <div className="font-medium">{t.mock.title}</div>
             <div className="w-full rounded-lg p-2.5" style={{ background: 'var(--t-surface)' }}>
-              <div style={{ color: 'var(--t-muted)' }}>Describe what you want to build…</div>
+              <div style={{ color: 'var(--t-muted)' }}>{t.mock.placeholder}</div>
               <div className="mt-4 flex items-center justify-between">
-                <span style={{ color: 'var(--t-muted)' }}>Workspace Write</span>
+                <span style={{ color: 'var(--t-muted)' }}>{t.mock.sandbox}</span>
                 <span className="grid h-5 w-5 place-items-center rounded-full" style={{ background: 'var(--t-accent)', color: 'var(--t-base)' }}>
                   ↑
                 </span>
@@ -140,7 +137,7 @@ export function ThemePreview() {
           </div>
         </div>
         <p className="mt-3 text-sm text-fg-subtle" aria-live="polite">
-          <span className="font-medium text-fg">{theme.name}.</span> {theme.description} Rendered from the palette values in Theme Studio 0.1.3. Illustrative layout, not a screenshot.
+          <span className="font-medium text-fg">{theme.name}</span> — {t.descriptions[theme.id as keyof typeof t.descriptions]} {t.caption}
         </p>
       </div>
     </div>
