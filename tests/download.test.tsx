@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen, within } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { DownloadPanel, HeroActions } from '@/components/home/download'
 import { getDictionary } from '@/lib/i18n/dictionaries'
@@ -39,6 +39,7 @@ describe('DownloadPanel', () => {
     env = { platform: 'windows', arch: 'x64', checked: true }
     const { container } = render(<DownloadPanel t={t} newTab={newTab} />)
     const recommended = container.firstElementChild as HTMLElement
+    fireEvent.click(within(recommended).getByRole('button', { name: t.action.other }))
     const links_ = within(recommended).getAllByRole('link')
     expect(links_[0]?.getAttribute('href')).toBe(links.rivetdeck.microsoftStore)
     expect(links_[0]?.textContent).toContain(t.store.action)
@@ -60,15 +61,30 @@ describe('DownloadPanel', () => {
     expect(within(container.firstElementChild as HTMLElement).getAllByRole('link')[0]?.getAttribute('href')).toMatch(/mac-x64\.dmg$/)
   })
 
-  it('keeps the other platforms under a collapsed "other versions" disclosure', () => {
+  it('keeps all alternative downloads in the split button dropdown', () => {
     env = { platform: 'linux', arch: 'arm64', checked: true }
-    const { container } = render(<DownloadPanel t={t} newTab={newTab} />)
-    const details = container.querySelector('details') as HTMLDetailsElement
-    expect(details.open).toBe(false)
-    expect(details.textContent).toContain(t.otherVersions)
-    expect(within(details).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['macOS', 'Windows', 'Linux'])
-    expect(within(container.firstElementChild as HTMLElement).getAllByRole('link')[0]?.getAttribute('href')).toMatch(/linux-arm64\.AppImage$/)
+    render(<DownloadPanel t={t} newTab={newTab} />)
+    const toggle = screen.getByRole('button', { name: t.action.other })
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
+    expect(screen.queryByRole('region', { name: t.action.other })).toBeNull()
+    expect(screen.getByRole('link').getAttribute('href')).toMatch(/linux-arm64\.AppImage$/)
+
+    fireEvent.click(toggle)
+    const dropdown = screen.getByRole('region', { name: t.action.other })
+    expect(toggle.getAttribute('aria-expanded')).toBe('true')
+    expect(within(dropdown).getAllByRole('heading').map((h) => h.textContent)).toEqual(['LinuxOther downloads', 'macOS', 'Windows'])
+    expect(within(dropdown).getAllByRole('link')).toHaveLength(10)
+    expect(within(dropdown).getByRole('link', { name: /Microsoft Store/ }).getAttribute('target')).toBe('_blank')
+
+    fireEvent.keyDown(dropdown, { key: 'Escape' })
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
+    expect(document.activeElement).toBe(toggle)
+
+    fireEvent.click(toggle)
+    fireEvent.pointerDown(document.body)
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
   })
+
 })
 
 describe('HeroActions', () => {

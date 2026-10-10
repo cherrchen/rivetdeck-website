@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useId, useRef, useState } from 'react'
+
 import { ButtonLink } from '@/components/ui/button'
 import { GitHubIcon } from '@/components/ui/icons'
 import { Rich } from '@/components/ui/rich'
@@ -29,14 +31,14 @@ function fileName(option: DownloadOption): string {
 }
 
 /** One download as a full-width row; the first row of a group is drawn as the primary action. */
-function OptionRow({ option, t, primary = false, newTab }: { option: DownloadOption; t: T; primary?: boolean; newTab: string }) {
+function OptionRow({ option, t, primary = false, joined = false, newTab }: { option: DownloadOption; t: T; primary?: boolean; joined?: boolean; newTab: string }) {
   const subtle = primary ? 'opacity-70' : 'text-fg-subtle'
   const isStore = option.channel === 'store'
   return (
     <a
       href={option.href}
       {...(isStore ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className={`flex items-center justify-between gap-3 rounded-lg border px-3.5 py-2.5 text-sm transition-colors ${
+      className={`flex items-center justify-between gap-3 border px-3.5 py-2.5 text-sm transition-colors ${joined ? 'min-w-0 flex-1 rounded-l-lg' : 'rounded-lg'} ${
         primary ? 'border-inverse-bg bg-inverse-bg text-inverse-fg hover:bg-inverse-hover' : 'border-border hover:bg-bg-subtle'
       }`}
     >
@@ -76,6 +78,19 @@ function Recommended({ platform, arch, t, newTab }: { platform: PlatformId; arch
   const isStore = choice.primary.channel === 'store'
   const intelNote = platform === 'macos' ? (arch === 'x64' ? t.macHintIntel : arch === null ? t.macHint : null) : null
   const intel = DOWNLOADS.macos.find((o) => o.format === 'dmg' && o.arch === 'x64')
+  const [open, setOpen] = useState(false)
+  const menuId = useId()
+  const control = useRef<HTMLDivElement>(null)
+  const toggle = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const dismiss = (event: PointerEvent) => {
+      if (!control.current?.contains(event.target as Node)) setOpen(false)
+    }
+    document.addEventListener('pointerdown', dismiss)
+    return () => document.removeEventListener('pointerdown', dismiss)
+  }, [open])
 
   return (
     <div className="rounded-xl border border-border bg-surface p-6 sm:p-10">
@@ -88,7 +103,61 @@ function Recommended({ platform, arch, t, newTab }: { platform: PlatformId; arch
       <p className="mt-1 text-sm text-fg-subtle">{t.platforms[platform].note}</p>
 
       <div className="mt-6 max-w-xl">
-        <OptionRow option={choice.primary} t={t} primary newTab={newTab} />
+        <div
+          ref={control}
+          className="relative"
+          onKeyDown={(event) => {
+            if (event.key === 'Escape' && open) {
+              setOpen(false)
+              toggle.current?.focus()
+            }
+          }}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false)
+          }}
+        >
+          <div className="flex">
+            <OptionRow option={choice.primary} t={t} primary joined newTab={newTab} />
+            <button
+              ref={toggle}
+              type="button"
+              aria-label={t.action.other}
+              aria-expanded={open}
+              aria-controls={menuId}
+              onClick={() => setOpen(!open)}
+              className="flex w-14 shrink-0 cursor-pointer items-center justify-center rounded-r-lg border border-inverse-bg border-l-inverse-fg/20 bg-inverse-bg text-inverse-fg transition-colors hover:bg-inverse-hover"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={`transition-transform ${open ? 'rotate-180' : ''}`}>
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+          </div>
+          <div
+            id={menuId}
+            hidden={!open}
+            role="region"
+            aria-label={t.action.other}
+            className="absolute top-full left-0 z-20 mt-2 max-h-96 w-full overflow-y-auto overscroll-contain rounded-xl border border-border bg-surface p-3 shadow-card"
+          >
+            {[platform, ...PLATFORM_ORDER.filter((id) => id !== platform)].map((id) => (
+              <section key={id} className="border-border py-3 first:pt-0 last:pb-0 [&+section]:border-t">
+                <h4 className="mb-2 px-1 text-sm font-medium">
+                  {t.platforms[id].name}
+                  {id === platform ? <span className="ml-2 font-normal text-fg-subtle">{isStore ? t.store.githubHeading : t.action.other}</span> : null}
+                </h4>
+                <ul className="space-y-2" onClick={(event) => {
+                  if ((event.target as HTMLElement).closest('a')) setOpen(false)
+                }}>
+                  {(id === platform ? choice.others : DOWNLOADS[id]).map((option) => (
+                    <li key={option.file ?? option.channel}>
+                      <OptionRow option={option} t={t} newTab={newTab} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </div>
         {intelNote ? (
           <p className="mt-3 text-sm leading-6 text-fg-subtle">
             {arch === null && intel ? (
@@ -99,19 +168,6 @@ function Recommended({ platform, arch, t, newTab }: { platform: PlatformId; arch
           </p>
         ) : null}
       </div>
-
-      {choice.others.length > 0 ? (
-        <div className="mt-7 max-w-xl">
-          <h4 className="text-sm font-medium">{isStore ? t.store.githubHeading : t.action.other}</h4>
-          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-            {choice.others.map((option) => (
-              <li key={option.file ?? option.channel}>
-                <OptionRow option={option} t={t} newTab={newTab} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
     </div>
   )
 }
@@ -119,7 +175,7 @@ function Recommended({ platform, arch, t, newTab }: { platform: PlatformId; arch
 /**
  * Download area. Before the browser is inspected (server render, no scripting,
  * phones) it lists every platform. With a recognized desktop system it leads
- * with that system's best option and keeps everything else under "other versions".
+ * with that system's best option and keeps alternatives in the download dropdown.
  */
 export function DownloadPanel({ t, newTab }: { t: T; newTab: string }) {
   const env = useEnvironment()
@@ -133,25 +189,7 @@ export function DownloadPanel({ t, newTab }: { t: T; newTab: string }) {
     )
   }
 
-  return (
-    <>
-      <Recommended platform={env.platform} arch={env.arch} t={t} newTab={newTab} />
-      <details className="group mt-3 rounded-xl border border-border bg-surface">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-6 py-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
-          <span>
-            {t.otherVersions}
-            <span className="ml-2 font-normal text-fg-subtle">{t.otherVersionsLead}</span>
-          </span>
-          <span aria-hidden="true" className="text-fg-subtle transition-transform group-open:rotate-90">
-            ›
-          </span>
-        </summary>
-        <div className="border-t border-border bg-bg p-3 sm:p-5">
-          <AllPlatforms t={t} newTab={newTab} />
-        </div>
-      </details>
-    </>
-  )
+  return <Recommended platform={env.platform} arch={env.arch} t={t} newTab={newTab} />
 }
 
 /** Primary hero actions: a download button for the detected system, otherwise a jump to the download section. */
