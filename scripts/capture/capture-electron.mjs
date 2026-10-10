@@ -77,7 +77,7 @@ async function capture(mode) {
   await c.clickText('Folders', 'button')
   await settle(1200)
   await shot(`multiroot-folders-${mode}`)
-  await c.screenshotElement(`${out}/multiroot-dialog-${mode}.png`, '[role=dialog]', { pad: 0, inset: 20 })
+  await c.screenshotElement(`${out}/multiroot-dialog-${mode}.png`, '[role=dialog]', { pad: 0 })
   console.log('captured multiroot-dialog', mode)
   await c.key('Escape')
   await settle()

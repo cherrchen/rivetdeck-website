@@ -201,7 +201,8 @@ function Features({ dict }: { dict: Dictionary }) {
           body={t.roots.body}
           points={t.roots.points}
           visual={
-            <Frame caption={t.roots.caption}>
+            // Match the dialog's 40px corners at 1280 × 944 without cropping its content.
+            <Frame caption={t.roots.caption} borderRadius="3.125% / 4.2373%">
               <Screenshot shot={SHOTS.foldersDialog} alt={dict.shots.foldersDialog} sizes="(min-width: 1400px) 640px, 100vw" />
             </Frame>
           }

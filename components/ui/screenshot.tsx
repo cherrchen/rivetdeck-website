@@ -42,10 +42,10 @@ export function Screenshot({
  * Bordered frame that gives screenshots a consistent edge on both themes.
  * `fade` dissolves the lower part of the capture into the page background.
  */
-export function Frame({ children, caption, fade = false }: { children: React.ReactNode; caption?: string; fade?: boolean }) {
+export function Frame({ children, caption, fade = false, borderRadius }: { children: React.ReactNode; caption?: string; fade?: boolean; borderRadius?: string }) {
   return (
     <figure>
-      <div className={`overflow-hidden rounded-xl border border-border bg-surface ${fade ? 'fade-bottom' : ''}`}>{children}</div>
+      <div style={borderRadius ? { borderRadius } : undefined} className={`overflow-hidden rounded-xl border border-border bg-surface ${fade ? 'fade-bottom' : ''}`}>{children}</div>
       {caption ? <figcaption className="mt-3 text-[13px] text-fg-subtle">{caption}</figcaption> : null}
     </figure>
   )

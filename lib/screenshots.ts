@@ -39,7 +39,7 @@ export const SHOTS = {
   },
   foldersDialog: {
     name: 'multiroot-dialog',
-    width: 1200,
-    height: 864,
+    width: 1280,
+    height: 944,
   },
 } as const satisfies Record<string, ScreenshotSpec>
