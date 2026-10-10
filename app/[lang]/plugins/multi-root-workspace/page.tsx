@@ -131,12 +131,11 @@ function Hero({ dict }: { dict: Dictionary }) {
   const t = dict.multiRoot.hero
   const newTab = dict.common.opensInNewTab
   return (
-    <section aria-labelledby="mr-hero-title" className="relative overflow-hidden">
-      <div aria-hidden="true" className="grid-bg absolute inset-0 -z-10 opacity-60" />
-      <Container className="pt-16 pb-6 sm:pt-24">
-        <div className="rise flex flex-wrap items-center gap-2 font-mono text-xs text-fg-muted">
-          <a href={links.multiRoot.changelog} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-bg px-3 py-1 hover:text-fg">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />v{COMPAT_PLUGIN_VERSION}
+    <section aria-labelledby="mr-hero-title">
+      <Container className="pt-20 pb-6 sm:pt-28">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] text-fg-muted">
+          <a href={links.multiRoot.changelog} target="_blank" rel="noopener noreferrer" className="font-mono text-fg hover:underline hover:underline-offset-4">
+            v{COMPAT_PLUGIN_VERSION}
             <span className="sr-only">
               {t.changelog}
               {newTab}
@@ -144,13 +143,13 @@ function Hero({ dict }: { dict: Dictionary }) {
           </a>
           <span>MIT · npm · macOS · Linux</span>
         </div>
-        <h1 id="mr-hero-title" className="rise rise-1 mt-6 max-w-4xl text-[40px] leading-[1.04] font-semibold tracking-[-0.045em] text-balance sm:text-6xl lg:text-7xl">
+        <h1 id="mr-hero-title" className="mt-6 max-w-4xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
           {t.titleLine1}
           <br />
-          <span className="text-accent">{t.titleLine2}</span>
+          <span className="text-fg-subtle">{t.titleLine2}</span>
         </h1>
-        <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-8 text-fg-muted">{t.lead}</p>
-        <div className="rise rise-3 mt-8 flex flex-wrap items-center gap-3">
+        <p className="mt-6 max-w-xl text-[17px] leading-7 text-fg-muted">{t.lead}</p>
+        <div className="mt-9 flex flex-wrap items-center gap-3">
           <ButtonLink href="#install" newTab={newTab}>
             {t.install}
           </ButtonLink>
@@ -161,9 +160,7 @@ function Hero({ dict }: { dict: Dictionary }) {
         <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-fg-muted">
           {t.bullets.map((bullet) => (
             <li key={bullet} className="flex items-center gap-2">
-              <span aria-hidden="true" className="text-accent">
-                ●
-              </span>
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-fg-subtle" />
               {bullet}
             </li>
           ))}
@@ -198,7 +195,7 @@ function Features({ dict }: { dict: Dictionary }) {
   ]
 
   return (
-    <Section id="features" tone="subtle" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
+    <Section id="features" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
       <div className="space-y-20">
         <FeatureRow
           kicker={t.roots.kicker}
@@ -256,8 +253,8 @@ function FeatureRow({
   return (
     <div className="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-14">
       <div className={reverse ? 'lg:order-2' : undefined}>
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{kicker}</p>
-        <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">{title}</h3>
+        <p className="text-sm text-fg-subtle">{kicker}</p>
+        <h3 className="mt-3 text-2xl font-medium tracking-[-0.03em] text-balance sm:text-3xl">{title}</h3>
         <p className="mt-4 text-[15px] leading-7 text-fg-muted">{body}</p>
         <ul className="mt-5 space-y-2.5">
           {points.map((point) => (
@@ -278,7 +275,7 @@ function FeatureRow({
 function ToolsVisual({ t }: { t: PageDict['features']['tools'] }) {
   const kept = ['read', 'write', 'edit', 'bash', 'terminal']
   return (
-    <div className="rounded-xl border border-border-strong bg-bg p-5 sm:p-6">
+    <div className="rounded-xl border border-border bg-surface p-5 sm:p-6">
       <p className="text-xs font-medium text-fg-subtle">{t.unchanged}</p>
       <ul className="mt-3 flex flex-wrap gap-2">
         {kept.map((tool) => (
@@ -300,12 +297,12 @@ function ToolsVisual({ t }: { t: PageDict['features']['tools'] }) {
 function CrossRepo({ t }: { t: PageDict['features']['crossRepo'] }) {
   return (
     <div>
-      <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{t.kicker}</p>
-      <h3 className="mt-3 max-w-2xl text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">{t.title}</h3>
+      <p className="text-sm text-fg-subtle">{t.kicker}</p>
+      <h3 className="mt-3 max-w-2xl text-2xl font-medium tracking-[-0.03em] text-balance sm:text-3xl">{t.title}</h3>
       <p className="mt-4 max-w-2xl text-[15px] leading-7 text-fg-muted">{t.body}</p>
       <ol className="mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
         {t.steps.map((step, i) => (
-          <li key={step.title} className="bg-bg p-5">
+          <li key={step.title} className="bg-surface p-5">
             <span className="grid h-7 w-7 place-items-center rounded-full border border-accent font-mono text-xs text-accent">{i + 1}</span>
             <h4 className="mt-4 font-medium">{step.title}</h4>
             <p className="mt-1.5 text-sm leading-6 text-fg-muted">{step.body}</p>
@@ -325,10 +322,10 @@ function InstructionsFeature({ t }: { t: PageDict['features']['instructions'] })
   return (
     <div className="grid gap-8 lg:grid-cols-2 lg:gap-14">
       <div>
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{t.kicker}</p>
-        <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">{t.title}</h3>
+        <p className="text-sm text-fg-subtle">{t.kicker}</p>
+        <h3 className="mt-3 text-2xl font-medium tracking-[-0.03em] text-balance sm:text-3xl">{t.title}</h3>
         <p className="mt-4 text-[15px] leading-7 text-fg-muted">{t.body}</p>
-        <figure className="mt-6 rounded-xl border border-border-strong bg-bg p-5" aria-label={t.figure}>
+        <figure className="mt-6 rounded-xl border border-border bg-surface p-5" aria-label={t.figure}>
           <ul className="space-y-2.5">
             {roots.map((root, i) => (
               <li key={`${root.name}-${i}`} className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-border bg-bg-subtle px-3 py-2">
@@ -342,7 +339,7 @@ function InstructionsFeature({ t }: { t: PageDict['features']['instructions'] })
           <figcaption className="mt-3 text-xs text-fg-subtle">{t.exampleRoots}</figcaption>
         </figure>
       </div>
-      <div className="rounded-xl border border-border bg-bg p-6">
+      <div className="rounded-xl border border-border bg-surface p-6">
         <h4 className="font-medium">{t.limitsTitle}</h4>
         <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-6 text-fg-muted marker:text-accent">
           {t.limits.map((limit) => (
@@ -362,7 +359,7 @@ function Security({ dict }: { dict: Dictionary }) {
       <SecurityDiagram t={t.diagram} />
       <ol className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
         {t.controls.map((control, i) => (
-          <li key={control.title} className="bg-bg p-5">
+          <li key={control.title} className="bg-surface p-5">
             <span className="font-mono text-xs text-accent">{String(i + 1).padStart(2, '0')}</span>
             <h3 className="mt-2 font-medium">{control.title}</h3>
             <p className="mt-2 text-sm leading-6 text-fg-muted">{control.body}</p>
@@ -395,7 +392,7 @@ function Install({ dict }: { dict: Dictionary }) {
   const newTab = dict.common.opensInNewTab
   const code = { code: (c: string) => <Code>{c}</Code> }
   return (
-    <Section id="install" tone="subtle" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
+    <Section id="install" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
       <ol className="space-y-10">
         <Step n="1" title={t.step1.title} body={t.step1.body}>
           <InstallTabs t={t.tabs} copy={dict.common.copy} />
@@ -415,7 +412,7 @@ function Install({ dict }: { dict: Dictionary }) {
         </Step>
       </ol>
 
-      <div className="mt-12 rounded-xl border border-border bg-bg p-5 text-sm leading-6 text-fg-muted sm:p-6">
+      <div className="mt-12 rounded-xl border border-border bg-surface p-5 text-sm leading-6 text-fg-muted sm:p-6">
         <h3 className="font-medium text-fg">{t.other.title}</h3>
         <ul className="mt-3 space-y-2">
           <li>
@@ -447,7 +444,7 @@ function Step({ n, title, body, children }: { n: string; title: string; body: Re
     <li className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:gap-12">
       <div>
         <span className="grid h-8 w-8 place-items-center rounded-full border border-accent font-mono text-sm text-accent">{n}</span>
-        <h3 className="mt-4 text-xl font-semibold tracking-[-0.02em]">{title}</h3>
+        <h3 className="mt-4 text-xl font-medium tracking-[-0.02em]">{title}</h3>
         <p className="mt-2 max-w-md text-sm leading-6 text-fg-muted">{body}</p>
       </div>
       <div className="min-w-0">{children}</div>
@@ -482,9 +479,9 @@ function FinalCta({ dict }: { dict: Dictionary }) {
   const t = dict.multiRoot.finalCta
   const newTab = dict.common.opensInNewTab
   return (
-    <section aria-labelledby="mr-cta-title" className="border-t border-border bg-bg-subtle py-20 sm:py-28">
+    <section aria-labelledby="mr-cta-title" className="py-24 sm:py-32">
       <Container className="text-center">
-        <h2 id="mr-cta-title" className="mx-auto max-w-2xl text-3xl font-semibold tracking-[-0.035em] text-balance sm:text-5xl">
+        <h2 id="mr-cta-title" className="mx-auto max-w-2xl text-[32px] leading-[1.08] font-medium tracking-[-0.04em] text-balance sm:text-[48px]">
           {t.title}
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-fg-muted">{t.lead}</p>

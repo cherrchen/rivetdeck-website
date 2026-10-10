@@ -37,12 +37,15 @@ export function Screenshot({
   )
 }
 
-/** Bordered frame that gives screenshots a consistent edge on both themes. */
-export function Frame({ children, caption }: { children: React.ReactNode; caption?: string }) {
+/**
+ * Bordered frame that gives screenshots a consistent edge on both themes.
+ * `fade` dissolves the lower part of the capture into the page background.
+ */
+export function Frame({ children, caption, fade = false }: { children: React.ReactNode; caption?: string; fade?: boolean }) {
   return (
     <figure>
-      <div className="shadow-card overflow-hidden rounded-xl border border-border-strong bg-bg">{children}</div>
-      {caption ? <figcaption className="mt-3 text-sm text-fg-subtle">{caption}</figcaption> : null}
+      <div className={`overflow-hidden rounded-xl border border-border bg-surface ${fade ? 'fade-bottom' : ''}`}>{children}</div>
+      {caption ? <figcaption className="mt-3 text-[13px] text-fg-subtle">{caption}</figcaption> : null}
     </figure>
   )
 }

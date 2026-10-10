@@ -113,32 +113,42 @@ function Hero({ dict }: { dict: Dictionary }) {
   const t = dict.home
   const newTab = dict.common.opensInNewTab
   return (
-    <section aria-labelledby="hero-title" className="relative overflow-hidden">
-      <div aria-hidden="true" className="grid-bg absolute inset-0 -z-10 opacity-60" />
-      <Container className="pt-16 pb-12 sm:pt-24">
-        <a
-          href={RELEASE.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rise inline-flex items-center gap-2 rounded-full border border-border-strong bg-bg px-3 py-1 font-mono text-xs text-fg-muted hover:text-fg"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-warn" aria-hidden="true" />
+    <section aria-labelledby="hero-title">
+      <Container className="pt-5">
+        <p className="text-center text-[13px] text-fg-muted">
           {fmt(t.hero.badge, { tag: RELEASE.tag })}
-          <span className="sr-only">{newTab}</span>
-        </a>
-        <h1 id="hero-title" className="rise rise-1 mt-6 max-w-4xl text-[40px] leading-[1.04] font-semibold tracking-[-0.045em] text-balance sm:text-6xl lg:text-7xl">
-          {t.hero.title}
-        </h1>
-        <p className="rise rise-2 mt-6 max-w-2xl text-lg leading-8 text-fg-muted">{t.hero.lead}</p>
-        <HeroActions t={t.download} hero={t.hero} repo={links.rivetdeck.repo} newTab={newTab} />
-        <p className="mt-4 text-sm text-fg-subtle">{t.hero.meta}</p>
+          <a href={RELEASE.url} target="_blank" rel="noopener noreferrer" className="ml-4 font-medium text-fg hover:underline hover:underline-offset-4">
+            {t.hero.releaseNotes}
+            <span aria-hidden="true" className="ml-1">
+              ›
+            </span>
+            <span className="sr-only">{newTab}</span>
+          </a>
+        </p>
       </Container>
 
-      <Container className="pb-20">
-        <Frame>
+      <Container className="pt-20 pb-16 sm:pt-28 sm:pb-20">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_200px] lg:items-end">
+          <div>
+            <h1 id="hero-title" className="max-w-3xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
+              {t.hero.title}
+            </h1>
+            <p className="mt-6 max-w-xl text-[17px] leading-7 text-fg-muted">{t.hero.lead}</p>
+            <HeroActions t={t.download} hero={t.hero} repo={links.rivetdeck.repo} newTab={newTab} />
+          </div>
+          <ul className="space-y-1.5 border-l border-border pl-5 text-sm text-fg-muted lg:mb-1">
+            {t.hero.meta.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </Container>
+
+      <Container>
+        <Frame fade>
           <Screenshot shot={SHOTS.gitDiff} alt={dict.shots.gitDiff} priority crop="aspect-[16/9] object-cover object-top" sizes="(min-width: 1200px) 1136px, 100vw" />
         </Frame>
-        <p className="mt-3 text-sm text-fg-subtle">{t.hero.caption}</p>
+        <p className="mt-3 text-[13px] text-fg-subtle">{t.hero.caption}</p>
       </Container>
     </section>
   )
@@ -147,19 +157,27 @@ function Hero({ dict }: { dict: Dictionary }) {
 function Features({ dict }: { dict: Dictionary }) {
   const t = dict.home.features
   return (
-    <Section id="features" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
-      <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-center">
-        <Frame caption={t.caption}>
-          <Screenshot shot={SHOTS.home} alt={dict.shots.home} sizes="(min-width: 1200px) 640px, 100vw" />
-        </Frame>
-        <dl className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-1">
-          {t.items.map((f) => (
-            <div key={f.title} className="bg-bg p-5">
-              <dt className="text-[15px] font-medium">{f.title}</dt>
-              <dd className="mt-1.5 text-sm leading-6 text-fg-muted">{f.body}</dd>
-            </div>
-          ))}
-        </dl>
+    <Section id="features" title={t.title}>
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-8">
+          <Frame caption={t.caption}>
+            <Screenshot shot={SHOTS.home} alt={dict.shots.home} sizes="(min-width: 1200px) 760px, 100vw" />
+          </Frame>
+        </div>
+        <div className="lg:col-span-4">
+          <p className="text-xl leading-[1.45] tracking-[-0.015em] text-fg-subtle">
+            <Rich text={t.lead} tags={{ b: (c) => <span className="text-fg">{c}</span> }} />
+          </p>
+          <h3 className="mt-10 text-[13px] text-fg-subtle">{t.listLabel}</h3>
+          <dl className="mt-4 space-y-6">
+            {t.items.map((f) => (
+              <div key={f.title}>
+                <dt className="text-sm font-medium">{f.title}</dt>
+                <dd className="mt-1 text-sm leading-6 text-fg-muted">{f.body}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </Section>
   )
@@ -169,32 +187,24 @@ function Plugins({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const t = dict.home.plugins
   const newTab = dict.common.opensInNewTab
   return (
-    <Section id="plugins" tone="subtle" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
-      <div className="grid gap-6 lg:grid-cols-2">
+    <Section id="plugins" title={t.title} lead={t.lead}>
+      <div className="grid gap-3 lg:grid-cols-2">
         <PluginCard name="Git" status={t.preinstalled} href={links.git.repo} summary={t.gitSummary} sourceLabel={t.sourceOnGithub} newTab={newTab}>
-          <Frame>
-            <Screenshot shot={SHOTS.gitDiff} alt={dict.shots.gitDiff} crop="aspect-[5/4] object-cover object-right-top" sizes="(min-width: 1200px) 560px, 100vw" />
-          </Frame>
+          <Screenshot shot={SHOTS.gitDiff} alt={dict.shots.gitDiff} crop="aspect-[16/10] object-cover object-right-top" sizes="(min-width: 1200px) 520px, 100vw" />
         </PluginCard>
 
         <PluginCard name="Theme Studio" status={t.preinstalled} href={links.themeStudio.repo} summary={t.themeStudioSummary} sourceLabel={t.sourceOnGithub} newTab={newTab}>
-          <Frame>
-            <Screenshot shot={SHOTS.themes} alt={dict.shots.themes} crop="aspect-[5/4] object-cover object-center" sizes="(min-width: 1200px) 560px, 100vw" />
-          </Frame>
+          <Screenshot shot={SHOTS.themes} alt={dict.shots.themes} crop="aspect-[16/10] object-cover object-center" sizes="(min-width: 1200px) 520px, 100vw" />
         </PluginCard>
       </div>
 
-      <div className="mt-6 rounded-xl border border-border bg-bg p-5 sm:p-8">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h3 className="text-xl font-semibold tracking-[-0.02em]">{t.tryThemes.title}</h3>
-            <p className="mt-1.5 max-w-xl text-sm leading-6 text-fg-muted">{t.tryThemes.lead}</p>
-          </div>
-        </div>
-        <div className="mt-6">
+      <div className="mt-3 rounded-xl border border-border bg-surface p-6 sm:p-10">
+        <h3 className="text-xl font-medium tracking-[-0.02em]">{t.tryThemes.title}</h3>
+        <p className="mt-2 max-w-xl text-sm leading-6 text-fg-muted">{t.tryThemes.lead}</p>
+        <div className="mt-8">
           <ThemePreview t={dict.themePreview} />
         </div>
-        <div className="mt-8 grid gap-4 border-t border-border pt-6 sm:grid-cols-2">
+        <div className="mt-10 grid gap-6 border-t border-border pt-10 sm:grid-cols-2">
           <Frame caption={t.tryThemes.captionNordic}>
             <Image src="/screenshots/app-theme-nordic-dark.png" alt={dict.shots.nordicDark} width={2880} height={1800} sizes="(min-width: 1200px) 540px, 100vw" loading="lazy" className="h-auto w-full" />
           </Frame>
@@ -206,16 +216,16 @@ function Plugins({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 
       <Link
         href={localePath(locale, '/plugins/multi-root-workspace')}
-        className="group mt-6 grid gap-8 rounded-xl border border-border-strong bg-bg p-5 transition-colors hover:border-fg sm:p-8 lg:grid-cols-[1fr_1.1fr] lg:items-center"
+        className="group mt-3 grid gap-10 rounded-xl border border-border bg-surface p-6 transition-colors hover:border-border-strong sm:p-10 lg:grid-cols-[1fr_1.15fr] lg:items-center"
       >
         <div>
-          <span className="inline-flex rounded-full border border-border-strong px-2.5 py-0.5 font-mono text-xs text-fg-muted">{t.multiRoot.badge}</span>
-          <h3 className="mt-4 text-2xl font-semibold tracking-[-0.03em]">Multi-root Workspace</h3>
+          <p className="text-[13px] text-fg-subtle">{t.multiRoot.badge}</p>
+          <h3 className="mt-3 text-2xl font-medium tracking-[-0.03em]">Multi-root Workspace</h3>
           <p className="mt-3 max-w-md text-[15px] leading-7 text-fg-muted">{t.multiRoot.body}</p>
           <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium">
             {t.multiRoot.cta}
-            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-              →
+            <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+              ›
             </span>
           </span>
         </div>
@@ -245,17 +255,24 @@ function PluginCard({
   children: React.ReactNode
 }) {
   return (
-    <article className="flex flex-col rounded-xl border border-border bg-bg p-5 sm:p-6">
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="text-xl font-semibold tracking-[-0.02em]">{name}</h3>
-        <span className="rounded-full bg-accent-soft px-2.5 py-0.5 font-mono text-xs text-accent">{status}</span>
+    <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface">
+      <div className="border-b border-border bg-bg-subtle px-6 pt-6 sm:px-8 sm:pt-8">
+        <div className="overflow-hidden rounded-t-lg border border-b-0 border-border bg-surface">{children}</div>
       </div>
-      <p className="mt-2 text-sm leading-6 text-fg-muted">{summary}</p>
-      <div className="mt-5">{children}</div>
-      <a href={href} target="_blank" rel="noopener noreferrer" className="mt-auto pt-5 text-sm font-medium text-fg hover:underline">
-        {sourceLabel} <span aria-hidden="true">↗</span>
-        <span className="sr-only">{newTab}</span>
-      </a>
+      <div className="flex flex-1 flex-col p-6 sm:p-8">
+        <div className="flex items-baseline gap-3">
+          <h3 className="text-lg font-medium tracking-[-0.02em]">{name}</h3>
+          <span className="text-[13px] text-fg-subtle">{status}</span>
+        </div>
+        <p className="mt-2 max-w-md text-sm leading-6 text-fg-muted">{summary}</p>
+        <a href={href} target="_blank" rel="noopener noreferrer" className="mt-auto self-start pt-6 text-sm font-medium text-fg hover:underline hover:underline-offset-4">
+          {sourceLabel}
+          <span aria-hidden="true" className="ml-1">
+            ›
+          </span>
+          <span className="sr-only">{newTab}</span>
+        </a>
+      </div>
     </article>
   )
 }
@@ -266,18 +283,17 @@ function Download({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   return (
     <Section
       id="download"
-      eyebrow={t.eyebrow}
       title={t.title}
       lead={
         <Rich
           text={fmt(t.lead, { version: RELEASE.version, date: formatDate(RELEASE.publishedAt, locale) })}
-          tags={{ v: (c) => <span className="font-mono text-fg">{c}</span> }}
+          tags={{ v: (c) => <span className="font-mono text-[0.92em] text-fg">{c}</span> }}
         />
       }
     >
       <DownloadPanel t={t} newTab={newTab} />
 
-      <p className="mt-5 text-sm leading-6 text-fg-subtle">
+      <p className="mt-5 text-[13px] leading-6 text-fg-subtle">
         <Rich
           text={fmt(t.verify, { file: RELEASE.checksums })}
           tags={{
@@ -296,9 +312,9 @@ function Download({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         />
       </p>
 
-      <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+      <div className="mt-20 grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-start">
         <div>
-          <h3 className="text-xl font-semibold tracking-[-0.02em]">{t.source.title}</h3>
+          <h3 className="text-xl font-medium tracking-[-0.02em]">{t.source.title}</h3>
           <p className="mt-2 max-w-md text-sm leading-6 text-fg-muted">{t.source.body}</p>
         </div>
         <CodeBlock
@@ -321,21 +337,22 @@ function OpenSource({ dict }: { dict: Dictionary }) {
   const t = dict.home.openSource
   const newTab = dict.common.opensInNewTab
   return (
-    <Section id="open-source" tone="subtle" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
-      <div className="grid gap-4 md:grid-cols-3">
+    <Section id="open-source" title={t.title} lead={t.lead}>
+      <div className="grid gap-10 md:grid-cols-3 md:gap-8">
         {t.facts.map((fact) => (
-          <div key={fact.title} className="rounded-xl border border-border bg-bg p-5">
-            <h3 className="font-medium">{fact.title}</h3>
+          <div key={fact.title} className="border-t border-border pt-6">
+            <h3 className="text-[15px] font-medium">{fact.title}</h3>
             <p className="mt-2 text-sm leading-6 text-fg-muted">{fact.body}</p>
           </div>
         ))}
       </div>
-      <div className="mt-8 flex flex-wrap gap-3">
+      <div className="mt-12 flex flex-wrap gap-3">
         <ButtonLink href={links.rivetdeck.repo} variant="secondary" newTab={newTab}>
           <GitHubIcon /> {t.repo}
         </ButtonLink>
         <ButtonLink href={links.upstream} variant="ghost" newTab={newTab}>
           {t.upstream}
+          <span aria-hidden="true">›</span>
         </ButtonLink>
       </div>
     </Section>

@@ -68,7 +68,7 @@ function Flow({ d, blocked = false }: { d: string; blocked?: boolean }) {
 export function TopologyDiagram({ t }: { t: Dictionary['multiRoot']['topology'] }) {
   return (
     <figure>
-      <div className="rounded-xl border border-border-strong bg-bg p-3 sm:p-5">
+      <div className="rounded-xl border border-border bg-surface p-3 sm:p-5">
         <svg
           viewBox="0 0 1000 450"
           role="img"

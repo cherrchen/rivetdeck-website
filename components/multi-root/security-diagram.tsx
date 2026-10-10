@@ -30,7 +30,7 @@ function Arrow({ d }: { d: string }) {
 export function SecurityDiagram({ t }: { t: Dictionary['multiRoot']['security']['diagram'] }) {
   return (
     <figure>
-      <div className="hidden rounded-xl border border-border-strong bg-bg p-5 md:block">
+      <div className="hidden rounded-xl border border-border bg-surface p-5 md:block">
         <svg viewBox="0 0 1000 470" role="img" aria-labelledby="sec-title sec-desc" className="h-auto w-full">
           <title id="sec-title">{t.title}</title>
           <desc id="sec-desc">{t.desc}</desc>

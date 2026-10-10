@@ -8,42 +8,46 @@
  */
 :root {
   color-scheme: light;
-  --bg: #ffffff;
-  --bg-subtle: #fafafa;
-  --bg-muted: #f2f2f2;
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --bg-subtle: #f5f5f5;
+  --bg-muted: #ededed;
   --border: #ebebeb;
-  --border-strong: #d4d4d4;
+  --border-strong: #dedede;
   --fg: #171717;
-  --fg-muted: #5c5c5c;
-  --fg-subtle: #6b6b6b;
+  --fg-muted: #4d4d4d;
+  --fg-subtle: #6e6e6e;
   --inverse-bg: #171717;
+  --inverse-hover: #383838;
   --inverse-fg: #ffffff;
   --accent: #3b4ccf;
   --accent-soft: #eef0ff;
   --ok: #1a7f37;
   --warn: #9a6700;
   --bad: #c62828;
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.12);
+  --shadow-card: 0 8px 24px -16px rgb(0 0 0 / 0.12);
 }
 
 .dark {
   color-scheme: dark;
   --bg: #0a0a0a;
-  --bg-subtle: #111111;
-  --bg-muted: #1a1a1a;
-  --border: #262626;
-  --border-strong: #3a3a3a;
+  --surface: #111111;
+  --bg-subtle: #161616;
+  --bg-muted: #1f1f1f;
+  --border: #232323;
+  --border-strong: #333333;
   --fg: #ededed;
   --fg-muted: #a1a1a1;
   --fg-subtle: #8f8f8f;
   --inverse-bg: #ededed;
+  --inverse-hover: #cccccc;
   --inverse-fg: #0a0a0a;
   --accent: #98a5ff;
   --accent-soft: #151a3a;
   --ok: #4ac26b;
   --warn: #e3b341;
   --bad: #ff7b72;
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --shadow-card: 0 8px 24px -16px rgb(0 0 0 / 0.7);
 }
 
 [data-identity='multi-root'] {
@@ -60,6 +64,7 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans Mono CJK SC', monospace;
   --color-bg: var(--bg);
+  --color-surface: var(--surface);
   --color-bg-subtle: var(--bg-subtle);
   --color-bg-muted: var(--bg-muted);
   --color-border: var(--border);
@@ -68,6 +73,7 @@
   --color-fg-muted: var(--fg-muted);
   --color-fg-subtle: var(--fg-subtle);
   --color-inverse-bg: var(--inverse-bg);
+  --color-inverse-hover: var(--inverse-hover);
   --color-inverse-fg: var(--inverse-fg);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
@@ -108,18 +114,6 @@
   }
 }
 
-/* Reveal-on-scroll uses CSS only: content is visible by default and animates when supported. */
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 @keyframes flow {
   to {
     stroke-dashoffset: -24;
@@ -137,20 +131,6 @@
   }
 }
 
-.rise {
-  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-
-.rise-1 {
-  animation-delay: 0.08s;
-}
-.rise-2 {
-  animation-delay: 0.16s;
-}
-.rise-3 {
-  animation-delay: 0.24s;
-}
-
 .flow-line {
   stroke-dasharray: 4 8;
   animation: flow 1.6s linear infinite;
@@ -166,7 +146,6 @@
   html {
     scroll-behavior: auto;
   }
-  .rise,
   .flow-line,
   .pulse-ring {
     animation: none;
@@ -178,13 +157,9 @@
   }
 }
 
-/* Grid backdrop used by hero sections. */
-.grid-bg {
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+/* Lets a tall screenshot dissolve into the page instead of ending on a hard edge. */
+.fade-bottom {
+  mask-image: linear-gradient(to bottom, #000 62%, transparent);
 }
 
 .skip-link {
@@ -209,4 +184,10 @@
 /* Negative tracking is tuned for Latin display type; it crowds CJK glyphs. */
 :lang(zh) [class*='tracking-[-'] {
   letter-spacing: 0;
+}
+
+/* Headlines wrap at punctuation and spaces rather than mid-phrase; `anywhere` still prevents overflow. */
+:lang(zh) :is(h1, h2) {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }

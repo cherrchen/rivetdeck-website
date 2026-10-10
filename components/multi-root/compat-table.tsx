@@ -49,7 +49,7 @@ export function CompatTable({ t }: { t: T }) {
         </table>
       </div>
 
-      <h3 className="mt-10 text-lg font-semibold tracking-[-0.02em]">{t.platforms}</h3>
+      <h3 className="mt-10 text-lg font-medium tracking-[-0.02em]">{t.platforms}</h3>
       <ul className="mt-4 grid gap-3 sm:grid-cols-3">
         {COMPAT_PLATFORMS.map((p) => (
           <li key={p.id} className="rounded-lg border border-border p-4">

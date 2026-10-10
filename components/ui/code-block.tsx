@@ -20,8 +20,8 @@ export function CodeBlock({
   const text =
     copyText ?? lines.filter((l) => l.trim() && !l.trim().startsWith('#')).join('\n')
   return (
-    <figure className="overflow-hidden rounded-lg border border-border bg-bg-subtle">
-      <figcaption className="flex items-center justify-between gap-3 border-b border-border px-3 py-2">
+    <figure className="overflow-hidden rounded-xl border border-border bg-surface">
+      <figcaption className="flex items-center justify-between gap-3 border-b border-border px-4 py-2">
         <span className="font-mono text-xs text-fg-subtle">{title ?? 'shell'}</span>
         <CopyButton text={text} labels={copy} />
       </figcaption>

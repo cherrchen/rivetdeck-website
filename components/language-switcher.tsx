@@ -24,7 +24,7 @@ export function LanguageSwitcher({ locale, path, labelTemplate }: { locale: Loca
             onClick={() => {
               document.cookie = `${LOCALE_COOKIE}=${target}; path=/; max-age=31536000; samesite=lax`
             }}
-            className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-border px-2 text-xs font-medium text-fg-muted transition-colors hover:bg-bg-muted hover:text-fg"
+            className="inline-flex h-8 min-w-8 items-center justify-center rounded-md px-2 text-[13px] text-fg-muted transition-colors hover:bg-bg-muted hover:text-fg"
           >
             {localeConfig[target].short}
           </a>

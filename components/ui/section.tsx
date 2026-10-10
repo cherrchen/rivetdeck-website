@@ -7,28 +7,25 @@ export function Section({
   title,
   lead,
   children,
-  tone = 'plain',
 }: {
   id: string
-  eyebrow: string
+  eyebrow?: string
   title: string
   lead?: ReactNode
   children: ReactNode
-  tone?: 'plain' | 'subtle'
 }) {
   return (
-    <section
-      id={id}
-      aria-labelledby={`${id}-title`}
-      className={`border-t border-border py-20 sm:py-28 ${tone === 'subtle' ? 'bg-bg-subtle' : ''}`}
-    >
+    <section id={id} aria-labelledby={`${id}-title`} className="py-24 sm:py-32">
       <Container>
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{eyebrow}</p>
-        <h2 id={`${id}-title`} className="mt-3 max-w-3xl text-3xl font-semibold tracking-[-0.03em] text-balance sm:text-4xl">
+        {eyebrow ? <p className="mb-4 text-sm text-fg-subtle">{eyebrow}</p> : null}
+        <h2
+          id={`${id}-title`}
+          className="max-w-3xl text-[32px] leading-[1.1] font-medium tracking-[-0.04em] text-balance sm:text-[44px] sm:leading-[1.05]"
+        >
           {title}
         </h2>
-        {lead ? <p className="mt-4 max-w-2xl text-base leading-7 text-fg-muted sm:text-lg">{lead}</p> : null}
-        <div className="mt-12">{children}</div>
+        {lead ? <p className="mt-5 max-w-2xl text-base leading-7 text-fg-muted sm:text-[17px]">{lead}</p> : null}
+        <div className="mt-14">{children}</div>
       </Container>
     </section>
   )

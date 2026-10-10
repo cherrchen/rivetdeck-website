@@ -24,35 +24,37 @@ export function SiteHeader({
   common: Dictionary['common']
 }) {
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-bg/85 backdrop-blur supports-[backdrop-filter]:bg-bg/70">
-      <Container className="relative flex h-14 items-center justify-between gap-3">
-        {brand}
-        <nav aria-label={common.primaryNav} className="hidden items-center gap-1 lg:flex">
-          {items.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="rounded-md px-3 py-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
-              {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            >
-              {item.label}
-              {item.external ? <span className="sr-only">{common.opensInNewTab}</span> : null}
-            </a>
-          ))}
-        </nav>
+    <header className="sticky top-0 z-50 border-b border-border/70 bg-bg/80 backdrop-blur-md">
+      <Container className="relative flex h-16 items-center justify-between gap-3">
+        <div className="flex items-center gap-8">
+          {brand}
+          <nav aria-label={common.primaryNav} className="hidden items-center gap-0.5 lg:flex">
+            {items.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="rounded-full px-3 py-1.5 text-sm text-fg-muted transition-colors hover:bg-bg-muted/60 hover:text-fg"
+                {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                {item.label}
+                {item.external ? <span className="sr-only">{common.opensInNewTab}</span> : null}
+              </a>
+            ))}
+          </nav>
+        </div>
         <div className="flex shrink-0 items-center gap-2">
+          <LanguageSwitcher locale={locale} path={path} labelTemplate={common.switchLanguage} />
+          <ThemeToggle label={common.themeToggle} />
           {cta ? (
             <a
               href={cta.href}
-              className="hidden h-9 items-center rounded-md bg-inverse-bg px-3.5 text-sm font-medium text-inverse-fg hover:opacity-90 sm:inline-flex"
+              className="hidden h-8 items-center rounded-md bg-inverse-bg px-3 text-[13px] font-medium text-inverse-fg transition-colors hover:bg-inverse-hover sm:inline-flex"
             >
               {cta.label}
             </a>
           ) : null}
-          <LanguageSwitcher locale={locale} path={path} labelTemplate={common.switchLanguage} />
-          <ThemeToggle label={common.themeToggle} />
           <MobileMenu
-            items={cta ? [...items, { label: cta.label, href: cta.href }] : items}
+            items={cta && !items.some((item) => item.href === cta.href) ? [...items, { label: cta.label, href: cta.href }] : items}
             labels={{ open: common.menuOpen, close: common.menuClose, nav: common.mobileNav }}
           />
         </div>

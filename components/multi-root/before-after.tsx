@@ -5,7 +5,7 @@ function Chip({ children, tone = 'plain' }: { children: React.ReactNode; tone?: 
   return (
     <span
       className={`inline-flex items-center whitespace-nowrap rounded-md border px-2.5 py-1 font-mono text-xs ${
-        tone === 'accent' ? 'border-accent bg-accent-soft text-fg' : 'border-border-strong bg-bg text-fg-muted'
+        tone === 'accent' ? 'border-accent bg-accent-soft text-fg' : 'border-border-strong bg-surface text-fg-muted'
       }`}
     >
       {children}
@@ -17,9 +17,9 @@ function Chip({ children, tone = 'plain' }: { children: React.ReactNode; tone?: 
 export function BeforeAfter({ t }: { t: Dictionary['multiRoot']['problem'] }) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <article className="rounded-xl border border-border bg-bg p-6">
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-fg-subtle">{t.without.label}</p>
-        <h3 className="mt-2 text-xl font-semibold tracking-[-0.02em]">{t.without.title}</h3>
+      <article className="rounded-xl border border-border bg-surface p-6">
+        <p className="text-sm text-fg-subtle">{t.without.label}</p>
+        <h3 className="mt-2 text-xl font-medium tracking-[-0.02em]">{t.without.title}</h3>
         <div className="mt-6 space-y-3" aria-hidden="true">
           {['web', 'api', 'design-system'].map((repo, i) => (
             <div key={repo} className="flex items-center gap-3">
@@ -35,9 +35,9 @@ export function BeforeAfter({ t }: { t: Dictionary['multiRoot']['problem'] }) {
           ))}
         </ul>
       </article>
-      <article className="rounded-xl border border-accent bg-bg p-6">
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{t.with.label}</p>
-        <h3 className="mt-2 text-xl font-semibold tracking-[-0.02em]">{t.with.title}</h3>
+      <article className="rounded-xl border border-accent bg-surface p-6">
+        <p className="text-sm text-fg-subtle">{t.with.label}</p>
+        <h3 className="mt-2 text-xl font-medium tracking-[-0.02em]">{t.with.title}</h3>
         <div className="mt-6 flex flex-wrap items-center gap-3" aria-hidden="true">
           <Chip tone="accent">{t.with.session}</Chip>
           <span className="h-px w-6 bg-accent" />

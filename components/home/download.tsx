@@ -36,8 +36,8 @@ function OptionRow({ option, t, primary = false, newTab }: { option: DownloadOpt
     <a
       href={option.href}
       {...(isStore ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className={`flex items-center justify-between gap-3 rounded-md border px-3 py-2.5 text-sm transition-colors ${
-        primary ? 'border-fg bg-inverse-bg text-inverse-fg hover:opacity-90' : 'border-border hover:bg-bg-muted'
+      className={`flex items-center justify-between gap-3 rounded-lg border px-3.5 py-2.5 text-sm transition-colors ${
+        primary ? 'border-inverse-bg bg-inverse-bg text-inverse-fg hover:bg-inverse-hover' : 'border-border hover:bg-bg-subtle'
       }`}
     >
       <span>
@@ -53,10 +53,10 @@ function OptionRow({ option, t, primary = false, newTab }: { option: DownloadOpt
 /** All platforms side by side, each with its own options. Used when the system is unknown and inside "other versions". */
 function AllPlatforms({ t, newTab }: { t: T; newTab: string }) {
   return (
-    <div className="grid gap-4 md:grid-cols-3">
+    <div className="grid gap-3 md:grid-cols-3">
       {PLATFORM_ORDER.map((id) => (
-        <article key={id} className="flex flex-col rounded-xl border border-border bg-bg p-5">
-          <h3 className="text-lg font-semibold tracking-[-0.02em]">{t.platforms[id].name}</h3>
+        <article key={id} className="flex flex-col rounded-xl border border-border bg-surface p-6">
+          <h3 className="text-lg font-medium tracking-[-0.02em]">{t.platforms[id].name}</h3>
           <p className="mt-1 text-sm text-fg-subtle">{t.platforms[id].note}</p>
           <ul className="mt-5 flex flex-1 flex-col gap-2">
             {DOWNLOADS[id].map((option, i) => (
@@ -78,13 +78,13 @@ function Recommended({ platform, arch, t, newTab }: { platform: PlatformId; arch
   const intel = DOWNLOADS.macos.find((o) => o.format === 'dmg' && o.arch === 'x64')
 
   return (
-    <div className="rounded-xl border border-border-strong bg-bg p-5 sm:p-8">
-      <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-accent">
+    <div className="rounded-xl border border-border bg-surface p-6 sm:p-10">
+      <div className="flex flex-wrap items-center gap-2 text-[13px] text-fg-subtle">
         <span>{t.recommended}</span>
         <span aria-hidden="true">·</span>
-        <span className="text-fg-muted">{fmt(t.detected, { platform: t.platforms[platform].name })}</span>
+        <span>{fmt(t.detected, { platform: t.platforms[platform].name })}</span>
       </div>
-      <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em]">Rivetdeck · {t.platforms[platform].name}</h3>
+      <h3 className="mt-3 text-2xl font-medium tracking-[-0.03em]">Rivetdeck · {t.platforms[platform].name}</h3>
       <p className="mt-1 text-sm text-fg-subtle">{t.platforms[platform].note}</p>
 
       <div className="mt-6 max-w-xl">
@@ -136,8 +136,8 @@ export function DownloadPanel({ t, newTab }: { t: T; newTab: string }) {
   return (
     <>
       <Recommended platform={env.platform} arch={env.arch} t={t} newTab={newTab} />
-      <details className="group mt-6 rounded-xl border border-border bg-bg">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
+      <details className="group mt-3 rounded-xl border border-border bg-surface">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-6 py-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
           <span>
             {t.otherVersions}
             <span className="ml-2 font-normal text-fg-subtle">{t.otherVersionsLead}</span>
@@ -146,7 +146,7 @@ export function DownloadPanel({ t, newTab }: { t: T; newTab: string }) {
             ›
           </span>
         </summary>
-        <div className="border-t border-border p-5">
+        <div className="border-t border-border bg-bg p-3 sm:p-5">
           <AllPlatforms t={t} newTab={newTab} />
         </div>
       </details>
@@ -161,7 +161,7 @@ export function HeroActions({ t, hero, repo, newTab }: { t: T; hero: Dictionary[
 
   return (
     <>
-      <div className="rise rise-3 mt-8 flex flex-wrap items-center gap-3">
+      <div className="mt-9 flex flex-wrap items-center gap-3">
         {choice && env.platform ? (
           <ButtonLink href={choice.primary.href} external={choice.primary.channel === 'store'} newTab={newTab}>
             {fmt(hero.downloadFor, { platform: t.platforms[env.platform].name })}
@@ -176,9 +176,9 @@ export function HeroActions({ t, hero, repo, newTab }: { t: T; hero: Dictionary[
         </ButtonLink>
       </div>
       {choice ? (
-        <p className="mt-4 text-sm text-fg-subtle">
+        <p className="mt-4 text-[13px] text-fg-subtle">
           {choice.primary.channel === 'store' ? hero.via.store : hero.via.github} ·{' '}
-          <a href="#download" className="text-fg underline underline-offset-2">
+          <a href="#download" className="text-fg-muted underline underline-offset-4 hover:text-fg">
             {hero.otherVersions}
           </a>
         </p>

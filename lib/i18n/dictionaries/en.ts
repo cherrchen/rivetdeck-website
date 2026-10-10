@@ -89,11 +89,12 @@ const en = {
       note: 'Rivetdeck is an unofficial, third-party desktop distribution built on DeepSeek Harness. It is not made, endorsed or supported by DeepSeek. “DeepSeek Harness” is a trademark of DeepSeek and is used here only to describe compatibility.',
     },
     hero: {
-      badge: '{tag} · pre-release',
-      title: 'DeepSeek Harness, as a desktop app.',
+      badge: '{tag} is a pre-release',
+      releaseNotes: 'Release notes',
+      title: 'DeepSeek Harness, as a desktop app',
       lead: 'Rivetdeck wraps the DeepSeek Harness runtime in a native window for macOS, Windows and Linux. Pick a workspace, start a session, review changes with Git, and theme it, all without leaving the app.',
       github: 'View on GitHub',
-      meta: 'Developer preview · MIT licensed · Unofficial',
+      meta: ['Developer preview', 'MIT licensed', 'Unofficial distribution'],
       caption: 'Captured from the Rivetdeck desktop build: Workspaces sidebar, session composer and the preinstalled Git panel.',
       downloadGeneric: 'Download',
       downloadFor: 'Download for {platform}',
@@ -101,9 +102,9 @@ const en = {
       otherVersions: 'Other platforms and versions',
     },
     features: {
-      eyebrow: 'Features',
-      title: 'The harness you know, with the desktop parts handled.',
-      lead: 'Rivetdeck does not replace the agent runtime. It packages it, supervises it, and adds the native surface around it.',
+      title: 'The same Harness, in its own window',
+      lead: '<b>Rivetdeck does not replace the agent runtime.</b> It packages it, supervises it, and adds the native surface around it.',
+      listLabel: 'What the desktop build adds',
       caption: 'Start screen: workspace picker, session composer, sandbox mode and Git branch.',
       items: [
         {
@@ -125,8 +126,7 @@ const en = {
       ],
     },
     plugins: {
-      eyebrow: 'Plugin ecosystem',
-      title: 'Plugins are first-class, not bolted on.',
+      title: 'Git and Theme Studio, preinstalled',
       lead: 'Two portable DSH plugins ship inside Rivetdeck. Others install separately and run on the same plugin system.',
       preinstalled: 'Preinstalled',
       sourceOnGithub: 'Source on GitHub',
@@ -145,8 +145,7 @@ const en = {
       },
     },
     download: {
-      eyebrow: 'Download',
-      title: 'Get Rivetdeck for your system.',
+      title: 'Download Rivetdeck',
       lead: 'Version <v>{version}</v>, published {date}. This is a pre-release. On Windows the Microsoft Store comes first; every other link is a file attached to the GitHub release.',
       recommended: 'Recommended for your system',
       detected: 'Detected: {platform}',
@@ -178,8 +177,7 @@ const en = {
       },
     },
     openSource: {
-      eyebrow: 'Open source',
-      title: 'Independent, MIT-licensed, built on DeepSeek Harness.',
+      title: 'Open source, maintained independently',
       lead: 'Rivetdeck is a community desktop distribution. It follows upstream development and maintains only the desktop packaging.',
       facts: [
         {
@@ -193,7 +191,7 @@ const en = {
         },
       ],
       repo: 'Rivetdeck on GitHub',
-      upstream: 'Upstream DeepSeek Harness ↗',
+      upstream: 'Upstream DeepSeek Harness',
     },
   },
 

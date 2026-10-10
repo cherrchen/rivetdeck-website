@@ -80,11 +80,12 @@ const zh: Dictionary = {
       note: 'Rivetdeck 是基于 DeepSeek Harness 的非官方第三方桌面发行版，并非 DeepSeek 制作、认可或提供支持。“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
     },
     hero: {
-      badge: '{tag} · 预发布版',
-      title: 'DeepSeek Harness，做成桌面应用。',
+      badge: '{tag} 为预发布版',
+      releaseNotes: '发布说明',
+      title: 'DeepSeek Harness，做成桌面应用',
       lead: 'Rivetdeck 把 DeepSeek Harness 运行时装进适用于 macOS、Windows 和 Linux 的原生窗口。选择工作区、开始会话、用 Git 审阅改动、给界面换主题，全部不必离开应用。',
       github: '在 GitHub 上查看',
-      meta: '开发者预览 · MIT 许可 · 非官方',
+      meta: ['开发者预览', 'MIT 许可', '非官方发行版'],
       caption: '截取自 Rivetdeck 桌面版：工作区侧边栏、会话输入框和预装的 Git 面板。',
       downloadGeneric: '下载',
       downloadFor: '下载 {platform} 版',
@@ -92,9 +93,9 @@ const zh: Dictionary = {
       otherVersions: '其他平台和版本',
     },
     features: {
-      eyebrow: '功能',
-      title: '你熟悉的 Harness，桌面端的事交给我们。',
-      lead: 'Rivetdeck 不替换智能体运行时。它负责打包、守护运行时，并在外面补上原生桌面体验。',
+      title: '还是那个 Harness，有了自己的窗口',
+      lead: '<b>Rivetdeck 不替换智能体运行时。</b>它负责打包、守护运行时，并在外面补上原生桌面体验。',
+      listLabel: '桌面版增加了什么',
       caption: '起始页：工作区选择、会话输入框、沙箱模式和 Git 分支。',
       items: [
         {
@@ -116,8 +117,7 @@ const zh: Dictionary = {
       ],
     },
     plugins: {
-      eyebrow: '插件生态',
-      title: '插件是一等公民，不是外挂。',
+      title: '预装 Git 与 Theme Studio',
       lead: 'Rivetdeck 内置两个可移植的 DSH 插件，其他插件单独安装，运行在同一套插件系统上。',
       preinstalled: '已预装',
       sourceOnGithub: '在 GitHub 查看源码',
@@ -136,8 +136,7 @@ const zh: Dictionary = {
       },
     },
     download: {
-      eyebrow: '下载',
-      title: '获取适合你系统的 Rivetdeck。',
+      title: '下载 Rivetdeck',
       lead: '版本 <v>{version}</v>，发布于 {date}。这是预发布版本。Windows 优先提供 Microsoft Store；其余链接都是 GitHub Release 上的附件。',
       recommended: '为你的系统推荐',
       detected: '已识别：{platform}',
@@ -169,8 +168,7 @@ const zh: Dictionary = {
       },
     },
     openSource: {
-      eyebrow: '开源',
-      title: '独立、MIT 许可、基于 DeepSeek Harness。',
+      title: '开源，独立维护',
       lead: 'Rivetdeck 是社区维护的桌面发行版。它跟随上游开发，只维护桌面端的打包部分。',
       facts: [
         {
@@ -184,7 +182,7 @@ const zh: Dictionary = {
         },
       ],
       repo: 'GitHub 上的 Rivetdeck',
-      upstream: '上游 DeepSeek Harness ↗',
+      upstream: '上游 DeepSeek Harness',
     },
   },
 

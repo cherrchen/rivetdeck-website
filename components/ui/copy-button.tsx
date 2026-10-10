@@ -29,7 +29,7 @@ export function CopyButton({ text, labels }: { text: string; labels: CopyLabels 
         type="button"
         onClick={copy}
         aria-label={labels.label}
-        className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-bg px-2.5 text-xs font-medium text-fg-muted transition-colors hover:bg-bg-muted hover:text-fg"
+        className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 text-xs font-medium text-fg-muted transition-colors hover:bg-bg-muted hover:text-fg"
       >
         {state === 'copied' ? (
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

@@ -8,16 +8,16 @@ export interface FooterColumn {
 
 export function SiteFooter({ columns, note, newTab }: { columns: readonly FooterColumn[]; note: string; newTab: string }) {
   return (
-    <footer className="border-t border-border bg-bg-subtle">
-      <Container className="py-14">
+    <footer className="border-t border-border">
+      <Container className="py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {columns.map((col) => (
             <div key={col.title}>
-              <h2 className="text-sm font-medium">{col.title}</h2>
-              <ul className="mt-4 space-y-2.5">
+              <h2 className="text-[13px] font-medium">{col.title}</h2>
+              <ul className="mt-4 space-y-3">
                 {col.links.map((link) => {
                   const external = /^https?:/.test(link.href)
-                  const className = 'text-sm text-fg-muted transition-colors hover:text-fg'
+                  const className = 'text-[13px] text-fg-subtle transition-colors hover:text-fg'
                   if (link.href.startsWith('/')) {
                     return (
                       <li key={link.href}>
@@ -44,7 +44,7 @@ export function SiteFooter({ columns, note, newTab }: { columns: readonly Footer
             </div>
           ))}
         </div>
-        <p className="mt-12 max-w-3xl border-t border-border pt-6 text-xs leading-6 text-fg-subtle">{note}</p>
+        <p className="mt-16 max-w-3xl text-xs leading-6 text-fg-subtle">{note}</p>
       </Container>
     </footer>
   )
