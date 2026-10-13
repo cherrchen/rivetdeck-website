@@ -6,12 +6,13 @@ export interface CompatCopy {
   region: string
   caption: string
   columns: { release: string; status: string; since: string; notes: string }
-  platforms: string
+  /** Heading for the platform cards; omit (with `platforms`) for platform-agnostic plugins. */
+  platforms?: string
   otherRelease: string
   sinceDev: string
   status: Record<CompatStatus, string>
   notes: Record<string, string>
-  platformNotes: Record<string, string>
+  platformNotes?: Record<string, string>
 }
 
 const icon: Record<CompatStatus, string> = { verified: '✓', partial: '◐', unreleased: '◇', unsupported: '✕' }
@@ -32,7 +33,7 @@ export function StatusBadge({ status, label }: { status: CompatStatus; label: st
 }
 
 /** Support matrix rendered from a `lib/*-compat.ts` module; status is declared, never computed from semver. */
-export function CompatTable({ t, rows, platforms, version }: { t: CompatCopy; rows: readonly CompatRow[]; platforms: readonly CompatPlatform[]; version: string }) {
+export function CompatTable({ t, rows, platforms = [], version }: { t: CompatCopy; rows: readonly CompatRow[]; platforms?: readonly CompatPlatform[]; version: string }) {
   return (
     <div>
       <div className="overflow-x-auto rounded-xl border border-border" tabIndex={0} role="region" aria-label={t.region}>
@@ -59,18 +60,22 @@ export function CompatTable({ t, rows, platforms, version }: { t: CompatCopy; ro
         </table>
       </div>
 
-      <h3 className="mt-10 text-lg font-medium tracking-[-0.02em]">{t.platforms}</h3>
-      <ul className="mt-4 grid gap-3 sm:grid-cols-3">
-        {platforms.map((p) => (
-          <li key={p.id} className="rounded-lg border border-border p-4">
-            <div className="flex items-center justify-between gap-2">
-              <span className="font-medium">{p.name}</span>
-              <StatusBadge status={p.status} label={t.status[p.status]} />
-            </div>
-            <p className="mt-2 text-sm leading-6 text-fg-muted">{t.platformNotes[p.id]}</p>
-          </li>
-        ))}
-      </ul>
+      {platforms.length > 0 && (
+        <>
+          <h3 className="mt-10 text-lg font-medium tracking-[-0.02em]">{t.platforms}</h3>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+            {platforms.map((p) => (
+              <li key={p.id} className="rounded-lg border border-border p-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-medium">{p.name}</span>
+                  <StatusBadge status={p.status} label={t.status[p.status]} />
+                </div>
+                <p className="mt-2 text-sm leading-6 text-fg-muted">{t.platformNotes?.[p.id]}</p>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   )
 }

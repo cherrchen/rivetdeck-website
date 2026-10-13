@@ -18,7 +18,7 @@ import { isLocale, localePath } from '@/lib/i18n/config'
 import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
 import { fmt } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
-import { THEME_STUDIO_COMPAT_PLATFORMS, THEME_STUDIO_COMPAT_ROWS, THEME_STUDIO_PLUGIN_VERSION } from '@/lib/theme-studio-compat'
+import { THEME_STUDIO_COMPAT_ROWS, THEME_STUDIO_PLUGIN_VERSION } from '@/lib/theme-studio-compat'
 import { SHOTS } from '@/lib/screenshots'
 import { links, THEME_STUDIO_PACKAGE, withBasePath } from '@/lib/site'
 import { THEMES } from '@/lib/themes'
@@ -146,7 +146,7 @@ function Hero({ dict }: { dict: Dictionary }) {
               {newTab}
             </span>
           </a>
-          <span>MIT · npm · platform:web</span>
+          <span>MIT · npm</span>
         </div>
         <h1 id="ts-hero-title" className="mt-6 max-w-4xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
           {t.titleLine1}
@@ -329,7 +329,7 @@ function Compatibility({ dict }: { dict: Dictionary }) {
   const newTab = dict.common.opensInNewTab
   return (
     <Section id="compatibility" eyebrow={t.eyebrow} title={t.title} lead={fmt(t.lead, { version: THEME_STUDIO_PLUGIN_VERSION })}>
-      <CompatTable t={t} rows={THEME_STUDIO_COMPAT_ROWS} platforms={THEME_STUDIO_COMPAT_PLATFORMS} version={THEME_STUDIO_PLUGIN_VERSION} />
+      <CompatTable t={t} rows={THEME_STUDIO_COMPAT_ROWS} version={THEME_STUDIO_PLUGIN_VERSION} />
       <p className="mt-6 text-sm leading-6 text-pretty break-keep text-fg-subtle">
         <Rich
           text={t.footnote}

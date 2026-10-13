@@ -748,7 +748,6 @@ const zh: Dictionary = {
       region: 'DSH 版本支持矩阵',
       caption: '插件版本 {version} 支持的 DSH 版本',
       columns: { release: 'DSH 版本', status: '状态', since: '加入于', notes: '说明' },
-      platforms: '平台',
       otherRelease: '其他任何版本',
       sinceDev: '开发分支',
       status: { verified: '已验证', partial: '部分支持', unreleased: '仅限开发', unsupported: '不支持' },
@@ -766,11 +765,6 @@ const zh: Dictionary = {
         '0.2.1-alpha.1': '字体与字号保持由宿主管理，与覆盖并存。',
         '0.2.1-alpha.2': '插件的开发 pin。',
         other: '未验证但不会被拒绝：插件在运行时没有门禁；安装时的 peer 范围仍可能拒绝。',
-      },
-      platformNotes: {
-        macos: 'platform:web——只做 token 覆盖；能跑受支持宿主的地方就能跑',
-        linux: 'platform:web——只做 token 覆盖；能跑受支持宿主的地方就能跑',
-        windows: 'platform:web——只做 token 覆盖；能跑受支持宿主的地方就能跑',
       },
     },
     finalCta: {

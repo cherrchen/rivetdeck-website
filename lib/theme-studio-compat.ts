@@ -13,7 +13,7 @@
  * Row notes are localized: they live in the dictionaries under
  * `themeStudio.compat.notes`, keyed by `id`.
  */
-import type { CompatPlatform, CompatRow, CompatStatus } from './compat'
+import type { CompatRow, CompatStatus } from './compat'
 
 export const THEME_STUDIO_PLUGIN_VERSION = '0.1.4'
 
@@ -34,9 +34,3 @@ export const THEME_STUDIO_COMPAT_ROWS: readonly CompatRow[] = [
   row('0.2.1-alpha.2', 'verified', 'v0.1.4'),
   { id: 'other', release: null, status: 'unsupported', since: '—' },
 ]
-
-export const THEME_STUDIO_COMPAT_PLATFORMS = [
-  { id: 'macos', name: 'macOS', status: 'verified' },
-  { id: 'linux', name: 'Linux', status: 'verified' },
-  { id: 'windows', name: 'Windows', status: 'verified' },
-] as const satisfies readonly CompatPlatform[]

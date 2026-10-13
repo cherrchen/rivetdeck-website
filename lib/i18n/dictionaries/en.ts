@@ -794,7 +794,6 @@ const en = {
       region: 'DSH release support matrix',
       caption: 'DSH releases supported by plugin version {version}',
       columns: { release: 'DSH release', status: 'Status', since: 'Added in', notes: 'Notes' },
-      platforms: 'Platforms',
       otherRelease: 'Any other release',
       sinceDev: 'development branch',
       status: { verified: 'Verified', partial: 'Partial', unreleased: 'Development only', unsupported: 'Unsupported' },
@@ -812,11 +811,6 @@ const en = {
         '0.2.1-alpha.1': 'Font families and sizes stay host-owned alongside overlays.',
         '0.2.1-alpha.2': 'Development pin of the plugin.',
         other: 'Unverified rather than refused: the plugin does not gate at runtime; install-time peer ranges may still reject it.',
-      },
-      platformNotes: {
-        macos: 'platform:web — token overlays only; runs wherever a supported host does',
-        linux: 'platform:web — token overlays only; runs wherever a supported host does',
-        windows: 'platform:web — token overlays only; runs wherever a supported host does',
       },
     },
     finalCta: {
