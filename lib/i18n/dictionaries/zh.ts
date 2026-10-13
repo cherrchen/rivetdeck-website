@@ -201,6 +201,7 @@ const zh: Dictionary = {
       plugin: { title: '插件', features: '功能', security: '安全', install: '安装', compatibility: '兼容性' },
       docs: { title: '文档', readme: 'README', architecture: '架构', changelog: '更新日志' },
       source: { title: '源码', repo: 'GitHub 仓库', npm: 'npm 包', issues: '反馈问题' },
+      plugins: { title: 'DSH 插件', git: 'Git', themeStudio: 'Theme Studio', multiRoot: 'Multi-root Workspace' },
       ecosystem: { title: '生态', harness: 'DeepSeek Harness', rivetdeck: 'Rivetdeck 桌面应用' },
       note: 'Multi-root Workspace 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
     },
@@ -466,7 +467,8 @@ const zh: Dictionary = {
       plugin: { title: '插件', features: '功能', design: '设计', install: '安装', compatibility: '兼容性' },
       docs: { title: '文档', readme: 'README', architecture: '架构', changelog: '更新日志' },
       source: { title: '源码', repo: 'GitHub 仓库', npm: 'npm 包', issues: '反馈问题' },
-      ecosystem: { title: '生态', rivetdeck: 'Rivetdeck 桌面应用', multiRoot: 'Multi-root Workspace', themeStudio: 'Theme Studio', harness: 'DeepSeek Harness' },
+      plugins: { title: 'DSH 插件', git: 'Git', themeStudio: 'Theme Studio', multiRoot: 'Multi-root Workspace' },
+      ecosystem: { title: '生态', rivetdeck: 'Rivetdeck 桌面应用', harness: 'DeepSeek Harness' },
       note: 'Git 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
     },
     hero: {
@@ -648,7 +650,8 @@ const zh: Dictionary = {
       plugin: { title: '插件', features: '功能', palettes: '配色', install: '安装', compatibility: '兼容性' },
       docs: { title: '文档', readme: 'README', tokens: 'Token 参考', changelog: '更新日志' },
       source: { title: '源码', repo: 'GitHub 仓库', npm: 'npm 包', issues: '反馈问题' },
-      ecosystem: { title: '生态', rivetdeck: 'Rivetdeck 桌面应用', git: 'Git', multiRoot: 'Multi-root Workspace', harness: 'DeepSeek Harness' },
+      plugins: { title: 'DSH 插件', git: 'Git', themeStudio: 'Theme Studio', multiRoot: 'Multi-root Workspace' },
+      ecosystem: { title: '生态', rivetdeck: 'Rivetdeck 桌面应用', harness: 'DeepSeek Harness' },
       note: 'Theme Studio 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
     },
     hero: {

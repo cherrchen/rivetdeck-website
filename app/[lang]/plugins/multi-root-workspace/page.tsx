@@ -92,6 +92,14 @@ export default async function MultiRootPage({ params }: PageProps<'/[lang]/plugi
       ],
     },
     {
+      title: t.footer.plugins.title,
+      links: [
+        { label: t.footer.plugins.git, href: localePath(lang, '/plugins/git') },
+        { label: t.footer.plugins.themeStudio, href: localePath(lang, '/plugins/theme-studio') },
+        { label: t.footer.plugins.multiRoot, href: localePath(lang, '/plugins/multi-root-workspace') },
+      ],
+    },
+    {
       title: t.footer.ecosystem.title,
       links: [
         { label: t.footer.ecosystem.rivetdeck, href: localePath(lang, '/') },

@@ -88,11 +88,17 @@ export default async function GitPage({ params }: PageProps<'/[lang]/plugins/git
       ],
     },
     {
+      title: t.footer.plugins.title,
+      links: [
+        { label: t.footer.plugins.git, href: localePath(lang, '/plugins/git') },
+        { label: t.footer.plugins.themeStudio, href: localePath(lang, '/plugins/theme-studio') },
+        { label: t.footer.plugins.multiRoot, href: localePath(lang, '/plugins/multi-root-workspace') },
+      ],
+    },
+    {
       title: t.footer.ecosystem.title,
       links: [
         { label: t.footer.ecosystem.rivetdeck, href: localePath(lang, '/') },
-        { label: t.footer.ecosystem.multiRoot, href: localePath(lang, '/plugins/multi-root-workspace') },
-        { label: t.footer.ecosystem.themeStudio, href: localePath(lang, '/plugins/theme-studio') },
         { label: t.footer.ecosystem.harness, href: links.upstream },
       ],
     },
