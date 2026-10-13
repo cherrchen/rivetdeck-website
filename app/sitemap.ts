@@ -6,6 +6,8 @@ export const dynamic = 'force-static'
 
 const PAGES = [
   { path: '/', priority: 1 },
+  { path: '/plugins/git', priority: 0.9 },
+  { path: '/plugins/theme-studio', priority: 0.9 },
   { path: '/plugins/multi-root-workspace', priority: 0.9 },
 ] as const
 

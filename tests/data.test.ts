@@ -65,7 +65,7 @@ describe('recommend', () => {
 })
 
 describe('multi-root compatibility matrix', () => {
-  it('lists the nine released allowlist entries as verified, in order', () => {
+  it('lists all eleven allowlist entries as verified, in order', () => {
     const verified = COMPAT_ROWS.filter((r) => r.status === 'verified').map((r) => r.release)
     expect(verified).toEqual([
       '0.1.5-rc.2',
@@ -77,13 +77,13 @@ describe('multi-root compatibility matrix', () => {
       '0.1.7-rc.2',
       '0.2.0-rc.1',
       '0.2.0-rc.2',
+      '0.2.1-alpha.1',
+      '0.2.1-alpha.2',
     ])
   })
 
-  it('keeps development-branch releases out of the verified set', () => {
-    const dev = COMPAT_ROWS.filter((r) => r.status === 'unreleased').map((r) => r.release)
-    expect(dev).toEqual(['0.2.1-alpha.1', '0.2.1-alpha.2'])
-    for (const r of COMPAT_ROWS.filter((x) => x.status === 'unreleased')) expect(r.since).toBe('dev')
+  it('has no development-branch-only rows in the released package', () => {
+    expect(COMPAT_ROWS.filter((r) => r.status === 'unreleased')).toEqual([])
   })
 
   it('ends with an unsupported catch-all row and has unique releases', () => {
@@ -111,7 +111,7 @@ describe('external links', () => {
   })
 
   it('pin Multi-root documentation to the released tag', () => {
-    expect(links.multiRoot.architecture).toContain('/blob/v0.1.5/')
-    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.5/')
+    expect(links.multiRoot.architecture).toContain('/blob/v0.1.6/')
+    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.6/')
   })
 })

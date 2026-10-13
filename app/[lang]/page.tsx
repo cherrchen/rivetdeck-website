@@ -58,8 +58,8 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
     {
       title: t.footer.plugins.title,
       links: [
-        { label: t.footer.plugins.git, href: links.git.repo },
-        { label: t.footer.plugins.themeStudio, href: links.themeStudio.repo },
+        { label: t.footer.plugins.git, href: localePath(lang, '/plugins/git') },
+        { label: t.footer.plugins.themeStudio, href: localePath(lang, '/plugins/theme-studio') },
         { label: t.footer.plugins.multiRoot, href: localePath(lang, '/plugins/multi-root-workspace') },
       ],
     },
@@ -189,11 +189,11 @@ function Plugins({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   return (
     <Section id="plugins" title={t.title} lead={t.lead}>
       <div className="grid gap-3 lg:grid-cols-2">
-        <PluginCard name="Git" status={t.preinstalled} href={links.git.repo} summary={t.gitSummary} sourceLabel={t.sourceOnGithub} newTab={newTab}>
+        <PluginCard name="Git" status={t.preinstalled} href={localePath(locale, '/plugins/git')} sourceHref={links.git.repo} summary={t.gitSummary} pageLabel={t.pluginPage} sourceLabel={t.sourceOnGithub} newTab={newTab}>
           <Screenshot shot={SHOTS.gitDiff} alt={dict.shots.gitDiff} crop="aspect-[16/10] object-cover object-right-top" sizes="(min-width: 1400px) 600px, 100vw" />
         </PluginCard>
 
-        <PluginCard name="Theme Studio" status={t.preinstalled} href={links.themeStudio.repo} summary={t.themeStudioSummary} sourceLabel={t.sourceOnGithub} newTab={newTab}>
+        <PluginCard name="Theme Studio" status={t.preinstalled} href={localePath(locale, '/plugins/theme-studio')} sourceHref={links.themeStudio.repo} summary={t.themeStudioSummary} pageLabel={t.pluginPage} sourceLabel={t.sourceOnGithub} newTab={newTab}>
           <Screenshot shot={SHOTS.themes} alt={dict.shots.themes} crop="aspect-[16/10] object-cover object-center" sizes="(min-width: 1400px) 600px, 100vw" />
         </PluginCard>
       </div>
@@ -241,15 +241,21 @@ function PluginCard({
   name,
   status,
   href,
+  sourceHref,
   summary,
+  pageLabel,
   sourceLabel,
   newTab,
   children,
 }: {
   name: string
   status: string
+  /** Internal plugin page path. */
   href: string
+  /** Upstream repository URL. */
+  sourceHref: string
   summary: string
+  pageLabel: string
   sourceLabel: string
   newTab: string
   children: React.ReactNode
@@ -265,13 +271,18 @@ function PluginCard({
           <span className="text-[13px] text-fg-subtle">{status}</span>
         </div>
         <p className="mt-2 max-w-md text-sm leading-6 text-fg-muted">{summary}</p>
-        <a href={href} target="_blank" rel="noopener noreferrer" className="mt-auto self-start pt-6 text-sm font-medium text-fg hover:underline hover:underline-offset-4">
-          {sourceLabel}
-          <span aria-hidden="true" className="ml-1">
-            ›
-          </span>
-          <span className="sr-only">{newTab}</span>
-        </a>
+        <div className="mt-auto flex items-center gap-4 pt-6 text-sm font-medium">
+          <Link href={href} className="text-fg hover:underline hover:underline-offset-4">
+            {pageLabel}
+            <span aria-hidden="true" className="ml-1">
+              ›
+            </span>
+          </Link>
+          <a href={sourceHref} target="_blank" rel="noopener noreferrer" className="text-fg-subtle hover:text-fg">
+            {sourceLabel}
+            <span className="sr-only">{newTab}</span>
+          </a>
+        </div>
       </div>
     </article>
   )

@@ -21,6 +21,10 @@ describe('GitHub Pages paths', () => {
     expect(sitemap().map(({ url }) => url)).toEqual([
       'https://cherrchen.github.io/rivetdeck-website/',
       'https://cherrchen.github.io/rivetdeck-website/zh',
+      'https://cherrchen.github.io/rivetdeck-website/plugins/git',
+      'https://cherrchen.github.io/rivetdeck-website/zh/plugins/git',
+      'https://cherrchen.github.io/rivetdeck-website/plugins/theme-studio',
+      'https://cherrchen.github.io/rivetdeck-website/zh/plugins/theme-studio',
       'https://cherrchen.github.io/rivetdeck-website/plugins/multi-root-workspace',
       'https://cherrchen.github.io/rivetdeck-website/zh/plugins/multi-root-workspace',
     ])

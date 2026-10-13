@@ -3,10 +3,12 @@ import { notFound } from 'next/navigation'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { BeforeAfter } from '@/components/multi-root/before-after'
-import { CompatTable } from '@/components/multi-root/compat-table'
-import { InstallTabs } from '@/components/multi-root/install-tabs'
 import { SecurityDiagram } from '@/components/multi-root/security-diagram'
 import { TopologyDiagram } from '@/components/multi-root/topology-diagram'
+import { CompatTable } from '@/components/plugin/compat-table'
+import { FeatureRow } from '@/components/plugin/feature-row'
+import { Step } from '@/components/plugin/install-step'
+import { InstallTabs } from '@/components/plugin/install-tabs'
 import { ButtonLink } from '@/components/ui/button'
 import { CodeBlock } from '@/components/ui/code-block'
 import { Container } from '@/components/ui/container'
@@ -18,11 +20,18 @@ import { isLocale, localePath } from '@/lib/i18n/config'
 import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
 import { fmt } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
-import { COMPAT_PLUGIN_VERSION } from '@/lib/multi-root-compat'
+import { COMPAT_PLATFORMS, COMPAT_PLUGIN_VERSION, COMPAT_ROWS } from '@/lib/multi-root-compat'
 import { SHOTS } from '@/lib/screenshots'
 import { links, MULTI_ROOT_PACKAGE, withBasePath } from '@/lib/site'
 
 const PATH = '/plugins/multi-root-workspace'
+
+const INSTALL_SPEC = {
+  package: MULTI_ROOT_PACKAGE,
+  version: COMPAT_PLUGIN_VERSION,
+  repo: 'cherrchen/dsh-plugin-multi-root-workspace',
+  localPrelude: ['export CI=true'],
+} as const
 
 type PageDict = Dictionary['multiRoot']
 
@@ -188,8 +197,8 @@ function Features({ dict }: { dict: Dictionary }) {
     manageComment ?? '',
     '/workspace-folders add ~/code/another-repo',
     '/workspace-folders alias 1 payments',
-    '/workspace-folders remove 1',
     '/workspace-folders reveal 1',
+    '/workspace-folders remove 1',
   ]
 
   return (
@@ -231,43 +240,6 @@ function Features({ dict }: { dict: Dictionary }) {
         <InstructionsFeature t={t.instructions} />
       </div>
     </Section>
-  )
-}
-
-function FeatureRow({
-  kicker,
-  title,
-  body,
-  points,
-  visual,
-  reverse = false,
-}: {
-  kicker: string
-  title: string
-  body: string
-  points: readonly string[]
-  visual: React.ReactNode
-  reverse?: boolean
-}) {
-  return (
-    <div className="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-14">
-      <div className={reverse ? 'lg:order-2' : undefined}>
-        <p className="text-sm text-fg-subtle">{kicker}</p>
-        <h3 className="mt-3 text-2xl font-medium tracking-[-0.03em] text-balance sm:text-3xl">{title}</h3>
-        <p className="mt-4 text-[15px] leading-7 text-fg-muted">{body}</p>
-        <ul className="mt-5 space-y-2.5">
-          {points.map((point) => (
-            <li key={point} className="flex gap-3 text-sm leading-6 text-fg-muted">
-              <span aria-hidden="true" className="mt-0.5 text-accent">
-                →
-              </span>
-              {point}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className={`min-w-0 ${reverse ? 'lg:order-1' : ''}`}>{visual}</div>
-    </div>
   )
 }
 
@@ -394,7 +366,7 @@ function Install({ dict }: { dict: Dictionary }) {
     <Section id="install" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
       <ol className="space-y-10">
         <Step n="1" title={t.step1.title} body={t.step1.body}>
-          <InstallTabs t={t.tabs} copy={dict.common.copy} />
+          <InstallTabs spec={INSTALL_SPEC} t={t.tabs} copy={dict.common.copy} />
         </Step>
         <Step n="2" title={t.step2.title} body={<Rich text={t.step2.body} tags={code} />}>
           <CodeBlock title="pnpm-workspace.yaml" prompt="" lines={['allowBuilds:', '  koffi: true']} copyText={'allowBuilds:\n  koffi: true'} copy={dict.common.copy} />
@@ -438,25 +410,12 @@ function Install({ dict }: { dict: Dictionary }) {
   )
 }
 
-function Step({ n, title, body, children }: { n: string; title: string; body: React.ReactNode; children: React.ReactNode }) {
-  return (
-    <li className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:gap-12">
-      <div>
-        <span className="grid h-8 w-8 place-items-center rounded-full border border-accent font-mono text-sm text-accent">{n}</span>
-        <h3 className="mt-4 text-xl font-medium tracking-[-0.02em]">{title}</h3>
-        <p className="mt-2 max-w-md text-sm leading-6 text-fg-muted">{body}</p>
-      </div>
-      <div className="min-w-0">{children}</div>
-    </li>
-  )
-}
-
 function Compatibility({ dict }: { dict: Dictionary }) {
   const t = dict.multiRoot.compat
   const newTab = dict.common.opensInNewTab
   return (
     <Section id="compatibility" eyebrow={t.eyebrow} title={t.title} lead={fmt(t.lead, { version: COMPAT_PLUGIN_VERSION })}>
-      <CompatTable t={t} />
+      <CompatTable t={t} rows={COMPAT_ROWS} platforms={COMPAT_PLATFORMS} version={COMPAT_PLUGIN_VERSION} />
       <p className="mt-6 text-sm leading-6 text-pretty break-keep text-fg-subtle">
         <Rich
           text={t.footnote}

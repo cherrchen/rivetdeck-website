@@ -8,10 +8,11 @@ async function exists(file) {
 
 /** Verify exported URLs against actual files, including the social image metadata. */
 export async function verifyPages(directory, origin, basePath) {
-  for (const file of ['404.html', '.nojekyll', 'sitemap.xml', 'robots.txt', 'social/rivetdeck.png', 'social/multi-root-workspace.png']) {
+  const pluginPages = ['plugins/git', 'plugins/theme-studio', 'plugins/multi-root-workspace']
+  for (const file of ['404.html', '.nojekyll', 'sitemap.xml', 'robots.txt', 'social/rivetdeck.png', ...pluginPages.map((p) => `social/${p.split('/').pop()}.png`)]) {
     assert(await exists(path.join(directory, file)), `Missing export: ${file}`)
   }
-  const pages = ['index.html', 'zh/index.html', 'plugins/multi-root-workspace/index.html', 'zh/plugins/multi-root-workspace/index.html']
+  const pages = ['index.html', 'zh/index.html', ...pluginPages.flatMap((p) => [`${p}/index.html`, `zh/${p}/index.html`])]
   let checked = 0
   for (const page of pages) {
     const html = await readFile(path.join(directory, page), 'utf8')

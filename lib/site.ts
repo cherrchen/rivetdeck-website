@@ -24,6 +24,8 @@ export function getSiteUrl(): URL {
 
 const rivetdeckRepo = 'https://github.com/cherrchen/rivetdeck'
 const multiRootRepo = 'https://github.com/cherrchen/dsh-plugin-multi-root-workspace'
+const gitRepo = 'https://github.com/cherrchen/dsh-plugin-git'
+const themeStudioRepo = 'https://github.com/cherrchen/dsh-theme-studio'
 
 export const links = {
   rivetdeck: {
@@ -37,26 +39,40 @@ export const links = {
   },
   upstream: 'https://github.com/deepseek-ai/deepseek-harness',
   git: {
-    repo: 'https://github.com/cherrchen/dsh-plugin-git',
+    repo: gitRepo,
+    npm: 'https://www.npmjs.com/package/@dsh-electron/dsh-plugin-git',
+    changelog: `${gitRepo}/blob/v0.2.5/CHANGELOG.md`,
+    readme: `${gitRepo}/blob/v0.2.5/README.md`,
+    architecture: `${gitRepo}/blob/v0.2.5/docs/architecture/overview.md`,
+    compatDoc: `${gitRepo}/blob/v0.2.5/docs/reference/dsh-compatibility.md`,
+    issues: `${gitRepo}/issues`,
   },
   themeStudio: {
-    repo: 'https://github.com/cherrchen/dsh-theme-studio',
+    repo: themeStudioRepo,
+    npm: 'https://www.npmjs.com/package/@dsh-electron/dsh-theme-studio',
+    changelog: `${themeStudioRepo}/blob/v0.1.4/CHANGELOG.en.md`,
+    readme: `${themeStudioRepo}/blob/v0.1.4/README.en.md`,
+    tokens: `${themeStudioRepo}/blob/v0.1.4/docs/reference/theme-tokens.md`,
+    compatDoc: `${themeStudioRepo}/blob/v0.1.4/docs/development/dsh-compatibility.md`,
+    issues: `${themeStudioRepo}/issues`,
   },
   multiRoot: {
     repo: multiRootRepo,
     npm: 'https://www.npmjs.com/package/@dsh-electron/dsh-plugin-multi-root-workspace',
-    changelog: `${multiRootRepo}/blob/v0.1.5/CHANGELOG.en.md`,
-    architecture: `${multiRootRepo}/blob/v0.1.5/docs/architecture/multi-root-workspace.md`,
-    readme: `${multiRootRepo}/blob/v0.1.5/README.en.md`,
+    changelog: `${multiRootRepo}/blob/v0.1.6/CHANGELOG.en.md`,
+    architecture: `${multiRootRepo}/blob/v0.1.6/docs/architecture/multi-root-workspace.md`,
+    readme: `${multiRootRepo}/blob/v0.1.6/README.en.md`,
     issues: `${multiRootRepo}/issues`,
     adr: {
-      dialect: `${multiRootRepo}/blob/v0.1.5/docs/decisions/ADR-0003-dialect-grant-widening.md`,
-      lease: `${multiRootRepo}/blob/v0.1.5/docs/decisions/ADR-0007-registry-authority-lease.md`,
-      panel: `${multiRootRepo}/blob/v0.1.5/docs/decisions/ADR-0008-panel-session-derived-authority.md`,
-      compat: `${multiRootRepo}/blob/v0.1.5/docs/decisions/ADR-0009-dsh-compat-contract.md`,
-      instructions: `${multiRootRepo}/blob/v0.1.5/docs/decisions/ADR-0010-additional-root-instruction-scope.md`,
+      dialect: `${multiRootRepo}/blob/v0.1.6/docs/decisions/ADR-0003-dialect-grant-widening.md`,
+      lease: `${multiRootRepo}/blob/v0.1.6/docs/decisions/ADR-0007-registry-authority-lease.md`,
+      panel: `${multiRootRepo}/blob/v0.1.6/docs/decisions/ADR-0008-panel-session-derived-authority.md`,
+      compat: `${multiRootRepo}/blob/v0.1.6/docs/decisions/ADR-0009-dsh-compat-contract.md`,
+      instructions: `${multiRootRepo}/blob/v0.1.6/docs/decisions/ADR-0010-additional-root-instruction-scope.md`,
     },
   },
 } as const
 
 export const MULTI_ROOT_PACKAGE = '@dsh-electron/dsh-plugin-multi-root-workspace'
+export const GIT_PACKAGE = '@dsh-electron/dsh-plugin-git'
+export const THEME_STUDIO_PACKAGE = '@dsh-electron/dsh-theme-studio'

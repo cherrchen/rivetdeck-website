@@ -60,6 +60,26 @@
   --accent-soft: #0b2a25;
 }
 
+[data-identity='git'] {
+  --accent: #c2410c;
+  --accent-soft: #fdf0e7;
+}
+
+.dark [data-identity='git'] {
+  --accent: #ff9c6b;
+  --accent-soft: #2b160c;
+}
+
+[data-identity='theme-studio'] {
+  --accent: #6d28d9;
+  --accent-soft: #f1ebfd;
+}
+
+.dark [data-identity='theme-studio'] {
+  --accent: #c4b0f2;
+  --accent-soft: #231a38;
+}
+
 @theme inline {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans Mono CJK SC', monospace;

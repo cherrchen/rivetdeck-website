@@ -3,32 +3,52 @@
 import { useId, useState } from 'react'
 import { CodeBlock } from '@/components/ui/code-block'
 import type { CopyLabels } from '@/components/ui/copy-button'
-import type { Dictionary } from '@/lib/i18n/dictionaries'
-import { COMPAT_PLUGIN_VERSION } from '@/lib/multi-root-compat'
-import { MULTI_ROOT_PACKAGE } from '@/lib/site'
 
 const SOURCES = ['npm', 'tarball', 'github', 'local'] as const
 type Source = (typeof SOURCES)[number]
 
-const TARBALL = `dsh-electron-dsh-plugin-multi-root-workspace-${COMPAT_PLUGIN_VERSION}.tgz`
-const GITHUB = `github:cherrchen/dsh-plugin-multi-root-workspace#v${COMPAT_PLUGIN_VERSION}`
-const REPO = 'https://github.com/cherrchen/dsh-plugin-multi-root-workspace.git'
+/** Localized labels for the source switch, provided by the page's dictionary section. */
+export interface InstallTabsCopy {
+  label: string
+  npm: { label: string; note: string }
+  tarball: { label: string; note: string }
+  github: { label: string; note: string }
+  local: { label: string; note: string }
+}
 
-function sourceLines(source: Source): string[] {
-  const add = `dsh plugin --profile web add`
+/** Everything the four install commands need to know about one plugin package. */
+export interface InstallSpec {
+  /** npm package name, e.g. `@dsh-electron/dsh-plugin-git`. */
+  package: string
+  /** Released version, used for the GitHub `#v…` pin and the default tarball name. */
+  version: string
+  /** `owner/repo` on GitHub. */
+  repo: string
+  /** Tarball file name; defaults to the `pnpm pack` output for the package. */
+  tarball?: string
+  /** Install command for a local checkout; defaults to `pnpm install`. */
+  installCommand?: string
+  /** Extra lines before the install step of a local checkout (e.g. `export CI=true`). */
+  localPrelude?: readonly string[]
+}
+
+function sourceLines(source: Source, spec: InstallSpec): string[] {
+  const add = 'dsh plugin --profile web add'
+  const dir = spec.repo.split('/')[1] ?? spec.repo
+  const tarball = spec.tarball ?? `${spec.package.replace(/^@/, '').replaceAll('/', '-')}-${spec.version}.tgz`
   switch (source) {
     case 'npm':
-      return [`${add} ${MULTI_ROOT_PACKAGE}`, 'dsh --profile web']
+      return [`${add} ${spec.package}`, 'dsh --profile web']
     case 'tarball':
-      return [`pnpm pack ${MULTI_ROOT_PACKAGE}`, `${add} ./${TARBALL}`]
+      return [`pnpm pack ${spec.package}`, `${add} ./${tarball}`]
     case 'github':
-      return [`${add} ${GITHUB}`]
+      return [`${add} github:${spec.repo}#v${spec.version}`]
     case 'local':
       return [
-        `git clone ${REPO}`,
-        'cd dsh-plugin-multi-root-workspace',
-        'export CI=true',
-        'pnpm install',
+        `git clone https://github.com/${spec.repo}.git`,
+        `cd ${dir}`,
+        ...(spec.localPrelude ?? []),
+        spec.installCommand ?? 'pnpm install',
         'pnpm build',
         `${add} "$PWD"`,
       ]
@@ -36,7 +56,7 @@ function sourceLines(source: Source): string[] {
 }
 
 /** Source switch that shows the four README install methods; every panel stays in the DOM for crawlers. */
-export function InstallTabs({ t, copy }: { t: Dictionary['multiRoot']['install']['tabs']; copy: CopyLabels }) {
+export function InstallTabs({ spec, t, copy }: { spec: InstallSpec; t: InstallTabsCopy; copy: CopyLabels }) {
   const [active, setActive] = useState<Source>('npm')
   const base = useId()
 
@@ -70,7 +90,7 @@ export function InstallTabs({ t, copy }: { t: Dictionary['multiRoot']['install']
         ))}
       </div>
       {SOURCES.map((id) => {
-        const lines = sourceLines(id)
+        const lines = sourceLines(id, spec)
         return (
           <div key={id} id={`${base}-panel-${id}`} role="tabpanel" aria-labelledby={`${base}-tab-${id}`} hidden={active !== id} className="mt-4">
             <p className="mb-3 text-sm text-fg-subtle">{t[id].note}</p>
