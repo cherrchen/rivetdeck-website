@@ -10,7 +10,7 @@ export function SiteFooter({ columns, note, newTab }: { columns: readonly Footer
   return (
     <footer className="border-t border-border">
       <Container className="py-16">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-(--cols)" style={{ '--cols': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties}>
           {columns.map((col) => (
             <div key={col.title}>
               <h2 className="text-[13px] font-medium">{col.title}</h2>
