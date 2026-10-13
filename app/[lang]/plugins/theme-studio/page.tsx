@@ -122,7 +122,6 @@ export default async function ThemeStudioPage({ params }: PageProps<'/[lang]/plu
       <main id="main">
         <Hero dict={dict} />
         <Features dict={dict} />
-        <Palettes dict={dict} />
         <Install dict={dict} />
         <Compatibility dict={dict} />
         <FinalCta dict={dict} />
@@ -184,8 +183,13 @@ function Hero({ dict }: { dict: Dictionary }) {
 function Features({ dict }: { dict: Dictionary }) {
   const t = dict.themeStudio.features
   return (
-    <Section id="features" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
-      <div className="space-y-20">
+    <Section id="features" eyebrow={t.palettes.kicker} title={t.palettes.title} lead={t.palettes.body}>
+      <div id="palettes">
+        <ThemePreview t={dict.themePreview} />
+        <p className="mt-4 text-sm leading-6 text-fg-subtle">{t.palettes.note}</p>
+      </div>
+
+      <div className="mt-20 space-y-20">
         <FeatureRow kicker={t.row.kicker} title={t.row.title} body={t.row.body} points={t.row.points} visual={<SettingsRowVisual t={t.row} />} />
 
         <FeatureRow reverse kicker={t.preview.kicker} title={t.preview.title} body={t.preview.body} points={t.preview.points} visual={<MenuVisual t={t.preview} />} />
@@ -276,16 +280,6 @@ function MenuVisual({ t }: { t: PageDict['features']['preview'] }) {
         </li>
       </ul>
     </div>
-  )
-}
-
-function Palettes({ dict }: { dict: Dictionary }) {
-  const t = dict.themeStudio.features.palettes
-  return (
-    <Section id="palettes" eyebrow={t.kicker} title={t.title} lead={t.body}>
-      <ThemePreview t={dict.themePreview} />
-      <p className="mt-4 text-sm leading-6 text-fg-subtle">{t.note}</p>
-    </Section>
   )
 }
 

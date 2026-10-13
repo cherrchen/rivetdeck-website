@@ -662,9 +662,6 @@ const zh: Dictionary = {
       shotCaption: '“设置 → 通用”里的“主题”行和它的八张卡片。',
     },
     features: {
-      eyebrow: '功能',
-      title: '同一扇窗，换成你的颜色。',
-      lead: '插件只通过 ctx.theme.overrideTokens 产出 token 覆盖，别无其他。模式、字体和 DOM 渲染都留在宿主手里。',
       row: {
         kicker: '“主题”行',
         title: '在“外观”和“字号”之间',

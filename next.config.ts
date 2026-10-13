@@ -8,6 +8,7 @@ const config: NextConfig = {
   ...(pages ? { output: 'export' as const, trailingSlash: true } : {}),
   reactStrictMode: true,
   poweredByHeader: false,
+  allowedDevOrigins: ['127.0.0.1'],
   images: { formats: ['image/avif', 'image/webp'], unoptimized: pages },
 }
 

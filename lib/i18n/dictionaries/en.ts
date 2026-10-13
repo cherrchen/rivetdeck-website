@@ -694,9 +694,6 @@ const en = {
       shotCaption: 'The Themes row and its eight cards in Settings → General.',
     },
     features: {
-      eyebrow: 'Features',
-      title: 'Same window. Your colors.',
-      lead: 'The plugin produces token overlays through ctx.theme.overrideTokens — and nothing else. Mode, fonts and DOM rendering stay with the host.',
       row: {
         kicker: 'The Themes row',
         title: 'Between Appearance and Font size',
