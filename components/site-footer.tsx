@@ -44,7 +44,7 @@ export function SiteFooter({ columns, note, newTab }: { columns: readonly Footer
             </div>
           ))}
         </div>
-        <p className="mt-16 max-w-3xl text-xs leading-6 text-fg-subtle">{note}</p>
+        <p className="mt-16 max-w-3xl text-xs leading-6 whitespace-pre-line text-fg-subtle">{note}</p>
       </Container>
     </footer>
   )

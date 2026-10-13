@@ -203,7 +203,7 @@ const zh: Dictionary = {
       source: { title: '源码', repo: 'GitHub 仓库', npm: 'npm 包', issues: '反馈问题' },
       plugins: { title: 'DSH 插件', git: 'Git', themeStudio: 'Theme Studio', multiRoot: 'Multi-root Workspace' },
       ecosystem: { title: '生态', harness: 'DeepSeek Harness', rivetdeck: 'Rivetdeck 桌面应用' },
-      note: 'Multi-root Workspace 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
+      note: 'Multi-root Workspace 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。\n“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
     },
     hero: {
       changelog: ' 更新日志',
@@ -469,7 +469,7 @@ const zh: Dictionary = {
       source: { title: '源码', repo: 'GitHub 仓库', npm: 'npm 包', issues: '反馈问题' },
       plugins: { title: 'DSH 插件', git: 'Git', themeStudio: 'Theme Studio', multiRoot: 'Multi-root Workspace' },
       ecosystem: { title: '生态', rivetdeck: 'Rivetdeck 桌面应用', harness: 'DeepSeek Harness' },
-      note: 'Git 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
+      note: 'Git 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。\n“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
     },
     hero: {
       changelog: ' 更新日志',
@@ -652,7 +652,7 @@ const zh: Dictionary = {
       source: { title: '源码', repo: 'GitHub 仓库', npm: 'npm 包', issues: '反馈问题' },
       plugins: { title: 'DSH 插件', git: 'Git', themeStudio: 'Theme Studio', multiRoot: 'Multi-root Workspace' },
       ecosystem: { title: '生态', rivetdeck: 'Rivetdeck 桌面应用', harness: 'DeepSeek Harness' },
-      note: 'Theme Studio 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
+      note: 'Theme Studio 是面向 DSH（DeepSeek Harness）的独立 MIT 许可插件，并非 DeepSeek 制作、认可或提供支持。\n“DeepSeek Harness” 是 DeepSeek 的商标，此处仅用于说明兼容性。',
     },
     hero: {
       changelog: ' 更新日志',

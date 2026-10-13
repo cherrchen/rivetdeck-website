@@ -212,7 +212,7 @@ const en = {
       source: { title: 'Source', repo: 'GitHub repository', npm: 'npm package', issues: 'Report an issue' },
       plugins: { title: 'DSH plugins', git: 'Git', themeStudio: 'Theme Studio', multiRoot: 'Multi-root Workspace' },
       ecosystem: { title: 'Ecosystem', harness: 'DeepSeek Harness', rivetdeck: 'Rivetdeck desktop app' },
-      note: 'Multi-root Workspace is an independent, MIT-licensed plugin for DSH (DeepSeek Harness). It is not made, endorsed or supported by DeepSeek. “DeepSeek Harness” is a trademark of DeepSeek and is used here only to describe compatibility.',
+      note: 'Multi-root Workspace is an independent, MIT-licensed plugin for DSH (DeepSeek Harness). It is not made, endorsed or supported by DeepSeek.\n“DeepSeek Harness” is a trademark of DeepSeek and is used here only to describe compatibility.',
     },
     hero: {
       changelog: ' changelog',
@@ -489,7 +489,7 @@ const en = {
       source: { title: 'Source', repo: 'GitHub repository', npm: 'npm package', issues: 'Report an issue' },
       plugins: { title: 'DSH plugins', git: 'Git', themeStudio: 'Theme Studio', multiRoot: 'Multi-root Workspace' },
       ecosystem: { title: 'Ecosystem', rivetdeck: 'Rivetdeck desktop app', harness: 'DeepSeek Harness' },
-      note: 'Git is an independent, MIT-licensed plugin for DSH (DeepSeek Harness). It is not made, endorsed or supported by DeepSeek. “DeepSeek Harness” is a trademark of DeepSeek and is used here only to describe compatibility.',
+      note: 'Git is an independent, MIT-licensed plugin for DSH (DeepSeek Harness). It is not made, endorsed or supported by DeepSeek.\n“DeepSeek Harness” is a trademark of DeepSeek and is used here only to describe compatibility.',
     },
     hero: {
       changelog: ' changelog',
@@ -684,7 +684,7 @@ const en = {
       source: { title: 'Source', repo: 'GitHub repository', npm: 'npm package', issues: 'Report an issue' },
       plugins: { title: 'DSH plugins', git: 'Git', themeStudio: 'Theme Studio', multiRoot: 'Multi-root Workspace' },
       ecosystem: { title: 'Ecosystem', rivetdeck: 'Rivetdeck desktop app', harness: 'DeepSeek Harness' },
-      note: 'Theme Studio is an independent, MIT-licensed plugin for DSH (DeepSeek Harness). It is not made, endorsed or supported by DeepSeek. “DeepSeek Harness” is a trademark of DeepSeek and is used here only to describe compatibility.',
+      note: 'Theme Studio is an independent, MIT-licensed plugin for DSH (DeepSeek Harness). It is not made, endorsed or supported by DeepSeek.\n“DeepSeek Harness” is a trademark of DeepSeek and is used here only to describe compatibility.',
     },
     hero: {
       changelog: ' changelog',
