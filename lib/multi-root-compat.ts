@@ -2,8 +2,8 @@
  * Multi-root Workspace compatibility data.
  *
  * Source of truth: `SUPPORTED_DSH_RELEASES` in `src/compat/dsh-version.ts` of
- * cherrchen/dsh-plugin-multi-root-workspace, read on `main`. All eleven
- * releases are in the published package (v0.1.6); the plugin refuses to start
+ * cherrchen/dsh-plugin-multi-root-workspace, read on `main`. All sixteen
+ * releases are in the published package (v0.1.7); the plugin refuses to start
  * its gated rows on anything else. Status is declared per row; it is never
  * derived from semver ordering because the plugin supports an exact list, not
  * a range.
@@ -20,7 +20,7 @@ import type { CompatPlatform, CompatRow, CompatStatus } from './compat'
 
 export type { CompatStatus, CompatRow }
 
-export const COMPAT_PLUGIN_VERSION = '0.1.6'
+export const COMPAT_PLUGIN_VERSION = '0.1.7'
 
 const row = (release: string, status: CompatStatus, since: string): CompatRow => ({ id: release, release, status, since })
 
@@ -36,6 +36,11 @@ export const COMPAT_ROWS: readonly CompatRow[] = [
   row('0.2.0-rc.2', 'verified', 'v0.1.5'),
   row('0.2.1-alpha.1', 'verified', 'v0.1.6'),
   row('0.2.1-alpha.2', 'verified', 'v0.1.6'),
+  row('0.2.1-alpha.3', 'verified', 'v0.1.7'),
+  row('0.2.1-alpha.4', 'verified', 'v0.1.7'),
+  row('0.2.1-alpha.5', 'verified', 'v0.1.7'),
+  row('0.2.1-rc.1', 'verified', 'v0.1.7'),
+  row('0.2.1-rc.2', 'verified', 'v0.1.7'),
   { id: 'other', release: null, status: 'unsupported', since: '—' },
 ]
 

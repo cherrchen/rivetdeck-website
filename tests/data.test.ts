@@ -65,7 +65,7 @@ describe('recommend', () => {
 })
 
 describe('multi-root compatibility matrix', () => {
-  it('lists all eleven allowlist entries as verified, in order', () => {
+  it('lists all sixteen allowlist entries as verified, in order', () => {
     const verified = COMPAT_ROWS.filter((r) => r.status === 'verified').map((r) => r.release)
     expect(verified).toEqual([
       '0.1.5-rc.2',
@@ -79,6 +79,11 @@ describe('multi-root compatibility matrix', () => {
       '0.2.0-rc.2',
       '0.2.1-alpha.1',
       '0.2.1-alpha.2',
+      '0.2.1-alpha.3',
+      '0.2.1-alpha.4',
+      '0.2.1-alpha.5',
+      '0.2.1-rc.1',
+      '0.2.1-rc.2',
     ])
   })
 
@@ -111,7 +116,7 @@ describe('external links', () => {
   })
 
   it('pin Multi-root documentation to the released tag', () => {
-    expect(links.multiRoot.architecture).toContain('/blob/v0.1.6/')
-    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.6/')
+    expect(links.multiRoot.architecture).toContain('/blob/v0.1.7/')
+    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.7/')
   })
 })

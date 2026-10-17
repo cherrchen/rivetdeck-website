@@ -277,7 +277,7 @@ const en = {
       roots: {
         kicker: 'Multiple roots',
         title: 'A primary root plus as many additional roots as you register',
-        body: 'The primary root is the session origin and cannot be removed. Additional roots are canonicalized, checked against the primary root and each other, and kept in an ordered list. Each one can be aliased, reordered, copied or revealed in your file manager.',
+        body: 'The primary root is the session origin and cannot be removed. Additional roots are canonicalized, checked against the primary root and each other, and kept in an ordered list. Each one carries an access level — inherit, read-only or read-write — and can be aliased, reordered, copied or revealed in your file manager.',
         points: [
           'Overlapping or nested roots are rejected at registration',
           'A root that disappears or is swapped for a symlink stays listed but is not granted',
@@ -293,7 +293,7 @@ const en = {
           'bash and the PTY keep the primary root as their default working directory',
           'Language servers treat each additional root as a separate workspace',
           'The additional-root topology reaches the model as part of the sandbox policy context, so it needs no introspection tool',
-          'Sandbox modes still apply: read-only grants no additional root',
+          'Sandbox modes still apply to inherited roots: read-only grants none of them',
           'On DSH 0.2.1 the session can move its working directory — grants and the registry stay keyed to the session origin',
         ],
         unchanged: 'Unchanged for the agent',
@@ -309,12 +309,13 @@ const en = {
           'Panel authority comes from the live session, never from a client-supplied path',
           'Only one process per store may grant roots; a contending process fails closed',
           'The dialog also browses an additional root’s files — expandable directories and text previews',
+          'The Files tab switches to any additional root — a native tree fork keeps rows identical',
           'The panel is bilingual and follows the interface language',
         ],
         codeTitle: 'session',
         commands: [
           '# list the primary root and the additional roots',
-          '# register, name, remove or reveal a root',
+          '# register, name, set access or reveal a root',
         ],
       },
       crossRepo: {
@@ -356,16 +357,16 @@ const en = {
           body: 'A registration records the canonical directory it was granted for. The scope grants it only while the path still resolves to that directory; a swapped directory or symlink is reported as redirected and not granted.',
         },
         {
-          title: 'One scope, two enforcers',
-          body: 'The in-process fence and the kernel sandbox consume the same scope. A parity matrix test compares the fence’s write decisions with the paths each kernel profile grants.',
+          title: 'One scope, three enforcers',
+          body: 'The in-process fence, the kernel sandbox and the process fence that covers full access all consume the same scope. A parity matrix test compares the fence’s write decisions with the paths each kernel profile grants.',
         },
         {
           title: 'Fail closed',
           body: 'If the upstream sandbox profile cannot be recognized, the plugin refuses to run the command instead of quietly granting only the primary root. An unsupported DSH release stops the gated rows from starting.',
         },
         {
-          title: 'Modes are inherited',
-          body: 'Read-only grants no additional root. Workspace-write grants the primary root plus the registered roots. Full access is upstream’s decision and bypasses the sandbox.',
+          title: 'Modes are inherited, access is per root',
+          body: 'Each root is inherit, read-only or read-write. Inherited grants follow the session mode — read-only grants nothing; a fixed read-write root stays writable anyway. Under full access, where upstream bypasses the sandbox, a process fence keeps the denied roots denied.',
         },
         {
           title: 'One authority per store',
@@ -402,7 +403,7 @@ const en = {
         registryLines: ['validated', 'per primary root', 'one authority'],
         gate: 'Startup compatibility gate',
         gateLine: 'Exact DSH release allowlist. If the release is not listed, the fence, sandbox, registry, instruction, LSP and file-browsing rows do not start.',
-        caption: 'Enforcement path of the released plugin (v0.1.6). The numbered controls below list what each part guarantees and what it does not.',
+        caption: 'Enforcement path of the released plugin (v0.1.7). The numbered controls below list what each part guarantees and what it does not.',
       },
     },
     install: {
@@ -456,7 +457,12 @@ const en = {
         '0.2.0-rc.1': 'DSH 0.2 release candidate.',
         '0.2.0-rc.2': 'The runtime inside Rivetdeck 0.2.0-beta.3.',
         '0.2.1-alpha.1': 'Dynamic working directories; the registry stays keyed to the session origin.',
-        '0.2.1-alpha.2': 'Development pin of the plugin.',
+        '0.2.1-alpha.2': 'Same shapes as alpha.1 for this plugin.',
+        '0.2.1-alpha.3': 'storage-domain pins zod 4.4.3 — domain schemas build through the storage-domain copy.',
+        '0.2.1-alpha.4': 'Version admission prefers engines.dsh when present; this plugin keeps peerDependencies.',
+        '0.2.1-alpha.5': 'Same shapes as alpha.4 for this plugin.',
+        '0.2.1-rc.1': 'Runtime floor returns to stable Cordis 4.0.5 and schemastery 3.18.5.',
+        '0.2.1-rc.2': 'Development pin of the plugin.',
         other: 'The gated rows do not start; the harness behaves as if the plugin were not installed.',
       },
       platformNotes: {
