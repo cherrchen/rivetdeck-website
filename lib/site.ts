@@ -41,10 +41,10 @@ export const links = {
   git: {
     repo: gitRepo,
     npm: 'https://www.npmjs.com/package/@dsh-electron/dsh-plugin-git',
-    changelog: `${gitRepo}/blob/v0.2.5/CHANGELOG.md`,
-    readme: `${gitRepo}/blob/v0.2.5/README.md`,
-    architecture: `${gitRepo}/blob/v0.2.5/docs/architecture/overview.md`,
-    compatDoc: `${gitRepo}/blob/v0.2.5/docs/reference/dsh-compatibility.md`,
+    changelog: `${gitRepo}/blob/v0.2.7/CHANGELOG.md`,
+    readme: `${gitRepo}/blob/v0.2.7/README.md`,
+    architecture: `${gitRepo}/blob/v0.2.7/docs/architecture/overview.md`,
+    compatDoc: `${gitRepo}/blob/v0.2.7/docs/reference/dsh-compatibility.md`,
     issues: `${gitRepo}/issues`,
   },
   themeStudio: {

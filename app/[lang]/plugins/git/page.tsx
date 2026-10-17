@@ -222,6 +222,15 @@ function Features({ dict }: { dict: Dictionary }) {
             />
           }
         />
+
+        <FeatureRow
+          reverse
+          kicker={t.worktrees.kicker}
+          title={t.worktrees.title}
+          body={t.worktrees.body}
+          points={t.worktrees.points}
+          visual={<WorktreesVisual t={t.worktrees} />}
+        />
       </div>
     </Section>
   )
@@ -273,6 +282,31 @@ function GraphVisual({ t }: { t: PageDict['features']['graph'] }) {
               <p className="text-xs text-fg-subtle">{commit.meta}</p>
             </div>
             {commit.refs ? <span className="shrink-0 rounded-md bg-accent-soft px-1.5 py-0.5 font-mono text-[11px] font-medium text-accent">{commit.refs}</span> : null}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function WorktreesVisual({ t }: { t: PageDict['features']['worktrees'] }) {
+  const rows = [
+    { name: 'main', path: '~/code/shop', badge: t.mock.current },
+    { name: 'feat/checkout-flow', path: '~/code/shop/.agents/worktrees/checkout-flow', badge: null },
+  ]
+  return (
+    <div className="overflow-hidden rounded-xl border border-border bg-surface">
+      <p className="border-b border-border px-5 py-3 text-xs font-medium text-fg-subtle">{t.listTitle}</p>
+      <ul className="divide-y divide-border">
+        {rows.map((row) => (
+          <li key={row.path} className="flex items-center justify-between gap-3 px-5 py-4">
+            <div className="min-w-0">
+              <p className="truncate font-mono text-[13px] font-medium">{row.name}</p>
+              <p className="mt-0.5 truncate font-mono text-xs text-fg-subtle">{row.path}</p>
+            </div>
+            <span className={`shrink-0 rounded-md px-2 py-1 text-[11px] font-medium ${row.badge ? 'bg-accent-soft text-accent' : 'bg-bg-muted text-fg-subtle'}`}>
+              {row.badge ?? t.mock.useInSession}
+            </span>
           </li>
         ))}
       </ul>
