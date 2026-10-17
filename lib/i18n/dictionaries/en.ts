@@ -689,7 +689,7 @@ const en = {
     meta: {
       title: 'Theme Studio — eight palettes for DSH',
       description:
-        'A portable DSH plugin that adds a Themes row to Settings → General: eight built-in palettes with hover preview, click to apply, and a Default that restores the official appearance. Token overlays only — mode and fonts stay with the host.',
+        'A portable DSH plugin that adds a Themes row to Settings → General: eight built-in palettes and imported .dsh-theme.json themes with hover preview, click to apply, and a Default that restores the official appearance. Token overlays only — mode and fonts stay with the host.',
       keywords: ['DeepSeek Harness', 'DSH plugin', 'themes', 'dark mode', 'appearance', 'color palette'],
     },
     brandHome: 'Theme Studio home',
@@ -707,7 +707,7 @@ const en = {
       changelog: ' changelog',
       titleLine1: 'Eight palettes.',
       titleLine2: 'One click away.',
-      lead: 'DSH ships light, dark and follow-system. Theme Studio adds a Themes row to Settings → General with eight built-in palettes — hover to preview, click to apply, Default to give every color back.',
+      lead: 'DSH ships light, dark and follow-system. Theme Studio adds a Themes row to Settings → General with eight built-in palettes and your imported themes — hover to preview, click to apply, Default to give every color back.',
       install: 'Install the plugin',
       readme: 'Read the README ↗',
       bullets: ['Every theme ships light and dark values', 'Preview is transient; nothing persists until you click', 'Preinstalled in Rivetdeck'],
@@ -719,7 +719,9 @@ const en = {
         title: 'Between Appearance and Font size',
         body: 'The row lands in Settings → General styled like the official Language row: a dropdown selector carrying the applied theme’s four-color mosaic and name.',
         points: [
-          'The menu lists Default plus the eight built-in palettes, each with its swatch',
+          'The menu lists Default, the eight built-ins and your imported themes, each with its swatch',
+          'Import accepts a .dsh-theme.json file; Manage exports and removes your copies',
+          '“Create your own theme…” pre-fills the bundled creator skill where the host supports it',
           'The row and its menu follow the interface language',
           'With no theme chosen, the settings page is item-for-item identical to an uninstalled harness',
         ],
@@ -772,7 +774,7 @@ const en = {
     limits: {
       title: 'What this does not claim',
       points: [
-        'Only the eight built-ins: custom .dsh-theme.json import/export and a theme editor are roadmap items, not features.',
+        'Import and export speak the dsh-theme.json v1 format; a visual theme editor stays a roadmap item.',
         'The contrast check is a diagnostic, not a gate — some palettes fall below threshold and are neither repaired nor blocked.',
         'Preview is hover-driven: keyboard focus does not preview; press Enter to apply.',
         'The read-only catalog ctx.themeStudio.catalog exists only on the Client — no dynamic registration and no Host RPC.',
@@ -829,7 +831,12 @@ const en = {
         '0.2.0-rc.1': 'DSH 0.2 release candidate; eight new semantic tokens audited.',
         '0.2.0-rc.2': 'Same shapes as rc.1 for this plugin.',
         '0.2.1-alpha.1': 'Font families and sizes stay host-owned alongside overlays.',
-        '0.2.1-alpha.2': 'Development pin of the plugin.',
+        '0.2.1-alpha.2': 'Theme snapshot shape changes; font roles stay host-owned.',
+        '0.2.1-alpha.3': 'Runtime floor moves to Cordis 4.0.5-alpha.2; the web Settings entry joins the account menu.',
+        '0.2.1-alpha.4': 'Install admission prefers engines.dsh when present; this plugin keeps peerDependencies.',
+        '0.2.1-alpha.5': 'Same shapes as alpha.4 for this plugin.',
+        '0.2.1-rc.1': 'Runtime floor returns to stable Cordis 4.0.5 and schemastery 3.18.5.',
+        '0.2.1-rc.2': 'Development pin of the plugin.',
         other: 'Unverified rather than refused: the plugin does not gate at runtime; install-time peer ranges may still reject it.',
       },
     },

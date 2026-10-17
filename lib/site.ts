@@ -50,10 +50,10 @@ export const links = {
   themeStudio: {
     repo: themeStudioRepo,
     npm: 'https://www.npmjs.com/package/@dsh-electron/dsh-theme-studio',
-    changelog: `${themeStudioRepo}/blob/v0.1.4/CHANGELOG.en.md`,
-    readme: `${themeStudioRepo}/blob/v0.1.4/README.en.md`,
-    tokens: `${themeStudioRepo}/blob/v0.1.4/docs/reference/theme-tokens.md`,
-    compatDoc: `${themeStudioRepo}/blob/v0.1.4/docs/development/dsh-compatibility.md`,
+    changelog: `${themeStudioRepo}/blob/v0.1.5/CHANGELOG.en.md`,
+    readme: `${themeStudioRepo}/blob/v0.1.5/README.en.md`,
+    tokens: `${themeStudioRepo}/blob/v0.1.5/docs/reference/theme-tokens.md`,
+    compatDoc: `${themeStudioRepo}/blob/v0.1.5/docs/development/dsh-compatibility.md`,
     issues: `${themeStudioRepo}/issues`,
   },
   multiRoot: {

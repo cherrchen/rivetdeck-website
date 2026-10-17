@@ -657,7 +657,7 @@ const zh: Dictionary = {
     meta: {
       title: 'Theme Studio — 给 DSH 的八套配色',
       description:
-        '一个可移植的 DSH 插件，在“设置 → 通用”里加入“主题”行：八套内置配色，悬停预览、点击应用，Default 恢复官方外观。只产出 token 覆盖——模式与字体仍归宿主所有。',
+        '一个可移植的 DSH 插件，在“设置 → 通用”里加入“主题”行：八套内置配色与导入的 .dsh-theme.json 主题，悬停预览、点击应用，Default 恢复官方外观。只产出 token 覆盖——模式与字体仍归宿主所有。',
       keywords: ['DeepSeek Harness', 'DSH 插件', '主题', '深色模式', '外观', '配色'],
     },
     brandHome: 'Theme Studio 首页',
@@ -675,7 +675,7 @@ const zh: Dictionary = {
       changelog: ' 更新日志',
       titleLine1: '八套配色。',
       titleLine2: '一键换上。',
-      lead: 'DSH 自带浅色、深色和跟随系统。Theme Studio 在“设置 → 通用”里加入“主题”行，提供八套内置配色——悬停即预览，点击才应用，选 Default 则把颜色全部还给官方。',
+      lead: 'DSH 自带浅色、深色和跟随系统。Theme Studio 在“设置 → 通用”里加入“主题”行，提供八套内置配色，也接受你自己导入的主题——悬停即预览，点击才应用，选 Default 则把颜色全部还给官方。',
       install: '安装插件',
       readme: '阅读 README ↗',
       bullets: ['每套配色都带浅色与深色两份数值', '预览是临时的，点击之前不落盘', '已在 Rivetdeck 中预装'],
@@ -686,7 +686,13 @@ const zh: Dictionary = {
         kicker: '“主题”行',
         title: '在“外观”和“字号”之间',
         body: '这一行落在“设置 → 通用”中，样式对齐官方“语言”行：右侧的下拉选择器带着当前主题的四色马赛克和名称。',
-        points: ['菜单依次列出 Default 和八套内置配色，各带色板', '行与菜单跟随界面语言，中英双语', '未选择任何主题时，设置页与未安装插件的 Harness 逐项一致'],
+        points: [
+          '菜单列出 Default、八套内置配色和你导入的主题，各带色板',
+          '“导入主题…”接受 .dsh-theme.json 文件；“管理主题…”导出或移除你的副本',
+          '“创建自己的主题…”在宿主支持时预填随包的主题创作 skill',
+          '行与菜单跟随界面语言，中英双语',
+          '未选择任何主题时，设置页与未安装插件的 Harness 逐项一致',
+        ],
         mock: { above: '外观', label: '主题', value: 'Nordic', below: '字号' },
       },
       preview: {
@@ -726,7 +732,7 @@ const zh: Dictionary = {
     limits: {
       title: '不做的保证',
       points: [
-        '只有八套内置配色：自定义 .dsh-theme.json 的导入导出和主题编辑器还在路线图上。',
+        '导入与导出使用 dsh-theme.json v1 格式；可视化的主题编辑器仍在路线图上。',
         '对比度检查是诊断而不是门禁——有些配色低于阈值，既不自动修复也不阻止预览或应用。',
         '预览由悬停驱动：键盘聚焦不触发预览，直接按回车即应用。',
         '只读目录 ctx.themeStudio.catalog 只存在于客户端——不支持动态注册，也没有 Host RPC。',
@@ -783,7 +789,12 @@ const zh: Dictionary = {
         '0.2.0-rc.1': 'DSH 0.2 候选版本；新增八个语义 token 已审计。',
         '0.2.0-rc.2': '对本插件而言接口形态与 rc.1 相同。',
         '0.2.1-alpha.1': '字体与字号保持由宿主管理，与覆盖并存。',
-        '0.2.1-alpha.2': '插件的开发 pin。',
+        '0.2.1-alpha.2': '主题快照形态变化；字体角色仍归宿主所有。',
+        '0.2.1-alpha.3': '运行时下限升至 Cordis 4.0.5-alpha.2；Web 端设置入口收进账号菜单。',
+        '0.2.1-alpha.4': '存在 engines.dsh 时安装准入优先读取它；本插件继续使用 peerDependencies。',
+        '0.2.1-alpha.5': '对本插件而言接口形态与 alpha.4 相同。',
+        '0.2.1-rc.1': '运行时下限回到正式版 Cordis 4.0.5 与 schemastery 3.18.5。',
+        '0.2.1-rc.2': '插件的开发 pin。',
         other: '未验证但不会被拒绝：插件在运行时没有门禁；安装时的 peer 范围仍可能拒绝。',
       },
     },
