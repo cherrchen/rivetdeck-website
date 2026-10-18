@@ -27,6 +27,12 @@ describe('GitHub Pages paths', () => {
       'https://cherrchen.github.io/rivetdeck-website/zh/plugins/theme-studio',
       'https://cherrchen.github.io/rivetdeck-website/plugins/multi-root-workspace',
       'https://cherrchen.github.io/rivetdeck-website/zh/plugins/multi-root-workspace',
+      'https://cherrchen.github.io/rivetdeck-website/plugins/git/changelog',
+      'https://cherrchen.github.io/rivetdeck-website/zh/plugins/git/changelog',
+      'https://cherrchen.github.io/rivetdeck-website/plugins/theme-studio/changelog',
+      'https://cherrchen.github.io/rivetdeck-website/zh/plugins/theme-studio/changelog',
+      'https://cherrchen.github.io/rivetdeck-website/plugins/multi-root-workspace/changelog',
+      'https://cherrchen.github.io/rivetdeck-website/zh/plugins/multi-root-workspace/changelog',
     ])
     expect(robots().sitemap).toBe('https://cherrchen.github.io/rivetdeck-website/sitemap.xml')
   })

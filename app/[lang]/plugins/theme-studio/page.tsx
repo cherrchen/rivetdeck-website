@@ -14,7 +14,7 @@ import { PaletteMark } from '@/components/ui/logo'
 import { Code, Rich } from '@/components/ui/rich'
 import { Section } from '@/components/ui/section'
 import { Frame, Screenshot } from '@/components/ui/screenshot'
-import { isLocale, localePath } from '@/lib/i18n/config'
+import { isLocale, localePath, type Locale } from '@/lib/i18n/config'
 import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
 import { fmt } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
@@ -60,6 +60,7 @@ export default async function ThemeStudioPage({ params }: PageProps<'/[lang]/plu
     { label: t.nav.palettes, href: '#palettes' },
     { label: t.nav.install, href: '#install' },
     { label: t.nav.compatibility, href: '#compatibility' },
+    { label: t.nav.changelog, href: withBasePath(localePath(lang, `${PATH}/changelog`)) },
     { label: t.nav.github, href: links.themeStudio.repo, external: true },
     { label: t.nav.npm, href: links.themeStudio.npm, external: true },
   ]
@@ -79,7 +80,7 @@ export default async function ThemeStudioPage({ params }: PageProps<'/[lang]/plu
       links: [
         { label: t.footer.docs.readme, href: links.themeStudio.readme },
         { label: t.footer.docs.tokens, href: links.themeStudio.tokens },
-        { label: t.footer.docs.changelog, href: links.themeStudio.changelog },
+        { label: t.footer.docs.changelog, href: localePath(lang, `${PATH}/changelog`) },
       ],
     },
     {
@@ -126,7 +127,7 @@ export default async function ThemeStudioPage({ params }: PageProps<'/[lang]/plu
       />
 
       <main id="main">
-        <Hero dict={dict} />
+        <Hero dict={dict} locale={lang} />
         <Features dict={dict} />
         <Install dict={dict} />
         <Compatibility dict={dict} />
@@ -138,19 +139,16 @@ export default async function ThemeStudioPage({ params }: PageProps<'/[lang]/plu
   )
 }
 
-function Hero({ dict }: { dict: Dictionary }) {
+function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const t = dict.themeStudio.hero
   const newTab = dict.common.opensInNewTab
   return (
     <section aria-labelledby="ts-hero-title">
       <Container className="pt-20 pb-6 sm:pt-28">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] text-fg-muted">
-          <a href={links.themeStudio.changelog} target="_blank" rel="noopener noreferrer" className="font-mono text-fg hover:underline hover:underline-offset-4">
+          <a href={`${withBasePath(localePath(locale, `${PATH}/changelog`))}#v${THEME_STUDIO_PLUGIN_VERSION}`} className="font-mono text-fg hover:underline hover:underline-offset-4">
             v{THEME_STUDIO_PLUGIN_VERSION}
-            <span className="sr-only">
-              {t.changelog}
-              {newTab}
-            </span>
+            <span className="sr-only">{t.changelog}</span>
           </a>
           <span>MIT · npm</span>
         </div>

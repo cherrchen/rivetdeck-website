@@ -29,7 +29,10 @@ export function pageMetadata({
   for (const l of locales) languages[localeConfig[l].hreflang] = withBasePath(localePath(l, path))
 
   // build-pages.mjs exports one stable social image per page under /social/.
-  const images = process.env.GITHUB_PAGES === 'true' ? [withBasePath(`/social/${path === '/' ? 'rivetdeck' : (path.split('/').pop() ?? 'rivetdeck')}.png`)] : undefined
+  const segments = path.split('/').filter(Boolean)
+  const leaf = segments.at(-1)
+  const socialName = path === '/' ? 'rivetdeck' : leaf === 'changelog' ? `${segments.at(-2)}-changelog` : (leaf ?? 'rivetdeck')
+  const images = process.env.GITHUB_PAGES === 'true' ? [withBasePath(`/social/${socialName}.png`)] : undefined
 
   return {
     title,

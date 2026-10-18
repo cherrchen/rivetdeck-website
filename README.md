@@ -1,11 +1,14 @@
 # Rivetdeck website
 
-Static-first Next.js site with two independent pages:
+Static-first Next.js site with independent pages per product:
 
 | Route | Purpose |
 | --- | --- |
 | `/` | Rivetdeck, the desktop app built on DeepSeek Harness: features, bundled plugins, downloads (Microsoft Store and GitHub Releases) |
+| `/plugins/git` | Product page for the Git DSH plugin |
+| `/plugins/theme-studio` | Product page for the Theme Studio DSH plugin |
 | `/plugins/multi-root-workspace` | Standalone product page for the Multi-root Workspace DSH plugin, with its own SEO and compatibility matrix |
+| `/plugins/git/changelog` etc. | Per-plugin release history, transcribed from each plugin repository's bilingual `CHANGELOG` files; linked from the product-page header and linking back |
 
 Every route exists in English (unprefixed, the default) and Simplified Chinese
 (`/zh/...`).
@@ -59,7 +62,7 @@ pnpm build:pages   # Exports to out/ with this repository's Pages URL by default
 ```
 
 The build uses an ignored `.pages-build/` workspace to export real English routes
-at `/` and `/plugins/multi-root-workspace`, plus the Chinese `/zh/` routes.
+at `/` and the plugin (product and changelog) pages, plus the Chinese `/zh/` routes.
 It omits the server proxy and catch-all route, exports `404.html`, disables
 server image optimization, and adds `.nojekyll`. All page URLs below the Pages
 origin include the `/rivetdeck-website` prefix. On Pages, unprefixed routes always
@@ -97,6 +100,7 @@ Facts are kept in typed data modules so a release changes one file:
 | `lib/site.ts` | Repository, release, npm and documentation URLs |
 | `lib/releases.ts` | Rivetdeck downloads per platform (Microsoft Store listing, GitHub Release assets and sizes) and the recommendation order |
 | `lib/multi-root-compat.ts` | Multi-root Workspace compatibility matrix and platforms |
+| `lib/changelog.ts` | Changelog types, GitHub URL helpers and per-plugin documentation link maps; release content itself lives in the dictionaries under `*.changelog.releases` |
 | `lib/themes.ts` | Theme Studio palettes used by the interactive preview |
 | `lib/screenshots.ts` | Screenshot dimensions (alt text lives in the dictionaries) |
 | `lib/i18n/dictionaries/` | All page copy, one typed file per locale |

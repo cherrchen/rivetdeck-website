@@ -3,7 +3,7 @@
  *
  * Source of truth: `SUPPORTED_DSH_RELEASES` in `src/compat/dsh-version.ts` of
  * cherrchen/dsh-plugin-multi-root-workspace, read on `main`. All sixteen
- * releases are in the published package (v0.1.7); the plugin refuses to start
+ * releases are in the published package (v0.1.8); the plugin refuses to start
  * its gated rows on anything else. Status is declared per row; it is never
  * derived from semver ordering because the plugin supports an exact list, not
  * a range.
@@ -20,7 +20,7 @@ import type { CompatPlatform, CompatRow, CompatStatus } from './compat'
 
 export type { CompatStatus, CompatRow }
 
-export const COMPAT_PLUGIN_VERSION = '0.1.7'
+export const COMPAT_PLUGIN_VERSION = '0.1.8'
 
 const row = (release: string, status: CompatStatus, since: string): CompatRow => ({ id: release, release, status, since })
 

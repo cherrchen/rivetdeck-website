@@ -185,6 +185,60 @@ const zh: Dictionary = {
       repo: 'GitHub 上的 Rivetdeck',
       upstream: '上游 DeepSeek Harness',
     },
+    changelog: {
+      meta: {
+        title: 'Rivetdeck 更新日志 — 全部版本',
+        description:
+          'Rivetdeck 的每个已发布版本，按时间倒序排列；发布说明在 GitHub Releases 上。',
+      },
+      nav: { home: '概览' },
+      title: '更新日志',
+      lead: 'Rivetdeck 的每个已发布版本，按时间倒序排列。',
+      note: '发布说明见 GitHub Releases；早期版本以 DeepSeek Harness Desktop 名义发布，使用 electron-dsh-* 标签。',
+      metaLine: '{count} 个已发布版本 · 最新 {version}',
+      latest: '最新',
+      compare: '在 GitHub 上与上一版本对比',
+      releaseNotes: '发布说明',
+      releases: [
+        { version: '0.2.0-beta.4', date: '2026-10-17' },
+        { version: '0.2.0-beta.3', date: '2026-10-14' },
+        { version: '0.2.0-beta.2', date: '2026-10-09' },
+        { version: '0.2.0-beta.1', date: '2026-10-05' },
+        { version: '0.1.7-beta.2', date: '2026-09-30' },
+        { version: '0.1.7-beta.1', date: '2026-09-28' },
+        { version: '0.1.5-beta.3', date: '2026-09-24' },
+        { version: '0.1.5-beta.2', date: '2026-09-14' },
+        { version: '0.1.5-beta.1', date: '2026-09-14' },
+        { version: '0.1.2-rc.1', date: '2026-09-11' },
+        { version: '0.1.2-beta.5', date: '2026-09-07' },
+        { version: '0.1.2-beta.4', date: '2026-09-06' },
+        { version: '0.1.2-beta.3', date: '2026-09-05' },
+        { version: '0.1.2-beta.2', date: '2026-09-04' },
+        { version: '0.1.2-beta.1', date: '2026-09-03' },
+        { version: '0.1.1-rc.2', date: '2026-08-28' },
+        { version: '0.1.1-beta.11', date: '2026-08-26' },
+        { version: '0.1.1-beta.10', date: '2026-08-25' },
+        { version: '0.1.1-beta.9', date: '2026-08-24' },
+        { version: '0.1.1-beta.8', date: '2026-08-24' },
+        { version: '0.1.1-beta.7', date: '2026-08-23' },
+        { version: '0.1.1-beta.6', date: '2026-08-23' },
+        { version: '0.1.1-beta.5', date: '2026-08-23' },
+        { version: '0.1.1-beta.4', date: '2026-08-22' },
+        { version: '0.1.1-beta.3', date: '2026-08-22' },
+        { version: '0.1.1-beta.2', date: '2026-08-21' },
+        { version: '0.1.1-beta.1', date: '2026-08-21' },
+        { version: '0.1.0-beta.5', date: '2026-08-21' },
+        { version: '0.1.0-beta.4', date: '2026-08-21' },
+        { version: '0.1.0-beta.3', date: '2026-08-21' },
+        { version: '0.1.0-rc.8', date: '2026-08-20' },
+        { version: '0.1.0-beta.2', date: '2026-08-20' },
+        { version: '0.1.0-beta.1', date: '2026-08-20' },
+        { version: '0.1.0-rc.7', date: '2026-08-17', tag: 'electron-dsh-v0.1.0-rc.7' },
+        { version: '0.1.0-rc.6', date: '2026-08-17', tag: 'electron-dsh-v0.1.0-rc.6' },
+        { version: '0.1.0-rc.5', date: '2026-08-17', tag: 'electron-dsh-v0.1.0-rc.5' },
+      ],
+    },
+
   },
 
   multiRoot: {
@@ -195,7 +249,7 @@ const zh: Dictionary = {
       keywords: ['DeepSeek Harness', 'DSH 插件', '多根工作区', 'monorepo', '编程智能体', '沙箱'],
     },
     brandHome: 'Multi-root Workspace 首页',
-    nav: { features: '功能', security: '安全', install: '安装', compatibility: '兼容性', github: 'GitHub', npm: 'npm' },
+    nav: { features: '功能', security: '安全', install: '安装', compatibility: '兼容性', changelog: '更新日志', github: 'GitHub', npm: 'npm' },
     cta: '安装',
     footer: {
       plugin: { title: '插件', features: '功能', security: '安全', install: '安装', compatibility: '兼容性' },
@@ -457,6 +511,158 @@ const zh: Dictionary = {
       install: '安装插件',
       github: '在 GitHub 上查看',
     },
+    changelog: {
+      meta: {
+        title: 'Multi-root Workspace 更新日志 — 插件的全部版本',
+        description:
+          'DeepSeek Harness Multi-root Workspace 插件的发布历史：每个已发布版本的新功能、变更与修复，按时间倒序排列。',
+      },
+      nav: { plugin: '插件页' },
+      title: '更新日志',
+      lead: 'Multi-root Workspace 插件的每个已发布版本，按时间倒序排列。',
+      metaLine: '{count} 个已发布版本 · 最新 {version}',
+      latest: '最新',
+      compare: '在 GitHub 上与上一版本对比',
+      releaseNotes: '发布说明',
+      kinds: {
+        added: '新增',
+        changed: '变更',
+        fixed: '修复',
+        removed: '移除',
+        deprecated: '弃用',
+        security: '安全',
+        upgrade: '升级注意',
+      },
+      releases: [
+        { version: '0.1.8', date: '2026-10-18', sections: [
+            { kind: 'fixed', items: [
+                '<b>DSH 0.2.0 上权限设置页不可用</b>：以 <code>link:</code> 方式安装时，插件把只作为宿主服务消费、自身从不加载的可选包（<code>dsh-lsp</code> / <code>dsh-lsp-stdio</code> / <code>dsh-working-directory</code> 等）解析到检出目录自己的 devDependencies，版本统一的宿主被误判为 <code>mixed</code>；同时两个 provider 替身行 inject 兼容门禁而上游 <code>fs-sandbox</code> / <code>sandbox</code> 已被无条件禁用，门禁一旦拒绝，<code>ctx.fs</code> / <code>ctx.sandbox</code> 消失并连带 <code>ctx.shell</code> 与 <code>permissionPresets</code> 瘫痪（<code>permissionPresets/catalog</code> 报 <code>service-unavailable</code>）。可选包现按"谁加载副本、经哪个锚点"分为运行时加载、宿主服务与 runner 锚定三类——插件根内的宿主服务副本不再作证，Windows ACL 包改从 <code>dsh-sandbox-local</code> 锚点取证；两个 provider 行不再 inject 门禁，在被拒安装上退化为上游等价行为，宽授权行的门禁不变（<adr0009>ADR-0009 修订</adr0009>）。'
+              ] }
+          ] },
+        { version: '0.1.7', date: '2026-10-17', sections: [
+            { kind: 'added', items: [
+                '<b>Files 页签内浏览附加根</b>：文件树 header 新增根切换器（伪装成路径标签的菜单入口，列出主根与全部附加根及其状态）；选中附加根时由逐字节复刻的上游 Files 树接管树区——行高、图标、缩进、空态与原生逐项一致，原生 reload 由 header 原位同款图标钮顶替，切回主根即完整还原。原生 open-in-app 按钮由复刻件顶替并把目标换成选中根（<adr0015>ADR-0015</adr0015>、<adr0016>ADR-0016</adr0016>）。面板行带访问级别徽标，所有路径用同一 <code>PathCopy</code> 控件一点即复制；只读 → 读写升级经确认层；添加行的权限选择器为锚定下拉。',
+                '<b>附加根访问级别升级为三态</b>：<code>add [--inherit|--read-only|--read-write]</code>（或面板添加行选择）。<code>inherit</code> 跟随会话模式——新登记的默认值，旧版插件登记的可写记录也迁移为 <code>inherit</code>；<code>read-only</code> 可读、可浏览、参与 LSP 与指令注入，但任何模式（包括 <code>danger-full-access</code>）都不授予写权限；<code>read-write</code> 固定在全局只读会话里仍可写。<code>/workspace-folders access <ref> inherit|read-only|read-write</code> 与面板按根切换（扩权要求该根此刻可用且不重新授权路径）。持久化布局向下兼容：旧版本插件把只读记录判为无效而非升级为可写（<adr0013>ADR-0013</adr0013>、<adr0017>ADR-0017</adr0017>）。',
+                '<b>Full-access 也强制执行拒写边界</b>：shell / pwsh 执行器、<code>run_code</code>（PTC）与 agent PTY 在 <code>danger-full-access</code> 下绕过 <code>confine</code>，进程围栏为它们统一套用受限内核 profile（macOS Seatbelt、Linux bwrap——上游选定 Landlock 的主机同样改走 bubblewrap，bwrap 不可用时该组合在启动前拒绝），显式只读根与被工具封顶的根在该模式下依旧拒写；fs fence 读取同一份 deny 集（<adr0017>ADR-0017</adr0017>）。',
+                '<b>受限 Full-access 保护 <code>$DSH_HOME</code></b>：只要存在任何拒写边界（只读根、工具封顶成员或注册表权限不可用），home 目录就进入 deny 集——存根存储、注册表 lease 与用户 profile 都在其中；零附加根且注册表健康时 Full-access 与上游逐字节一致（<adr0017>ADR-0017</adr0017>）。',
+                '<b>面板用户终端不受约束</b>：进程围栏只对 env 带 <code>DSH_PTY_SESSION_ID</code> 的 spawn 生效（agent PTY 由 terminal-bash backend 盖章）；你在面板打开的终端属于用户行为，任何模式直通（<adr0017>ADR-0017</adr0017>）。',
+                '<b>Windows 上 Full-access 的局部拒写</b>：随包提供需管理员安装的每用户特权 broker——安装器只向专用虚拟服务账户 <code>NT SERVICE\\DshMultiRootBroker-<安装哈希></code> 授予固定 LSA 权限（<code>SeServiceLogonRight</code>、<code>SeCreateTokenPrivilege</code>、<code>SeAssignPrimaryTokenPrivilege</code>、<code>SeTcbPrivilege</code>、<code>SeDebugPrivilege</code>、<code>SeImpersonatePrivilege</code>），不为宿主用户提权；broker 为受限子进程构造普通 deny-only 组 token，runner 读回验证后才放行。未安装 broker 时该组合拒绝启动；Windows 执行仍如实报告 partial 边界（<adr0020>ADR-0020</adr0020>）。',
+                '<b>per-tool 写权限封顶</b>：<code>multi-root-scope</code> 行配置 <code>toolAccess: { <工具名>: \'read-only\' }</code> 后，该工具永远不能写任何附加根（主根不受影响）；封顶经 <code>tools/execute</code> 的真实 dispatch 上下文执行，非法配置 fail closed（<adr0013>ADR-0013</adr0013>）。',
+                '<b>附加根数量上限</b>：每个主根默认最多登记 16 条附加根记录（<code>maxAdditionalRoots</code> 可调至 64）；超限的新增被拒绝，历史超限记录照常授予。列表如实显示 <code>N of LIMIT</code>（<adr0014>ADR-0014</adr0014>）。',
+                '<b>Provider 冲突检测</b>：另一插件也替换 <code>ctx.fs</code> / <code>ctx.sandbox</code> 时，多根行响亮失败并拒绝一切授予，而不是依赖装载顺序（<adr0014>ADR-0014</adr0014>）。',
+                '<b>精确支持 DSH <code>0.2.1-alpha.3</code>、<code>0.2.1-alpha.4</code>、<code>0.2.1-alpha.5</code>、<code>0.2.1-rc.1</code> 与 <code>0.2.1-rc.2</code></b>。上游 <code>alpha.3</code> 起 <code>dsh-storage-domain</code> 把 <code>zod</code> 固定为 <code>4.4.3</code>，两个 zod 副本的类型互不兼容，域 schema 改由存储域自身解析的 zod 构建；<code>alpha.4</code> 起上游版本需求优先读 <code>engines.dsh</code>，本插件仍以 <code>peerDependencies</code> 为唯一版本契约。开发 pin 提升到 <code>0.2.1-rc.2</code>（cordis <code>4.0.5</code>；<code>alpha.3</code>–<code>alpha.5</code> 的 cordis 为 <code>4.0.5-alpha.2</code>）。'
+              ] },
+            { kind: 'changed', items: [
+                '<b>模型侧拓扑文案重写</b>：按当前模式与平台如实陈述授权——可写与只读根分组列出，声明 cwd/worktree 切换不改变授权、授权变化只约束后续操作与新进程；配置封顶工具时点名；Windows 附带 restricted-token partial-enforcement 与读不受其 confine 的说明（<adr0013>ADR-0013</adr0013>）。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>注册表权限不可用不再读作「没有限制」</b>：读到空根表的进程（争用、存储故障、配置非法）曾在 Full-access 下放行一切写；现在 <code>danger-full-access</code> 与 <code>workspace-write</code> 都只授予主根写权限（共享平台临时区不再可写），显式拒写边界仍优先，接管 lease 后恢复（<adr0017>ADR-0017</adr0017>）。',
+                '<b>改名祖先目录不能再解除只读边界</b>：此前把被拒根的父目录改名即可把整棵树搬出路径拒写边界；现在 Seatbelt 同时拒写被拒根的每个祖先目录本身（<code>(literal …)</code>），bwrap 把祖先自绑为挂接点使 rename 返回 EBUSY；Windows 用不共享删除的目录句柄钉住根及祖先，直到受限 Job 后代排空，防止 shell 搬走目录后经宿主文件工具绕过。祖先目录的元数据或改名操作会受相应机制限制（<adr0017>ADR-0017</adr0017>、<adr0020>ADR-0020</adr0020>）。',
+                '<b>负授权不随排序、消失或冲突丢失</b>：存量重叠登记双方撤销成员授权，但可信记录的拒写边界仍保留；新增根也检查 missing / redirected 根的保留边界。全局只读会话追加固定读写根后统一应用 deny，无法表达子树减法的后端在启动前拒绝。',
+                '<b>Windows 拒写前检查全部根的硬链接</b>：任一根存在多链接文件或不可检查节点时，在任何 ACL 写入前拒绝启动，避免改写 pnpm store 或其他链接的共享对象。新增宿主维护命令 <code>/workspace-folders isolate-profiles [--apply]</code>：默认只读检查，显式 apply 仅将 profile 导入配置设为 copy；存量依赖仍需按报告重装，不修复历史 ACL（<adr0020>ADR-0020</adr0020>）。',
+                '<b>Linux 上消失的拒写根失败关闭而非放行</b>：deny 根的 bwrap 挂载恢复为强制项——目录在登记后或 profile 构造后被删除时命名空间搭建失败、命令不会执行，不再出现在可写父挂载下被重建写入的缺口（<adr0017>ADR-0017</adr0017>）。',
+                '<b>附加根重新登记保留原权限</b>：命令与面板在未显式选择访问级别时不发送默认值，避免 revive 把只读登记静默升级；达到根上限时仍可从面板重新登记既有的不可用项。',
+                '<b>面板兼容旧宿主的根列表</b>：旧响应缺少 <code>limit</code> / <code>count</code> 时仍可显示和操作，显式非法值仍拒绝。',
+                '<b>非法 toolAccess 的拓扑文案与执行一致</b>：模型明确看到所有附加根写被拒，不再被告知 read-write 登记可写；根上限配置 <code>null</code> 同样 fail closed。',
+                '<b>安装副本在 Windows（DSH 0.1.7-alpha.1+）上的受限命令恢复可用</b>：发布的 v0.1.6 从 npm/tarball 安装后，独立 Windows runner 在首行之前就死于 <code>ERR_MODULE_NOT_FOUND</code>——它的静态模块图 import 的上游包无法从插件安装目录解析，受影响版本上配置了附加根的会话里每条受限命令都会失败。runner 的静态图现在只含 <code>node:</code> 内置，上游 ACL 包改为从上游 runner 自身位置按包自引用加载。',
+                '<b>Windows 上的网络与设备根被拒绝</b>：UNC（<code>\\\\server\\share</code>）、<code>\\\\?\\</code>、<code>\\\\.\\</code> 与映射网络盘此前会被当成普通附加根登记；现在在任何文件系统触碰之前以 <code>unsupported-path</code> 词法拒绝，存量记录标记为 <code>invalid</code>，受限执行侧 fail closed（<code>SandboxUnavailableError</code> / 退出 127），绝不静默放开（<adr0011>ADR-0011 修订</adr0011>）。',
+                '<b>Windows runner 在 spawn 前重新验证根</b>：授权 ACL 之后、启动子进程之前重新确认每个根仍存在且是同一 canonical 目录，并要求 <code>--temp</code> 已存在；不满足即退出 127，不启动无约束进程。',
+                '<b>Windows 上「在文件管理器中显示」不再误报失败</b>：<code>explorer.exe</code> 成功时也返回 1，win32 现在接受退出码 0/1。',
+                '<b>面板文件端点拒绝反斜杠路径</b>：POSIX 上 <code>..\\..\\x</code> 此前会解析到所选根内部；现在词法拒绝。',
+                '<b>Windows broker 放行 UAC 过滤调用方并诊断打包子进程</b>：非提权 UAC 管理员发起的受限命令此前被 broker 以「unrestricted 身份」拒绝；现在只拒绝携带 restricting SID 或 AppContainer 的调用方，Store/MSIX 版子进程（如 WindowsApps 别名的 <code>pwsh.exe</code>）在启动前给出指向 MSI/ZIP 版的诊断。升级后需用 <code>install.ps1</code> 重装一次 broker 才会生效（<adr0020>ADR-0020 修订</adr0020>）。',
+                '<b>面板文件树调用可中止</b>：组件卸载、路径或会话变化时取消在飞的 <code>files</code> / <code>readFile</code> 调用，过期响应不再渲染为错误。'
+              ] },
+            { kind: 'changed', items: [
+                '<b>Windows 受限 shell 行为说明</b>：受限 shell 是 pwsh（Git Bash/MSYS 在 restricted token 下无法启动，与上游 runner 一致）；在插件 runner 下 confined 子进程能收到 Ctrl+C 且 runner 镜像其退出码，而上游 runner 的子进程因继承 ignore-Ctrl+C 标志收不到（两者均为既成事实，见 <adr0011>ADR-0011 修订</adr0011>）。',
+                '安装提示补充：被 <code>koffi</code> 构建授权打断的首次安装，在授权后若插件未进 <code>dsh.profile.bundles</code>，需一次 <code>remove</code> + <code>add</code> 完成激活（<tbInstallApproval>故障排查</tbInstallApproval>）。'
+              ] }
+          ] },
+        { version: '0.1.6', date: '2026-10-11', sections: [
+            { kind: 'added', items: [
+                '精确支持 DSH <code>0.2.1-alpha.1</code> 与 <code>0.2.1-alpha.2</code>。动态 working directory 与 Session origin 分离：cwd 切换不改变注册表归属或授权根；新增 Worktree 管理、附加根 LSP 路由、Windows 内核级多根，以及 Workspace Folders 附加根文件浏览与预览。',
+                '附加根说明文件的 cwd 切换恢复与补发行为，避免上游撤回后遗漏仍有效的说明。'
+              ] },
+            { kind: 'changed', items: [
+                '附加根文件树与 LSP 按根隔离；Worktree 操作不改变根注册表授权。'
+              ] }
+          ] },
+        { version: '0.1.5', date: '2026-09-30', sections: [
+            { kind: 'added', items: [
+                '精确支持 DSH <code>0.2.0-rc.1</code> 与 <code>0.2.0-rc.2</code>，保留此前全部支持版本。CI 会在所有启用的操作系统上验证兼容合同中的每个版本。'
+              ] }
+          ] },
+        { version: '0.1.4', date: '2026-09-25', lead: '在 <code>v0.1.3</code> 的精确 allowlist 契约不变的前提下，把受支持的上游运行时扩展到 <code>0.1.7-rc.2</code>；设计取舍仍见 <adr0009>ADR-0009</adr0009>。', sections: [
+            { kind: 'added', items: [
+                '<b>支持上游运行时 <code>0.1.7-rc.2</code></b>。相对 <code>0.1.7-rc.1</code>，<code>confine</code>、指令渲染、session format 4、工具失败位、面板图标、当前会话目录、进程内启动和 bash 执行的形状都没变，适配层没有新分支。cordis 仍是 <code>~4.0.4</code>。<code>rc.1</code> 起的安装期 peer 门禁仍然要求这个精确版本出现在 <code>peerDependencies</code> 里。开发 pin 仍是 <code>0.1.5-rc.2</code>。'
+              ] }
+          ] },
+        { version: '0.1.3', date: '2026-09-24', lead: '在 <code>v0.1.2</code> 的精确 allowlist 契约不变的前提下，把受支持的上游运行时扩展到 <code>0.1.7-alpha.2</code> 与 <code>0.1.7-rc.1</code>；设计取舍仍见 <adr0009>ADR-0009</adr0009>。', sections: [
+            { kind: 'added', items: [
+                '<b>支持上游运行时 <code>0.1.7-alpha.2</code> 与 <code>0.1.7-rc.1</code></b>。相对 <code>0.1.7-alpha.1</code>，<code>confine</code>、指令渲染、session format 4、工具失败位、面板图标、当前会话目录、进程内启动和 bash 执行的形状都没变，适配层没有新分支。<code>0.1.7-rc.1</code> 起，<code>dsh plugin add</code> 会按 <code>peerDependencies</code> 拒绝不满足当前运行时的插件，所以这两项必须出现在精确 allowlist 里。开发 pin 仍是 <code>0.1.5-rc.2</code>。'
+              ] }
+          ] },
+        { version: '0.1.2', date: '2026-09-22', lead: '在 <code>v0.1.1</code> 的精确 allowlist 契约不变的前提下，把受支持的上游运行时扩展到 <code>0.1.6-alpha.2</code> 与 <code>0.1.7-alpha.1</code>；设计取舍仍见 <adr0009>ADR-0009</adr0009>。', sections: [
+            { kind: 'added', items: [
+                '<b>支持上游运行时 <code>0.1.6-alpha.2</code></b>，与 <code>0.1.5-rc.2</code>、<code>0.1.6-alpha.1</code> 一起进 allowlist。该版本的 <code>confine</code> 异步形状与 instruction renderer 名字与 <code>0.1.6-alpha.1</code> 相同；客户端当前会话改从目录行的 <code>retainedBy.mainView</code> 读取（见 Fixed）。开发 pin 仍是 <code>0.1.5-rc.2</code>。',
+                '<b>支持上游运行时 <code>0.1.7-alpha.1</code></b>。<code>confine</code> 与 instruction renderer 的形状没变，但这一版有几处必须适配：session format 4 不再接受 <code>kind: \'plugin\'</code>，附加根指令改用本插件自己的 source kind <code>multi-root-workspace</code>（format 3 及更早仍是 <code>plugin</code>）；工具失败位从 content block 移到消息本身；面板图标从像素命名改为 Regular 线宽；进程内启动改为 <code>createRuntimeResolution</code> + <code>PluginPackages</code>；bash 执行从 <code>shell.run</code> 改为 <code>shell.execute().result()</code>。该版本的 <code>dsh</code> 依赖 cordis <code>^4.0.3</code>，探测时必须把 cordis 钉到这个版本，否则两份 <code>@deepseek-ai/dsh-tools</code> 会让工具调度用的 Symbol 对不上、工具调用在第一步失败。开发 pin 仍是 <code>0.1.5-rc.2</code>。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b><code>0.1.6-alpha.2</code> 上已打开的会话被面板显示成「当前没有活动会话」</b>：该版本从 Session 目录快照删除了 <code>current</code>，当前会话改由主视图 <code>retain(..., { source: \'mainView\' })</code> 持有，投影在目录行的 <code>retainedBy.mainView</code>。<code>src/compat/client-session.ts</code> 用结构探测同时认两种形状；目录有行但没有主视图时仍显示空态，不会把 <code>ids[0]</code> 当成当前会话。'
+              ] }
+          ] },
+        { version: '0.1.1', date: '2026-09-16', lead: '<code>v0.1.0</code> 之后的<b>硬化批次（H1–H4）</b>：不新增面向使用者的"功能"，而是补齐跨进程、面板权威、上游兼容性与附加根指令四类边界。设计取舍见 <adr0007>ADR-0007</adr0007>、<adr0008>ADR-0008</adr0008>、<adr0009>ADR-0009</adr0009>、<adr0010>ADR-0010</adr0010>。', sections: [
+            { kind: 'upgrade', title: '升级注意（不兼容变更）', items: [
+                '<b>首次 <code>dsh plugin add</code> 会失败一次，四种安装来源皆然</b>：本版本新引入原生依赖 <code>koffi</code>（Windows 上 Registry Authority 的 FFI 封装），而 pnpm ≥10 默认不运行依赖的构建脚本，因此第一次 <code>add</code> 会以 <code>[ERR_PNPM_IGNORED_BUILDS]</code> 退出、插件不会进 <code>dsh.profile.bundles</code>。<code>dsh</code> 会把待决项留在该 profile 的 <code>pnpm-workspace.yaml</code> 里（<code>koffi: set this to true or false</code>），改成 <code>true</code> 再执行一次 <code>add</code> 即完成。<code>v0.1.0</code> 的 npm / tarball 来源没有这一步。详见<tbInstallApproval>故障排查：安装停在构建授权</tbInstallApproval>。',
+                '<b>支持的上游运行时收窄为精确清单 <code>0.1.5-rc.2</code>、<code>0.1.6-alpha.1</code></b>（原先是 <code>>=0.1.2-alpha.4 <0.2.0</code> 范围）。宿主版本不在这两个之一，或若干 <code>@deepseek-ai/dsh-*</code> 包混装了不同版本时，<code>fs</code> / <code>sandbox</code> / <code>registry</code> / <code>instructions</code> 四行<b>不启动</b>，组合退化为"未装这个插件"并在启动时打印说明。理由是这个插件替换的是围栏本身、靠识别上游实测出的方言 argv 形状工作，而 npm 语义化范围等于对未验证版本做承诺（<adr0009>ADR-0009</adr0009>）。诊断步骤见<tbUnsupported>故障排查：DSH 版本不在支持矩阵上</tbUnsupported>。<b>若你仍在 <code>v0.1.0</code> 时代实测可用的 <code>0.1.2-rc.1</code> 运行时上（例如某些已安装的桌面端自带运行时），请先升级该运行时，否则本版本不会生效。</b>',
+                '<b>面板不再接受客户端指名的根</b>：所有面板端点必填 <code>sessionId</code>，主根只来自 host 侧的 <code>session.header.cwd</code>；客户端 <code>primaryRoot</code> 字段与 <code>sandboxPolicy</code> 回退已删除。浏览器当前没有活动会话时，面板显示"当前没有活动会话"并且不向 host 发请求（<adr0008>ADR-0008</adr0008>）。'
+              ] },
+            { kind: 'added', items: [
+                '<b>跨进程 Registry Authority（H1）</b>：同一 <code>$DSH_HOME</code> 上同时只允许一个 DSH 进程持有根登记表（POSIX <code>flock</code> / Windows named semaphore，进程退出或崩溃由内核释放锁）。争用方 fail-closed——发布空 scope、注册表写操作报 <code>registry-contended</code>；持锁者退出后，<code>/workspace-folders list</code> 或面板刷新即经 <code>refresh()</code> 接管（<adr0007>ADR-0007</adr0007>）。',
+                '<b>附加根自身的指令文件进入模型上下文（H4）</b>：附加根<b>顶层</b>的 <code>AGENTS.md</code> / <code>CLAUDE.md</code> 在会话第一步之前注入；本会话<b>成功</b> <code>read</code> / <code>write</code> / <code>edit</code> 触碰过的子目录（含被触碰文件的每个祖先目录，直到该附加根）在其目录被考察到时增量补投；文件内容变化只重发该文件，文件或根消失时<b>显式撤回</b>。全部附加根共享 64 KiB 预算，以 <code>user</code> role 的 <code>{ kind: \'plugin\', form: \'instructions\' }</code> 消息投递（不是 <code>systemPrompt</code>）。上游的指令发现从会话 cwd 向上走，永远到不了附加根，这是本项存在的原因（<adr0010>ADR-0010</adr0010>）。',
+                '<b>支持第二个上游运行时 <code>0.1.6-alpha.1</code></b>，与基线 <code>0.1.5-rc.2</code> 一起进 allowlist；两者都跑过完整矩阵（<code>confine</code> 的同步/异步形状差异、instruction renderer 改名、两种 LLM wire 协议均由适配层与 smoke 吸收）。',
+                '<b><code>pnpm compat:check</code></b>：allowlist / <code>peerDependencies</code> / 开发 pin / 已安装树四者一致性门禁，是 CI 的第一步。',
+                '<b><code>multi-root-compat</code> 启动门禁行</b>：版本判定变成其余安全相关行的前置条件，而不是一条日志。',
+                '<b>按周升级车道</b>（<code>upgrade.yml</code>）：自动重指最新上游 pre-release 并跑完整矩阵，只读权限、不提交、不自动扩大 allowlist。',
+                '两个故障排查条目：<tbUnsupported>DSH 版本不在支持矩阵上</tbUnsupported>、<tbRegistryOwner>根登记表被另一个进程持有</tbRegistryOwner>。'
+              ] },
+            { kind: 'changed', items: [
+                '上游版本差异集中在 <code>src/compat/</code> 适配层，一律按<b>结构探测</b>（返回值是否 thenable、导出的是哪个名字）判断，不比较版本字符串；业务代码不再出现任何版本判断。',
+                '两个可选 peer（<code>@deepseek-ai/dsh-llm</code>、<code>@deepseek-ai/dsh-agent-instructions</code>）改为<b>按需加载</b>：barrel 的加载期依赖集合等于必需包集合，一个从不需要构造消息的最小组合不会在加载时失败。',
+                '<code>pnpm verify:all</code> 有意<b>不含</b> <code>compat:check</code>（升级车道要在一个还不在 allowlist 上的候选版本上跑完整矩阵）；CI 主车道单独把它排在最前。',
+                '新增 <code>./compat</code> 与 <code>./instructions</code> 子路径导出。',
+                '安装与发版：<code>prepare</code> 脚本改为自包含（git 安装由 pnpm 现场构建，用户需先授权 <code>allowBuilds</code>）；README 补齐 npm / tarball / 本地路径 / GitHub 四种安装来源；npm 发布改用 <b>trusted publishing（OIDC）</b>，仓库不再保存任何 npm 凭证。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>注册表拆除顺序</b>：原先"先释放内核 lease 再关闭 domain"，继任进程可能拿到 lease 后打开一份缺了本进程最后一次写入的快照；现在整个拆除在 store-wide authority 转场队列内按"排空在飞 mutation → 关闭 domain → 释放 lease"执行，并置 <code>disposed</code> 拒绝后续 acquisition（<code>tests/registry-lease.spec.ts</code>）。',
+                '<b>指令投递状态按实际产物提交</b>：renderer 省略或截断文件时不再记录完整 digest；消息构造失败或被取消不再把指令当成已送达；预算耗尽后仍检查撤回，跨根撤回与延迟触碰不再被跳过。',
+                '<b>附加根中间目录的指令文件</b>此前永远到不了模型（只考察被触碰文件的父目录），现在其每个祖先目录都会被考察。',
+                '<b><code>DSH_MULTI_ROOT_COMPAT=warn</code> 收紧</b>：只放宽 <code>unsupported</code>（版本一致、allowlist 未列名——升级车道要探测的正是这一种），<code>mixed</code> / <code>incomplete</code> 在两种模式下都拒绝。',
+                '<b>"包不存在"与"已安装但求值失败"分离</b>：后者不再被当成缺失缓存，进程不会静默停止投递附加根指令。',
+                '<b>Windows 锁命名按物理路径归一化</b>：经路径别名（junction / 符号链接）访问同一 store 的两个进程此前会各持一把锁，可同时成为 authority。',
+                '<b>会话事件配对按会话分隔</b>：不同会话使用相同 <code>tool/call</code> id 时不再互相覆盖、把目录记到另一个会话。',
+                '<b>升级工作流的 shell 输入处理</b>：手动版本与候选版本经 step <code>env</code> 传值并校验为单行，不再拼进 <code>run</code> 源码。',
+                '<b>本地打包不再夹带历史构建产物</b>：<code>lib/</code> 在 <code>bundle</code> 之前先清掉上一轮的 JS 面（tsdown 的共享 chunk 按内容哈希命名，旧名字不会自己消失）。<code>pnpm pack</code> 出的 tarball 现在只含一轮构建的制品，不再把历史 chunk 当死代码发出去（<code>files</code> 里的 <code>lib/*.js</code> 会全部进包）。'
+              ] }
+          ] },
+        { version: '0.1.0', date: '2026-09-13', lead: '首个发布版本：MVP 的三个里程碑（M1–M3）。', sections: [
+            { kind: 'added', items: [
+                '<b>插件骨架与组合方式（M1）</b>：以 bundle patch 替换上游 <code>fs-sandbox</code> 与 <code>sandbox</code> 两行 provider 并插入本插件的行（<code>bash-sandbox</code> 保持上游——bash 与 PTY 的 confinement 全部经 <code>ctx.sandbox</code>）。未配置附加根时行为与未装插件逐项一致；组合、disable/insert 时序与 provide 冲突三类结构性风险由差分测试钉住。',
+                '<b>多根能力（M2）</b>：<code>ctx.multiRootScope</code>（唯一授权源）、<code>MultiRootFileSystem</code>（进程内 containment fence，子类自上游 <code>LocalFileSystem</code>，其自身没有 fence）、<code>MultiRootSandboxProvider</code>（在 Seatbelt / bwrap / Landlock 三种方言的 profile 上克隆上游 grant 拼法追加附加根）；fs 与 bash/PTY 共享同一条 scope，安全不降级。',
+                '<b>模型可见的拓扑快照</b>：仅 <code>workspace-write</code> + 非空附加根时经 <code>systemPrompt.context</code> 输出（同 workspace、cwd 不变）；空根与只读模式逐字节不变。',
+                '<b>根注册表（M3）</b>：以 canonical 主根为键持久化在 <code>multi_root_workspace</code> storage domain，写入与读取都做校验；每条记录带 <code>recordedPath</code>，<b>重新解析路径不等于重新授权</b>——目录被替换成指向别处的符号链接时该根标为 <code>redirected</code> 并暂不授予。',
+                '<b><code>/workspace-folders</code> 命令</b>：<code>list</code> / <code>add <路径></code>（无参数时打开系统目录选择器）/ <code>alias</code> / <code>remove</code> / <code>reveal</code>，headless 下同样可用。',
+                '<b>Workspace Folders 浏览器面板</b>：侧栏底部动作 + 自绘对话框，经插件自己的 Connection RPC 通道与 host 通信；文案中英双语跟随界面语言，配色全部使用 host 的 <code>var(--dsw-*)</code> 设计 token。',
+                '<b>跨仓库旅程 e2e</b>（<code>pnpm smoke:journey</code>）：在 <code>web</code> 与 <code>headless</code> 两种组合下各驱动一轮真实 agent 回合，跨两个 Git 仓库（主根 <code>repo-a</code>、附加根 <code>repo-b</code>）并断言根外写入被拒。无需模型凭据（脚本化模型端点）。',
+                '<b>安装形态</b>：npm 注册表 / tarball / 本地路径 / GitHub；tag 触发的 <code>release.yml</code> 完成 verify → npm publish（provenance）→ GitHub Release。',
+                '<b>平台范围</b>：macOS（Seatbelt）与 Linux（bwrap / Landlock）的内核级多根全量；Windows 覆盖 <code>fs</code> 写路径，受限 bash/PTY 的多根不在本期（非空 scope 时输出一次显式告警）。'
+              ] },
+            { kind: 'fixed', items: [
+                '发布前外部评审提出的 8 项发现（其中 3 项发布阻断）全部修复，每项各带一个回归测试：登记目录被替换为符号链接后授权转移（引入 <code>recordedPath</code>，<b>重新解析路径不等于重新授权</b>）、并发修改注册表丢写或复活已撤销的授权（每个主根的变更串行）、刷新不重新检查目录、手输路径被目录选择器覆盖、<code>reveal</code> 的应答契约与失败码、重复 id 未校验、主根未纳入嵌套校验、CI 先测后构建。'
+              ] }
+          ] }
+      ],
+    },
+
   },
 
   git: {
@@ -467,7 +673,7 @@ const zh: Dictionary = {
       keywords: ['DeepSeek Harness', 'DSH 插件', 'git', '侧边栏', 'diff', '提交历史', '编程智能体'],
     },
     brandHome: 'Git 插件首页',
-    nav: { features: '功能', design: '设计', install: '安装', compatibility: '兼容性', github: 'GitHub', npm: 'npm' },
+    nav: { features: '功能', design: '设计', install: '安装', compatibility: '兼容性', changelog: '更新日志', github: 'GitHub', npm: 'npm' },
     cta: '安装',
     footer: {
       plugin: { title: '插件', features: '功能', design: '设计', install: '安装', compatibility: '兼容性' },
@@ -657,6 +863,146 @@ const zh: Dictionary = {
       install: '安装插件',
       github: '在 GitHub 上查看',
     },
+    changelog: {
+      meta: {
+        title: 'Git 更新日志 — Git 插件的全部版本',
+        description:
+          'DeepSeek Harness Git 插件的发布历史：每个已发布版本的新功能、变更与修复，按时间倒序排列。',
+      },
+      nav: { plugin: '插件页' },
+      title: '更新日志',
+      lead: 'Git 插件的每个已发布版本，按时间倒序排列。',
+      metaLine: '{count} 个已发布版本 · 最新 {version}',
+      latest: '最新',
+      compare: '在 GitHub 上与上一版本对比',
+      releaseNotes: '发布说明',
+      kinds: {
+        added: '新增',
+        changed: '变更',
+        fixed: '修复',
+        removed: '移除',
+        deprecated: '弃用',
+        security: '安全',
+        upgrade: '升级注意',
+      },
+      releases: [
+        { version: '0.2.7', date: '2026-10-17', sections: [
+            { kind: 'changed', items: [
+                '精确 DSH 支持清单纳入 <code>0.2.1-rc.2</code>，验证范围覆盖 <code>0.1.5-rc.2</code> 至 <code>0.2.1-rc.2</code> 的全部已发布版本。manifest 同时新增 <code>engines.dsh</code> 声明，内容与精确版本集合一致——自 <code>0.2.1-alpha.4</code> 起宿主准入预检在该字段存在时只读它——<code>pnpm compat:check</code> 强制其与 peer 范围同步。'
+              ] }
+          ] },
+        { version: '0.2.6', date: '2026-10-15', sections: [
+            { kind: 'added', items: [
+                '新的 <b>Git Worktrees</b> 侧栏页（<code>git.worktrees</code>）列出当前仓库的全部检出——不论其创建来源——并标记当前检出，提供 <b>在此会话中使用</b> 与创建对话框（可选分支名与起始提交）。仅当宿主通过新增的 <code>worktree-capability</code> RPC 报告创建模式时，该 tab 才注册。',
+                '<code>create-worktree</code> RPC 与 <code>GitService.createWorktree</code>：宿主挂载上游实验性 <code>worktrees</code> 服务时创建委托 <code>ctx.worktrees.create(agent, ...)</code> 并自动进入新检出；否则 <code>git-worktrees</code> 的 <code>enabled</code> 设置开启本地 <code>git worktree add -b</code> 实现，检出池默认 <code>.agents/worktrees</code>，可经 <code>worktrees.directory</code> 修改。宿主挂载 <code>fs</code> 服务时，新建的仓内检出池会写入自我忽略的 <code>.gitignore</code>。删除与修剪仍不属于本包。',
+                '新的 <code>git-worktrees</code> 设置节在两种受支持的设置面上编辑 <code>enabled</code> 与 <code>directory</code>；保存后重新轮询 capability，Worktrees tab 无需重启即可出现或消失。'
+              ] },
+            { kind: 'changed', items: [
+                '插件配置卡全面改用 <code>@deepseek-ai/dsh-client-ui-primitives</code> 原生控件：生成模型合并为一个下拉框，会话模型置于按 provider 分组的目录条目之上；Worktrees 启用项使用原生胶囊开关。',
+                '插件 bundle 页上的两个设置节现在合并为一个通宽设置表单、共用一个保存按钮——宿主导出 <code>SettingsForm</code> 时使用原生框架（DSH ≥0.1.7），更早版本使用样式一致的本地框架——离开页面时丢弃暂存修改。旧版命名空间卡片保留各自的控件。',
+                '精确 DSH 支持清单现已覆盖 <code>0.1.5-rc.2</code> 至 <code>0.2.1-alpha.3</code> 的全部已发布版本：<code>0.1.5-rc.3</code> 与 <code>0.2.1-alpha.1</code> 此前经验证补入，区间内不再有缺口。',
+                '<code>scripts/upgrade-dsh.mjs</code> 与 <code>pnpm compat:check</code> 接受不带 caret 或波浪号的精确宿主运行时 pin，与以精确版本声明 Cordis、schemastery 的发行版一致（<code>0.1.5-rc.3</code> 即如此）。'
+              ] },
+            { kind: 'fixed', items: [
+                '共享配置页依次等待各设置节保存后再使用新 revision 写入下一节，保存中关闭页面仍会完成请求。传输失败后保留可编辑草稿供重试；关闭本地工作树会显式覆盖组合配置的 <code>true</code> 默认值。',
+                '工作树创建发布的新目录投影不再取消自身的成功 RPC 回执；控制器卸载仍会取消在途创建。',
+                '同目录侧栏挂载不再取消共享刷新或清空提交草稿。可执行文件首次查找被取消后不再污染后续 Git 请求或其他会话；成功刷新同时更新会话能力。Changes 与 Graph 会显示仓库加载失败原因。',
+                '上游工作树创建要求当前会话有活 agent，已打开弹窗中的提交也受此约束；本地检出池目录提示仅在本地模式显示。'
+              ] }
+          ] },
+        { version: '0.2.5', date: '2026-10-11', sections: [
+            { kind: 'added', items: [
+                '工作树控件会列出当前会话仓库的链接检出。宿主提供工作目录服务且会话有活 agent 时，<b>在此会话中使用</b> 会将该会话切换到所选检出。'
+              ] },
+            { kind: 'changed', items: [
+                'Git 仓库状态跟随每个会话的有效工作目录，包括宿主投影的目录变更；旧宿主继续使用会话原始目录。',
+                'Git 0.2.5 支持 DeepSeek Harness <code>0.2.1-alpha.2</code>，包括会话有效工作目录与链接工作树切换；<code>0.2.1-alpha.1</code> 仍不受支持。'
+              ] },
+            { kind: 'fixed', items: [
+                '<code>git worktree list --porcelain -z</code> 的路径保留 Git 报告的空白，<b>在此会话中使用</b> 会进入该检出。',
+                '会话没有活 agent 时不显示 <b>在此会话中使用</b>，即使宿主已经挂上目录服务。',
+                '重叠的工作树进入请求按顺序执行，当前这次目录切换结束前进入按钮保持禁用。'
+              ] }
+          ] },
+        { version: '0.2.4', date: '2026-09-30', lead: '兼容性版本：精确 DSH 支持清单扩展至 <code>0.2.0-rc.2</code>，开发 pin 同步切到该发行版。', sections: [
+            { kind: 'changed', items: [
+                'Git 文件比较改为复用官方 DSH <code>DiffBlock</code>，删除插件自写的逐行渲染器与样式。插件保留 Git 取数和侧栏地址，继续支持现有 DSH 矩阵，并区分二进制、仅元数据、空 patch、不完整输出及末尾换行变化。复制和折叠由 DSH 提供，新宿主还提供换行控件。',
+                '精确 DSH 兼容矩阵加入 <code>0.2.0-rc.1</code> 与 <code>0.2.0-rc.2</code>。开发依赖与提交锁文件 pin 在 <code>0.2.0-rc.2</code>（Cordis <code>4.0.4</code>、schemastery <code>3.18.4</code>）。<code>src/compat/</code> 里已有的设置、schema 与图标结构探测继续覆盖这两个版本。该 pin 发布的车道专用包（<code>dsh-util-code-language</code>、<code>dsh-client-shortcuts</code>）只作为开发依赖，不进入 peer OR。'
+              ] },
+            { kind: 'fixed', items: [
+                '主 CI 冻结安装可以在 pnpm 24 小时发布冷却到期前解析开发 pin <code>0.2.0-rc.2</code>：<code>minimumReleaseAgeExclude</code> 只保留该 pin 在锁文件中的精确包。pnpm 11.7 会忽略同一包名的后续 <code>name@version</code> 行，因此不再把旧 pin 条目留在旁边。未列入清单的 prerelease 不进该列表。'
+              ] }
+          ] },
+        { version: '0.2.3', date: '2026-09-25', lead: '兼容性版本：精确 DSH 支持清单扩展至 <code>0.1.7-rc.2</code>，升级车道对仅 rc.2 发布的包使用条件 devDependencies。', sections: [
+            { kind: 'changed', items: [
+                '精确 DSH 兼容矩阵加入 <code>0.1.7-rc.2</code>。开发依赖仍 pin 在 <code>0.1.5-rc.2</code>。<code>src/compat/</code> 里已有的设置、schema 与图标结构探测继续覆盖该版本。',
+                '升级脚本仅在目标精确版本发布了 <code>@deepseek-ai/dsh-util-code-language</code> 与 <code>@deepseek-ai/dsh-client-shortcuts</code> 时，才把它们写入该车道的开发依赖。它们不进入 peer OR，因此旧宿主仍可加载。'
+              ] }
+          ] },
+        { version: '0.2.2', date: '2026-09-24', lead: '兼容性版本：精确 DSH 支持清单覆盖至 <code>0.1.7-rc.1</code>，<code>src/compat/</code> 按结构探测做跨版本适配，peer 改为由该清单生成的 OR 范围，使旧宿主继续加载、新发行版同时可支持。', sections: [
+            { kind: 'changed', items: [
+                '精确 DSH 兼容矩阵现支持 <code>0.1.5-rc.2</code>、<code>0.1.6-alpha.1</code>、<code>0.1.6-alpha.2</code>、<code>0.1.7-alpha.1</code>、<code>0.1.7-alpha.2</code> 与 <code>0.1.7-rc.1</code>，开发依赖仍 pin 在 <code>0.1.5-rc.2</code>。',
+                '所有 <code>@deepseek-ai/dsh-*</code> peer 改为由该清单生成的精确 OR 范围，不再使用单一的 <code>>=0.1.5-rc.2 <0.2.0</code> 区间。',
+                '<code>src/compat/</code> 内的跨版本适配按结构探测、不按版本号分支：提交信息设置在 <code>settingsScope</code> 与 <code>configForms</code> 间桥接；图标把旧固定尺寸导出映射到 0.1.7 权重 glyph；schema 仅在宿主 schemastery 副本提供 <code>.volatile()</code> 时标记字段，并通过 <code>readVolatile</code> 读取 volatile 引用快照。',
+                '<code>.pnpmfile.cjs</code> 把传递链上的 <code>@deepseek-ai/dsh-*</code> 统一改写为当前 pin，避免 caret peer 把锁文件漂到更新的 prerelease。',
+                '<code>.github/workflows/upgrade.yml</code> 的回归矩阵由支持清单动态生成；升级脚本把 Cordis 与 schemastery 钉到各发行版声明的 caret 或波浪号下限（含 <code>0.1.7-alpha.2</code> 与 <code>0.1.7-rc.1</code> 的 <code>~4.0.4</code> / <code>~3.18.4</code>）。',
+                'Client 工作区读取和插件设置卡片注册已适配 alpha.2 的 Session 列表与 Plugins 标签页接口变化。'
+              ] },
+            { kind: 'fixed', items: [
+                '在上游 DSH bundle 导入但未声明运行时依赖时，将 <code>simple-icons</code>、<code>zustand</code> 与 <code>immer</code> 声明为 peer（<code>dsh-client-ui-primitives</code>、<code>dsh-client-store</code>）。'
+              ] }
+          ] },
+        { version: '0.2.1', date: '2026-09-14', lead: '文档与可靠性版本：新增变更日志与贡献指南，<readmeInstallation>安装</readmeInstallation>一节文档化全部四种安装来源，焦点抖动不再叠加仓库刷新。', sections: [
+            { kind: 'added', items: [
+                '<code>CONTRIBUTING.md</code>（中文副版 <code>CONTRIBUTING.zh.md</code>），说明环境搭建、质量门禁与文档义务。',
+                '<code>CHANGELOG.md</code>（中文副版 <code>CHANGELOG.zh.md</code>）。'
+              ] },
+            { kind: 'changed', items: [
+                '<readmeInstallation>安装</readmeInstallation>一节改为文档化四种安装来源 —— npm 注册表、tarball、本地路径、GitHub/git —— 取代原先的"一条 npm 命令 + 一段本地开发片段"。',
+                '新增 <code>prepare</code> 脚本（<code>pnpm run build</code>），使 GitHub/git 安装会在安装方机器上从 <code>src/</code> 构建 <code>lib/</code>。',
+                '<code>pnpm docs:check</code> 现在同时校验仓库根的三对双语文档：<code>README</code>、<code>CONTRIBUTING</code>、<code>CHANGELOG</code> 都必须有 <code>.zh.md</code> 副版与 <code>*.i18n.yaml</code> 一致性记录。'
+              ] },
+            { kind: 'fixed', items: [
+                '焦点抖动不再叠加仓库刷新：<code>GitClientController.refresh()</code> 对同一工作区复用在途往返，反复的焦点事件只对应一对 <code>discover</code>/<code>status</code>，而不是互相判旧、让 <code>repository</code> 迟迟不落地的多轮重叠请求；请求若在该轮已读取仓库之后到达（外部编辑后的焦点回归），该 burst 会补读一轮，合并进来的调用方等到这轮补读落地（含共享轮次以瞬时错误收尾的情形——失败不得吞掉请求），每个 burst 最多两轮，避免控制器自身的 Host 流量自激。背景见 <tbWindowsFlood>Windows 桌面端终端窗口风暴</tbWindowsFlood>。'
+              ] }
+          ] },
+        { version: '0.2.0', date: '2026-09-14', lead: '首次公开发布：<code>@dsh-electron/dsh-plugin-git@0.2.0</code> 已带构建 provenance 发布到 npm，其 GitHub Release 附同一个 tarball。', sections: [
+            { kind: 'added', items: [
+                'Changes 与 Graph 标签页的实时标题。',
+                '<code>pnpm version:major</code> / <code>version:minor</code> / <code>version:patch</code> 快捷脚本，与 <code>version:set</code> 并列。',
+                '新增规格：client 的 CSS module class 若未出现在构建产物样式表中即失败。'
+              ] },
+            { kind: 'changed', items: [
+                '<b>对 Client 半部是破坏性变更：Git 各 surface 从第三方 Details Host 迁移到上游右侧边栏。</b> 本包此后面向 DeepSeek Harness ≥ v0.1.5-rc.2，把 <code>git.changes</code> 与 <code>git.graph</code> 注册为 page tab type、<code>git.diff</code> 注册为 <code>dsh-resource://git/diff/**</code> resource type，并统一经 <code>ctx.sidebarRight</code> 导航。',
+                '所有 <code>@deepseek-ai/dsh-*</code> peer 范围改为 <code>>=0.1.5-rc.2 <0.2.0</code>。',
+                'Diff 结果改为面板局部状态，不再写入共享的 controller slot。',
+                '面板头部动作复用共享的 <code>GitIconButton</code>。'
+              ] },
+            { kind: 'fixed', items: [
+                '回环 <code>/git</code> RPC 通道只在 <code>webServer</code> 出现后挂载，并从根上下文读取 connection service，不再在 <code>connection</code> 尚未解析时注册。',
+                'Changes 或 Diff 面板刷新失败时，错误会与面板拉取错误一同展示，不再被丢弃。',
+                '<code>npm publish</code> 收到的 tarball 参数改为 <code>./dist/<name>.tgz</code>：裸 <code>dist/<name>.tgz</code> 会被 npm 当作 GitHub <code>owner/repo</code> 简写解析并失败。'
+              ] },
+            { kind: 'removed', items: [
+                '<code>@dsh-electron/dsh-client-ui-details-host</code> 依赖及其钉住的 fixture tarball。'
+              ] }
+          ] },
+        { version: '0.1.0', date: '2026-09-13', lead: '首个 tag 版本：一项 portable Host service、一份 Client bundle 与一个 optional Desktop enhancement。', sections: [
+            { kind: 'added', items: [
+                '<code>ctx.git</code> Host service。它要求 <code>ctx.subprocess</code>，以 executable 加独立 argv values 启动 Git、绝不调用 shell：repository discovery、Git version、current branch 与 HEAD、porcelain v2 status（staged／unstaged／untracked，NUL 分隔路径）、local branches、working tree 与 staged diffs、stage／unstage、commit、amend、向 <code>origin</code> push、rebase-then-push sync、branch creation 与 branch switching。',
+                '破坏性的 discard：通过明确的 index、working tree 与 clean 步骤还原一条 staged、unstaged 或 untracked 变更，且始终在 Client 端要求第二次确认。',
+                '分页提交历史（<code>git log</code>，每条 commit 一行定长字段），Graph surface 通过 load-more 控件增量追加更早提交。',
+                'Commit message 生成：staged diff（受 <code>commitMessage.maxDiffBytes</code> 上限约束）发送到宿主 LLM runtime —— 会话模型，或插件配置中固定的 <code>provider</code>/<code>model</code> 路由 —— 流式建议写入可编辑的 message 输入框。它绝不 stage、commit 或 push。',
+                '基于第三方 Details Host（当时为必需依赖）的 Client surfaces：<b>Changes</b>（branch、带 Generate 的 commit message、分裂式 Commit 按钮、staged／unstaged／untracked 分区）、<b>Diff</b>（每标签页一个文件）、<b>Graph</b>（canvas lane graph，Auto／All／First parent 三种 scope，最多可见三条 lane，增量分页）。',
+                '会话输入区的 composer 控件 —— branch selector 与 changed-files indicator —— 用于打开 Git surface，以及共享的 create-branch modal（处理 unborn HEAD）。',
+                '面向 DSH Web host 的回环 <code>/git</code> RPC channel，以及 <code>cordis.patch.yml</code> bundle 层，使一次 <code>dsh plugin add</code> 即可把插件挂进 profile。',
+                '可选的 <code>ctx.inject([\'desktop\'], ...)</code> child fiber，使用 <code>shell.showItemInFolder</code>、<code>shell.openPath</code> 与 <code>notification.show</code>。',
+                '<code>docs/</code> 文档库、<code>pnpm docs:check</code> 机器校验、<code>version:set</code> 脚本、tag 触发的 release 工作流、双语 README 配对及其 <code>README.i18n.yaml</code> hash 记录。'
+              ] }
+          ] }
+      ],
+    },
+
   },
 
   themeStudio: {
@@ -667,7 +1013,7 @@ const zh: Dictionary = {
       keywords: ['DeepSeek Harness', 'DSH 插件', '主题', '深色模式', '外观', '配色'],
     },
     brandHome: 'Theme Studio 首页',
-    nav: { features: '功能', palettes: '配色', install: '安装', compatibility: '兼容性', github: 'GitHub', npm: 'npm' },
+    nav: { features: '功能', palettes: '配色', install: '安装', compatibility: '兼容性', changelog: '更新日志', github: 'GitHub', npm: 'npm' },
     cta: '安装',
     footer: {
       plugin: { title: '插件', features: '功能', palettes: '配色', install: '安装', compatibility: '兼容性' },
@@ -810,6 +1156,107 @@ const zh: Dictionary = {
       install: '安装插件',
       github: '在 GitHub 上查看',
     },
+    changelog: {
+      meta: {
+        title: 'Theme Studio 更新日志 — 插件的全部版本',
+        description:
+          'DeepSeek Harness Theme Studio 插件的发布历史：每个已发布版本的新功能、变更与修复，按时间倒序排列。',
+      },
+      nav: { plugin: '插件页' },
+      title: '更新日志',
+      lead: 'Theme Studio 插件的每个已发布版本，按时间倒序排列。',
+      metaLine: '{count} 个已发布版本 · 最新 {version}',
+      latest: '最新',
+      compare: '在 GitHub 上与上一版本对比',
+      releaseNotes: '发布说明',
+      kinds: {
+        added: '新增',
+        changed: '变更',
+        fixed: '修复',
+        removed: '移除',
+        deprecated: '弃用',
+        security: '安全',
+        upgrade: '升级注意',
+      },
+      releases: [
+        { version: '0.1.5', date: '2026-10-17', sections: [
+            { kind: 'added', items: [
+                '公开 <code>dsh-theme.json</code> v1 主题文件格式并随包发布 JSON Schema（<code>schemas/dsh-theme.schema.json</code>）：<code>palette</code> 明暗各 13 字段必填，可选稀疏 <code>overrides</code> 叠加在派生 token 之上；色值限对比度 resolver 支持的子集，<code>version</code> 可省略默认为 1。',
+                'Themes 菜单新增导入/管理入口：导入经确认对话框写入设置并自动预览，重复 id 由用户选择覆盖或自动生成新 id；管理对话框支持导出与删除导入主题，内置主题也可导出为可回导的 <code>user.*</code> 文件。',
+                '公共 <code>ctx.themeStudio.catalog</code> 升级为 builtin + imported 复合目录（ADR-0009）：<code>list()</code>/<code>get()</code>/<code>validate()</code> 覆盖导入主题，<code>list()</code> 在调用时返回冻结快照。',
+                '支持 DSH 0.2.1-alpha.3。',
+                '支持 DSH 0.2.1-alpha.4、0.2.1-alpha.5、0.2.1-rc.1 与 0.2.1-rc.2。',
+                '新增 Theme Creator（ADR-0010）：<code>dsh-theme-creator</code> skill 由 <code>creatorAgentMode</code> 设置驱动（<code>off</code>/<code>gesture</code>/<code>catalog</code>，默认 <code>gesture</code>——只响应 <code>/dsh-theme-creator</code> 用户手势、不进模型目录）；skill 指导模型在工作区写出 <code>dsh-theme.json</code> 并经随包校验器自检，产物仍由用户经导入流程确认。',
+                'Themes 菜单新增「创建自己的主题」：在支持两参 <code>startSession</code> 的版本上打开 Cordis 会话并预填 <code>/dsh-theme-creator </code>（不自动发送）；较早版本降级为手动手势提示。<code>creatorAgentMode</code> 在插件管理页（Plugins → Theme Studio）切换；无插件管理页的宿主保持已存储或默认档位。',
+                '随包发布 <code>lib/validate-theme.js</code> 命令行校验器：<code>node lib/validate-theme.js <file></code> 输出结构化 JSON 格式与对比度报告（通过 0 / 未过 1 / 用法错误 2）。'
+              ] },
+            { kind: 'changed', items: [
+                '<code>theme-studio</code> 设置命名空间新增 <code>importedThemes</code> 字段持久化导入主题源文件；Host schema 保持宽松、Client 严格解析，无法读取的条目被跳过而不影响其余设置。',
+                '<code>theme-studio</code> 设置命名空间新增 <code>creatorAgentMode</code> 字段控制 Theme Creator 可见性；旧快照缺失该字段时按默认 <code>gesture</code> 处理。'
+              ] },
+            { kind: 'fixed', items: [
+                '导入、覆盖或删除被旧 settings 通道拒绝时显示保存失败并保留已接受的主题列表；设置尚未就绪时禁止导入与删除。',
+                '覆盖导入等待保存成功后预览新配色；重复 id 的自动重命名遵守 64 字符上限。',
+                'Themes 菜单中指针离开主题项或悬停到「导入主题」「管理主题」时恢复已应用主题，不再残留最后悬停主题的预览；键盘选中这两个动作同样先取消预览。',
+                '导入编辑以 accepted 原始数组为合并基准，无法解析的既有条目在追加、覆盖或删除后保留，不再被静默抹除。',
+                '确认导入前重查 catalog 与在途写入的 id 占用；过期确认回到三选对话框，<code>append</code> 兜底走 keep-both 改名，不写入持久重复 id。',
+                '超长的导入主题名在选择器按钮与管理对话框中以省略号截断并保留完整名提示，不再撑宽设置行。',
+                '主题文件读取失败（如读取中途出错）现在显示导入错误对话框，不再产生未处理的 Promise rejection。',
+                '导入确认与管理对话框现在显示主题文件的 <code>description</code> 字段，与文件格式文档一致；超长描述以省略号截断并保留完整文本提示。',
+                '主题菜单的悬停预览改为按整行判定：指针在行内 padding 或图标与文字间隙时不再误恢复已应用主题；移到分隔线、组标签、footer 动作或菜单外仍恢复。',
+                '主题文件的 <code>$schema</code> 字段按公开 JSON Schema 收紧为字符串；此前非字符串值（如深嵌套对象）可通过校验并持久化，其后的深冻结会因递归过深抛出 RangeError，且该持久化条目每次启动都使导入目录加载失败。',
+                '主题文件的 <code>version: null</code> 不再被当作省略处理，按公开 JSON Schema 拒绝为 <code>unsupported-version</code>。',
+                '主题文件校验不再对被拒绝的值做递归字符串化：把 <code>id</code>、<code>name</code>、<code>version</code> 或 override 色值写成深嵌套数组的文件现在按对应错误码拒绝，不再抛出 RangeError。',
+                '激活导入主题且正在预览其他主题时，<code>importedThemes</code> 变更重装 active 层后不再盖住预览层：仍然有效的预览会重新装回顶层并刷新 token，屏幕与预览状态保持一致。'
+              ] }
+          ] },
+        { version: '0.1.4', date: '2026-10-11', sections: [
+            { kind: 'added', items: [
+                '支持 DSH 0.2.1-alpha.1 与 0.2.1-alpha.2。官方正文字体、代码字体、终端字体及对应字号保持独立；主题预览、应用、取消、恢复默认和明暗切换不会改写这些偏好。',
+                '主题保存被 Host 拒绝时，设置行提示失败并恢复上次已接受的选择。连续应用按顺序写入，较早的成功结果不能在较新选择之后落盘并把它盖掉；插件关闭后不再把过期结果装回界面。',
+                'Stage 2 自动对比度校验：浅色/深色逐配对报告、透明色与 sRGB 混色解析、报告命令及严格退出码模式；README 记录实际校验范围与内置配色的已知失败。',
+                'Stage 3 公开 Client <code>ctx.themeStudio.catalog</code>，提供只读主题发现与校验报告，并随 Cordis 插件生命周期释放与重供服务。'
+              ] },
+            { kind: 'changed', items: [
+                'Client bundle 从宿主共享 <code>@deepseek-ai/dsh-client-store</code>，避免第二份 store 破坏客户端服务身份；提供隔离候选探测与多版本回归，发布复用完整验证。',
+                '按当前代码与全部历史提交补齐需求、架构、ADR、实施计划、开发流程、完整 API/token 参考与故障排查；根文档统一为中文 README.md、英文 README.en.md，旧 README.zh.md 保留导航入口。',
+                '新增 docs:check 文档结构检查并接入 CI/发布验证；同步 README 兼容检查与发布语言文件清单。'
+              ] }
+          ] },
+        { version: '0.1.3', date: '2026-09-30', sections: [
+            { kind: 'added', items: [
+                '新增三套对标 Claude Desktop、Codex Desktop 与 Claude Cream 的内置 overlay。',
+                '内置主题现在覆盖原先停在官方色板上的语义色、组件直接引用的 static，以及代码高亮 token；保留 tooltip 等使用的静态白色语义。',
+                '支持 DSH 0.2.0-rc.1 与 0.2.0-rc.2，补齐新版八项语义 token，并在独立安装树重新验证全部支持版本。'
+              ] },
+            { kind: 'changed', items: [
+                '开发依赖、overrides 与 lockfile 统一到最新受支持 DSH 0.2.0-rc.2；官方主题集成测试改为加载实际安装的发布 bundle。'
+              ] }
+          ] },
+        { version: '0.1.2', date: '2026-09-27', sections: [
+            { kind: 'changed', items: [
+                '移除 Theme Studio 自定义的插件页卡片和详情贡献；安装包通过包名加载器记录显示在官方插件管理器中。保留“设置 → 通用 → 主题”行。'
+              ] }
+          ] },
+        { version: '0.1.1', date: '2026-09-26', sections: [
+            { kind: 'added', items: [
+                '支持 DSH 0.1.7-rc.1 与 0.1.7-rc.2：这些版本会在 profile 安装或启动插件时校验插件声明的 DSH peer 范围。'
+              ] },
+            { kind: 'fixed', items: [
+                '在使用旧版 <code>register</code> API 注册 settings 命名空间的宿主上恢复主题选择持久化：不再把该 API 返回的命名空间 scope 交还给 Cordis，否则 Cordis 会将其判为无效 effect 并静默回滚注册。'
+              ] }
+          ] },
+        { version: '0.1.0', date: '2026-09-25', lead: '首次公开发布，提供可在 DSH Web 与 Desktop 中运行的主题覆盖插件。', sections: [
+            { kind: 'added', items: [
+                '在“设置 → 通用 → 主题”浏览 Graphite、OLED、Nordic、Paper、Warm 与默认卡，支持临时预览、取消、应用和重启后恢复。',
+                '通过 <code>ctx.theme.overrideTokens()</code> 叠加主题 token；官方浅色、深色与跟随系统外观仍由宿主管理。',
+                'Host 侧持久化当前主题选择，并兼容受支持 DSH 版本间的 register/settingsScope 与 Config/configure/configForms 差异；设置服务停止重供后可重新启动主题行。',
+                '发布 standalone Host、Client bundle、TypeScript 声明和 <code>cordis.patch.yml</code>，并声明精确的 DSH 兼容版本。'
+              ] }
+          ] }
+      ],
+    },
+
   },
 }
 

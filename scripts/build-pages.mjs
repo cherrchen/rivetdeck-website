@@ -30,9 +30,7 @@ await rename(path.join(workspace, 'app/[lang]'), path.join(workspace, 'app/(loca
 await rm(path.join(workspace, 'app/(localized)/[lang]/[...rest]'), { recursive: true })
 const localized = '@/app/(localized)/[lang]'
 const english = path.join(workspace, 'app/(english)')
-await mkdir(path.join(english, 'plugins/multi-root-workspace'), { recursive: true })
-await mkdir(path.join(english, 'plugins/git'), { recursive: true })
-await mkdir(path.join(english, 'plugins/theme-studio'), { recursive: true })
+await mkdir(english, { recursive: true })
 await writeFile(path.join(english, 'layout.tsx'), `import Layout from '${localized}/layout'
 import type { ReactNode } from 'react'
 export { metadata, viewport } from '${localized}/layout'
@@ -40,9 +38,18 @@ export default function EnglishLayout({ children }: { children: ReactNode }) {
   return Layout({ children, params: Promise.resolve({ lang: 'en' }) })
 }
 `)
-const pages = ['', 'plugins/git', 'plugins/theme-studio', 'plugins/multi-root-workspace']
+const pages = [
+  '',
+  'plugins/git',
+  'plugins/git/changelog',
+  'plugins/theme-studio',
+  'plugins/theme-studio/changelog',
+  'plugins/multi-root-workspace',
+  'plugins/multi-root-workspace/changelog',
+]
 for (const route of pages) {
   const target = path.join(english, route)
+  await mkdir(target, { recursive: true })
   const source = `${localized}${route ? `/${route}` : ''}`
   await writeFile(path.join(target, 'page.tsx'), `import Page, { generateMetadata as localizedMetadata } from '${source}/page'
 const props = { params: Promise.resolve({ lang: 'en' }), searchParams: Promise.resolve({}) }
@@ -54,8 +61,14 @@ export default function EnglishPage() { return Page(props) }
 
 // File-convention OG routes inside multiple root layouts can get inconsistent
 // generated hashes in a static export. Use stable, explicitly declared URLs.
+const socialName = (route) => {
+  if (route === '') return 'rivetdeck'
+  const segments = route.split('/')
+  const leaf = segments.at(-1)
+  return leaf === 'changelog' ? `${segments.at(-2)}-changelog` : leaf
+}
 for (const route of pages) {
-  const name = route === '' ? 'rivetdeck' : route.split('/').pop()
+  const name = socialName(route)
   const original = path.join(workspace, 'app/(localized)/[lang]', route, 'opengraph-image.tsx')
   await rename(original, path.join(workspace, `lib/pages-${name}-og.tsx`))
   const target = path.join(workspace, 'app/social', `${name}.png`)

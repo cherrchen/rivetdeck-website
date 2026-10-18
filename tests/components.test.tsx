@@ -41,10 +41,10 @@ describe('InstallTabs', () => {
     )
     fireEvent.click(screen.getByRole('tab', { name: 'tarball' }))
     expect(screen.getByRole('tabpanel', { name: 'tarball' }).textContent).toContain('pnpm pack @dsh-electron/dsh-plugin-multi-root-workspace')
-    expect(screen.getByRole('tabpanel', { name: 'tarball' }).textContent).toContain('dsh-electron-dsh-plugin-multi-root-workspace-0.1.7.tgz')
+    expect(screen.getByRole('tabpanel', { name: 'tarball' }).textContent).toContain('dsh-electron-dsh-plugin-multi-root-workspace-0.1.8.tgz')
     fireEvent.click(screen.getByRole('tab', { name: 'GitHub' }))
     expect(screen.getByRole('tabpanel', { name: 'GitHub' }).textContent).toContain(
-      'github:cherrchen/dsh-plugin-multi-root-workspace#v0.1.7',
+      'github:cherrchen/dsh-plugin-multi-root-workspace#v0.1.8',
     )
     fireEvent.click(screen.getByRole('tab', { name: 'local' }))
     expect(screen.getByRole('tabpanel', { name: 'local' }).textContent).toContain('git clone https://github.com/cherrchen/dsh-plugin-multi-root-workspace.git')
