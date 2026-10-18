@@ -2,46 +2,63 @@
  * Multi-root Workspace compatibility data.
  *
  * Source of truth: `SUPPORTED_DSH_RELEASES` in `src/compat/dsh-version.ts` of
- * cherrchen/dsh-plugin-multi-root-workspace, read on `main`. All sixteen
- * releases are in the published package (v0.1.8); the plugin refuses to start
- * its gated rows on anything else. Status is declared per row; it is never
- * derived from semver ordering because the plugin supports an exact list, not
- * a range.
+ * cherrchen/dsh-plugin-multi-root-workspace, read at each release tag. One row
+ * per published plugin version, newest first, listing the exact DSH releases
+ * that version supports. The plugin refuses to start its gated rows on any
+ * release outside the list. Support is declared per row; it is never derived
+ * from semver ordering because the plugin supports an exact list, not a range.
  *
- * - `verified`     in the released allowlist; exercised by the plugin's CI matrix.
- * - `partial`      works with a documented limit (platform rows only).
- * - `unreleased`   accepted only on the development branch; not in the npm package.
- * - `unsupported`  not on any list; the gated rows do not start.
- *
- * Row notes are localized: they live in the dictionaries under `multiRoot.compat.notes`,
- * keyed by `id`.
+ * v0.1.0 predates the exact allowlist (the compat gate landed in v0.1.1): its
+ * package declared `@deepseek-ai/dsh-*` peers as the `>=0.1.2-alpha.4 <0.2.0`
+ * range, shown here as the declared range.
  */
-import type { CompatPlatform, CompatRow, CompatStatus } from './compat'
+import type { CompatPlatform, CompatVersionRow } from './compat'
 
-export type { CompatStatus, CompatRow }
+export type { CompatStatus, CompatVersionRow } from './compat'
 
 export const COMPAT_PLUGIN_VERSION = '0.1.8'
 
-const row = (release: string, status: CompatStatus, since: string): CompatRow => ({ id: release, release, status, since })
+const exact = (release: string, dsh: readonly string[]): CompatVersionRow => ({ release, dsh })
+const range = (release: string, range: string): CompatVersionRow => ({ release, range })
 
-export const COMPAT_ROWS: readonly CompatRow[] = [
-  row('0.1.5-rc.2', 'verified', 'v0.1.1'),
-  row('0.1.6-alpha.1', 'verified', 'v0.1.1'),
-  row('0.1.6-alpha.2', 'verified', 'v0.1.2'),
-  row('0.1.7-alpha.1', 'verified', 'v0.1.2'),
-  row('0.1.7-alpha.2', 'verified', 'v0.1.3'),
-  row('0.1.7-rc.1', 'verified', 'v0.1.3'),
-  row('0.1.7-rc.2', 'verified', 'v0.1.4'),
-  row('0.2.0-rc.1', 'verified', 'v0.1.5'),
-  row('0.2.0-rc.2', 'verified', 'v0.1.5'),
-  row('0.2.1-alpha.1', 'verified', 'v0.1.6'),
-  row('0.2.1-alpha.2', 'verified', 'v0.1.6'),
-  row('0.2.1-alpha.3', 'verified', 'v0.1.7'),
-  row('0.2.1-alpha.4', 'verified', 'v0.1.7'),
-  row('0.2.1-alpha.5', 'verified', 'v0.1.7'),
-  row('0.2.1-rc.1', 'verified', 'v0.1.7'),
-  row('0.2.1-rc.2', 'verified', 'v0.1.7'),
-  { id: 'other', release: null, status: 'unsupported', since: '—' },
+export const COMPAT_VERSIONS: readonly CompatVersionRow[] = [
+  exact('v0.1.8', [
+    '0.2.1-rc.2', '0.2.1-rc.1', '0.2.1-alpha.5', '0.2.1-alpha.4',
+    '0.2.1-alpha.3', '0.2.1-alpha.2', '0.2.1-alpha.1', '0.2.0-rc.2',
+    '0.2.0-rc.1', '0.1.7-rc.2', '0.1.7-rc.1', '0.1.7-alpha.2',
+    '0.1.7-alpha.1', '0.1.6-alpha.2', '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  exact('v0.1.7', [
+    '0.2.1-rc.2', '0.2.1-rc.1', '0.2.1-alpha.5', '0.2.1-alpha.4',
+    '0.2.1-alpha.3', '0.2.1-alpha.2', '0.2.1-alpha.1', '0.2.0-rc.2',
+    '0.2.0-rc.1', '0.1.7-rc.2', '0.1.7-rc.1', '0.1.7-alpha.2',
+    '0.1.7-alpha.1', '0.1.6-alpha.2', '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  exact('v0.1.6', [
+    '0.2.1-alpha.2', '0.2.1-alpha.1', '0.2.0-rc.2', '0.2.0-rc.1',
+    '0.1.7-rc.2', '0.1.7-rc.1', '0.1.7-alpha.2', '0.1.7-alpha.1',
+    '0.1.6-alpha.2', '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  exact('v0.1.5', [
+    '0.2.0-rc.2', '0.2.0-rc.1', '0.1.7-rc.2', '0.1.7-rc.1',
+    '0.1.7-alpha.2', '0.1.7-alpha.1', '0.1.6-alpha.2', '0.1.6-alpha.1',
+    '0.1.5-rc.2',
+  ]),
+  exact('v0.1.4', [
+    '0.1.7-rc.2', '0.1.7-rc.1', '0.1.7-alpha.2', '0.1.7-alpha.1',
+    '0.1.6-alpha.2', '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  exact('v0.1.3', [
+    '0.1.7-rc.1', '0.1.7-alpha.2', '0.1.7-alpha.1', '0.1.6-alpha.2',
+    '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  exact('v0.1.2', [
+    '0.1.7-alpha.1', '0.1.6-alpha.2', '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  exact('v0.1.1', [
+    '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  range('v0.1.0', '>=0.1.2-alpha.4 <0.2.0'),
 ]
 
 export const COMPAT_PLATFORMS = [

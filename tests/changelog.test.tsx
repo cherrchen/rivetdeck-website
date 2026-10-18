@@ -92,17 +92,14 @@ describe('ChangelogReleases', () => {
   const t = en.git.changelog
   const newTab = ' (opens in a new tab)'
 
-  it('renders version headings, section chips, compare diffs and a release link for the oldest entry', () => {
+  it('renders version headings and section headings without diff links', () => {
     render(<ChangelogReleases releases={t.releases} repo={links.git.repo} docs={GIT_DOC_LINKS} locale="en" newTab={newTab} t={t} />)
 
     const latest = screen.getByRole('heading', { name: /v0\.2\.7/ })
     expect(latest.querySelector('a')?.getAttribute('href')).toBe(releaseUrl(links.git.repo, 'v0.2.7'))
     expect(latest.textContent).toContain('Latest')
 
-    const first = document.getElementById('v0.2.7')
-    expect(first?.querySelector('a[href*="compare"]')?.getAttribute('href')).toBe(compareUrl(links.git.repo, 'v0.2.6', 'v0.2.7'))
-    const oldest = document.getElementById('v0.1.0')
-    expect(oldest?.querySelector('a[href*="releases/tag"]')).toBeTruthy()
+    expect(document.querySelector('a[href*="compare"]')).toBeNull()
 
     for (const kind of ['Added', 'Changed', 'Fixed', 'Removed']) expect(screen.getAllByText(kind).length).toBeGreaterThan(0)
   })

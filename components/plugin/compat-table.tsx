@@ -1,17 +1,17 @@
-import { fmt } from '@/lib/i18n/format'
-import type { CompatPlatform, CompatRow, CompatStatus } from '@/lib/compat'
+import type { CompatPlatform, CompatStatus, CompatVersionRow } from '@/lib/compat'
 
 /** Localized labels a plugin page must provide for the matrix. */
 export interface CompatCopy {
   region: string
   caption: string
-  columns: { release: string; status: string; since: string; notes: string }
+  columns: { version: string; supported: string }
+  /** Badge on the row of the currently published plugin version. */
+  latest: string
+  /** Hint after a peer-range cell for releases predating the exact allowlist. */
+  rangeNote: string
   /** Heading for the platform cards; omit (with `platforms`) for platform-agnostic plugins. */
   platforms?: string
-  otherRelease: string
-  sinceDev: string
   status: Record<CompatStatus, string>
-  notes: Record<string, string>
   platformNotes?: Record<string, string>
 }
 
@@ -32,28 +32,67 @@ export function StatusBadge({ status, label }: { status: CompatStatus; label: st
   )
 }
 
-/** Support matrix rendered from a `lib/*-compat.ts` module; status is declared, never computed from semver. */
-export function CompatTable({ t, rows, platforms = [], version }: { t: CompatCopy; rows: readonly CompatRow[]; platforms?: readonly CompatPlatform[]; version: string }) {
+/**
+ * Per-version support matrix: one row per published plugin version, each
+ * listing the exact DSH releases it supports (or the declared peer range for
+ * versions that predate the allowlist). Version cells link to the changelog
+ * anchor when `changelogPath` is given. Data is declared, never derived from
+ * semver ordering.
+ */
+export function CompatTable({
+  t,
+  rows,
+  platforms = [],
+  version,
+  changelogPath,
+}: {
+  t: CompatCopy
+  rows: readonly CompatVersionRow[]
+  platforms?: readonly CompatPlatform[]
+  version: string
+  /** Localized route of the changelog page; version cells link to `#<tag>` anchors there. */
+  changelogPath?: string
+}) {
   return (
     <div>
       <div className="overflow-x-auto rounded-xl border border-border" tabIndex={0} role="region" aria-label={t.region}>
         <table className="w-full min-w-[640px] border-collapse text-left text-sm">
-          <caption className="sr-only">{fmt(t.caption, { version })}</caption>
+          <caption className="sr-only">{t.caption}</caption>
           <thead className="bg-bg-subtle text-xs text-fg-subtle">
             <tr>
-              <th scope="col" className="px-4 py-3 font-medium">{t.columns.release}</th>
-              <th scope="col" className="px-4 py-3 font-medium">{t.columns.status}</th>
-              <th scope="col" className="px-4 py-3 font-medium">{t.columns.since}</th>
-              <th scope="col" className="px-4 py-3 font-medium">{t.columns.notes}</th>
+              <th scope="col" className="px-4 py-3 font-medium">{t.columns.version}</th>
+              <th scope="col" className="px-4 py-3 font-medium">{t.columns.supported}</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => (
-              <tr key={row.id} className="border-t border-border align-top">
-                <th scope="row" className={`px-4 py-3 text-[13px] font-medium ${row.release ? 'font-mono whitespace-nowrap' : ''}`}>{row.release ?? t.otherRelease}</th>
-                <td className="px-4 py-3"><StatusBadge status={row.status} label={t.status[row.status]} /></td>
-                <td className="px-4 py-3 font-mono text-xs whitespace-nowrap text-fg-subtle">{row.since === 'dev' ? t.sinceDev : row.since}</td>
-                <td className="px-4 py-3 text-fg-muted">{t.notes[row.id]}</td>
+            {rows.slice(0, 5).map((row) => (
+              <tr key={row.release} className="border-t border-border align-top">
+                <th scope="row" className="px-4 py-3 font-mono text-[13px] font-medium whitespace-nowrap">
+                  {changelogPath ? (
+                    <a href={`${changelogPath}#${row.release}`} className="hover:underline hover:underline-offset-4">{row.release}</a>
+                  ) : (
+                    row.release
+                  )}
+                  {row.release === `v${version}` ? (
+                    <span className="ml-2 rounded-md bg-accent-soft px-1.5 py-0.5 font-sans text-[11px] font-medium text-accent">{t.latest}</span>
+                  ) : null}
+                </th>
+                <td className="px-4 py-3">
+                  {row.dsh ? (
+                    <ul className="flex flex-wrap gap-1.5">
+                      {row.dsh.map((v) => (
+                        <li key={v} className="rounded border border-border bg-bg-subtle px-1.5 py-0.5 font-mono text-xs whitespace-nowrap text-fg-muted">
+                          {v}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span className="text-[13px] text-fg-muted">
+                      <code className="font-mono">{row.range}</code>
+                      <span className="ml-1.5 text-xs text-fg-subtle">({t.rangeNote})</span>
+                    </span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

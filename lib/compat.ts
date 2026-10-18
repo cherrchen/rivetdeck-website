@@ -2,8 +2,8 @@
  * Shared compatibility-matrix types for the DSH plugin pages.
  *
  * Each plugin declares an exact list of verified DSH releases — never a semver
- * range — so the tables render a `status` that is declared per row, not derived
- * from version ordering.
+ * range — so the tables render one row per plugin version with the support set
+ * that version ships, as declared in `src/compat/dsh-version.ts` at its tag.
  *
  * - `verified`     in the released allowlist; exercised by the plugin's CI matrix.
  * - `partial`      works with a documented limit (platform rows only).
@@ -12,14 +12,13 @@
  */
 export type CompatStatus = 'verified' | 'partial' | 'unreleased' | 'unsupported'
 
-export interface CompatRow {
-  /** Key of the localized note; equals `release` for real releases. */
-  id: string
-  /** Exact DSH release string, or `null` for the catch-all row (its label is localized). */
-  release: string | null
-  status: CompatStatus
-  /** Plugin release that first added the exact version to the allowlist, or `dev` for the development branch only. */
-  since: string
+export interface CompatVersionRow {
+  /** Plugin release tag, e.g. `'v0.2.7'` — doubles as the changelog anchor id. */
+  release: string
+  /** Exact DSH releases this plugin version supports. Mutually exclusive with `range`. */
+  dsh?: readonly string[]
+  /** Declared peer range, for releases that predate the exact allowlist. */
+  range?: string
 }
 
 export interface CompatPlatform {

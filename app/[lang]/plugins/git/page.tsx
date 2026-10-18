@@ -17,7 +17,7 @@ import { isLocale, localePath, type Locale } from '@/lib/i18n/config'
 import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
 import { fmt } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
-import { GIT_COMPAT_PLATFORMS, GIT_COMPAT_ROWS, GIT_PLUGIN_VERSION } from '@/lib/git-compat'
+import { GIT_COMPAT_PLATFORMS, GIT_COMPAT_VERSIONS, GIT_PLUGIN_VERSION } from '@/lib/git-compat'
 import { SHOTS } from '@/lib/screenshots'
 import { GIT_PACKAGE, links, withBasePath } from '@/lib/site'
 
@@ -128,7 +128,7 @@ export default async function GitPage({ params }: PageProps<'/[lang]/plugins/git
         <Features dict={dict} />
         <Design dict={dict} />
         <Install dict={dict} />
-        <Compatibility dict={dict} />
+        <Compatibility dict={dict} locale={lang} />
         <FinalCta dict={dict} />
       </main>
 
@@ -392,12 +392,12 @@ function Install({ dict }: { dict: Dictionary }) {
   )
 }
 
-function Compatibility({ dict }: { dict: Dictionary }) {
+function Compatibility({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const t = dict.git.compat
   const newTab = dict.common.opensInNewTab
   return (
     <Section id="compatibility" eyebrow={t.eyebrow} title={t.title} lead={fmt(t.lead, { version: GIT_PLUGIN_VERSION })}>
-      <CompatTable t={t} rows={GIT_COMPAT_ROWS} platforms={GIT_COMPAT_PLATFORMS} version={GIT_PLUGIN_VERSION} />
+      <CompatTable t={t} rows={GIT_COMPAT_VERSIONS} platforms={GIT_COMPAT_PLATFORMS} version={GIT_PLUGIN_VERSION} changelogPath={withBasePath(localePath(locale, `${PATH}/changelog`))} />
       <p className="mt-6 text-sm leading-6 text-pretty break-keep text-fg-subtle">
         <Rich
           text={t.footnote}

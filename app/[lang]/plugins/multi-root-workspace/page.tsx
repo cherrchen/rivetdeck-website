@@ -20,7 +20,7 @@ import { isLocale, localePath, type Locale } from '@/lib/i18n/config'
 import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
 import { fmt } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
-import { COMPAT_PLATFORMS, COMPAT_PLUGIN_VERSION, COMPAT_ROWS } from '@/lib/multi-root-compat'
+import { COMPAT_PLATFORMS, COMPAT_PLUGIN_VERSION, COMPAT_VERSIONS } from '@/lib/multi-root-compat'
 import { SHOTS } from '@/lib/screenshots'
 import { links, MULTI_ROOT_PACKAGE, withBasePath } from '@/lib/site'
 
@@ -134,7 +134,7 @@ export default async function MultiRootPage({ params }: PageProps<'/[lang]/plugi
         <Features dict={dict} />
         <Security dict={dict} />
         <Install dict={dict} />
-        <Compatibility dict={dict} />
+        <Compatibility dict={dict} locale={lang} />
         <FinalCta dict={dict} />
       </main>
 
@@ -417,12 +417,12 @@ function Install({ dict }: { dict: Dictionary }) {
   )
 }
 
-function Compatibility({ dict }: { dict: Dictionary }) {
+function Compatibility({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const t = dict.multiRoot.compat
   const newTab = dict.common.opensInNewTab
   return (
     <Section id="compatibility" eyebrow={t.eyebrow} title={t.title} lead={fmt(t.lead, { version: COMPAT_PLUGIN_VERSION })}>
-      <CompatTable t={t} rows={COMPAT_ROWS} platforms={COMPAT_PLATFORMS} version={COMPAT_PLUGIN_VERSION} />
+      <CompatTable t={t} rows={COMPAT_VERSIONS} platforms={COMPAT_PLATFORMS} version={COMPAT_PLUGIN_VERSION} changelogPath={withBasePath(localePath(locale, `${PATH}/changelog`))} />
       <p className="mt-6 text-sm leading-6 text-pretty break-keep text-fg-subtle">
         <Rich
           text={t.footnote}

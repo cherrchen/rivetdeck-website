@@ -1,44 +1,57 @@
 /**
  * Git plugin compatibility data.
  *
- * Source of truth: `SUPPORTED_DSH_RELEASES` in `src/compat/dsh-version.ts` of
- * cherrchen/dsh-plugin-git, read on `main`. The released package (v0.2.7)
- * covers all seventeen releases, from `0.1.5-rc.2` through `0.2.1-rc.2`.
+ * Source of truth: `src/compat/dsh-version.ts` of cherrchen/dsh-plugin-git,
+ * read at each release tag. One row per published plugin version, newest
+ * first, listing the exact DSH releases that version supports.
  *
- * `since` names the plugin release that first listed the release: v0.2.2
- * introduced the exact allowlist (before that, `>=0.1.5-rc.2 <0.2.0` was a
- * range), v0.2.3 added 0.1.7-rc.2, v0.2.4 added the 0.2.0 candidates,
- * v0.2.5 added 0.2.1-alpha.2, v0.2.6 added 0.1.5-rc.3, 0.2.1-alpha.1 and
- * 0.2.1-alpha.3, and v0.2.7 added the rest of the 0.2.1 line through rc.2.
- *
- * Row notes are localized: they live in the dictionaries under `git.compat.notes`,
- * keyed by `id`.
+ * v0.1.0 through v0.2.1 predate the exact allowlist: their package declared
+ * `@deepseek-ai/dsh-*` peers as ranges (`>=0.1.2-alpha.4 <0.2.0` at v0.1.0,
+ * `>=0.1.5-rc.2 <0.2.0` from v0.2.0), shown here as the declared range. The
+ * exact list landed in v0.2.2 and only grows afterwards.
  */
-import type { CompatPlatform, CompatRow, CompatStatus } from './compat'
+import type { CompatPlatform, CompatVersionRow } from './compat'
 
 export const GIT_PLUGIN_VERSION = '0.2.7'
 
-const row = (release: string, status: CompatStatus, since: string): CompatRow => ({ id: release, release, status, since })
+const exact = (release: string, dsh: readonly string[]): CompatVersionRow => ({ release, dsh })
+const range = (release: string, range: string): CompatVersionRow => ({ release, range })
 
-export const GIT_COMPAT_ROWS: readonly CompatRow[] = [
-  row('0.1.5-rc.2', 'verified', 'v0.2.0'),
-  row('0.1.5-rc.3', 'verified', 'v0.2.6'),
-  row('0.1.6-alpha.1', 'verified', 'v0.2.2'),
-  row('0.1.6-alpha.2', 'verified', 'v0.2.2'),
-  row('0.1.7-alpha.1', 'verified', 'v0.2.2'),
-  row('0.1.7-alpha.2', 'verified', 'v0.2.2'),
-  row('0.1.7-rc.1', 'verified', 'v0.2.2'),
-  row('0.1.7-rc.2', 'verified', 'v0.2.3'),
-  row('0.2.0-rc.1', 'verified', 'v0.2.4'),
-  row('0.2.0-rc.2', 'verified', 'v0.2.4'),
-  row('0.2.1-alpha.1', 'verified', 'v0.2.6'),
-  row('0.2.1-alpha.2', 'verified', 'v0.2.5'),
-  row('0.2.1-alpha.3', 'verified', 'v0.2.6'),
-  row('0.2.1-alpha.4', 'verified', 'v0.2.7'),
-  row('0.2.1-alpha.5', 'verified', 'v0.2.7'),
-  row('0.2.1-rc.1', 'verified', 'v0.2.7'),
-  row('0.2.1-rc.2', 'verified', 'v0.2.7'),
-  { id: 'other', release: null, status: 'unsupported', since: '—' },
+export const GIT_COMPAT_VERSIONS: readonly CompatVersionRow[] = [
+  exact('v0.2.7', [
+    '0.2.1-rc.2', '0.2.1-rc.1', '0.2.1-alpha.5', '0.2.1-alpha.4',
+    '0.2.1-alpha.3', '0.2.1-alpha.2', '0.2.1-alpha.1', '0.2.0-rc.2',
+    '0.2.0-rc.1', '0.1.7-rc.2', '0.1.7-rc.1', '0.1.7-alpha.2',
+    '0.1.7-alpha.1', '0.1.6-alpha.2', '0.1.6-alpha.1', '0.1.5-rc.3',
+    '0.1.5-rc.2',
+  ]),
+  exact('v0.2.6', [
+    '0.2.1-alpha.3', '0.2.1-alpha.2', '0.2.1-alpha.1', '0.2.0-rc.2',
+    '0.2.0-rc.1', '0.1.7-rc.2', '0.1.7-rc.1', '0.1.7-alpha.2',
+    '0.1.7-alpha.1', '0.1.6-alpha.2', '0.1.6-alpha.1', '0.1.5-rc.3',
+    '0.1.5-rc.2',
+  ]),
+  exact('v0.2.5', [
+    '0.2.1-alpha.2', '0.2.0-rc.2', '0.2.0-rc.1', '0.1.7-rc.2',
+    '0.1.7-rc.1', '0.1.7-alpha.2', '0.1.7-alpha.1', '0.1.6-alpha.2',
+    '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  exact('v0.2.4', [
+    '0.2.0-rc.2', '0.2.0-rc.1', '0.1.7-rc.2', '0.1.7-rc.1',
+    '0.1.7-alpha.2', '0.1.7-alpha.1', '0.1.6-alpha.2', '0.1.6-alpha.1',
+    '0.1.5-rc.2',
+  ]),
+  exact('v0.2.3', [
+    '0.1.7-rc.2', '0.1.7-rc.1', '0.1.7-alpha.2', '0.1.7-alpha.1',
+    '0.1.6-alpha.2', '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  exact('v0.2.2', [
+    '0.1.7-rc.1', '0.1.7-alpha.2', '0.1.7-alpha.1', '0.1.6-alpha.2',
+    '0.1.6-alpha.1', '0.1.5-rc.2',
+  ]),
+  range('v0.2.1', '>=0.1.5-rc.2 <0.2.0'),
+  range('v0.2.0', '>=0.1.5-rc.2 <0.2.0'),
+  range('v0.1.0', '>=0.1.2-alpha.4 <0.2.0'),
 ]
 
 export const GIT_COMPAT_PLATFORMS = [

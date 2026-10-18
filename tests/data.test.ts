@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { COMPAT_ROWS } from '@/lib/multi-root-compat'
+import { COMPAT_PLUGIN_VERSION, COMPAT_VERSIONS } from '@/lib/multi-root-compat'
 import { DOWNLOADS, PLATFORM_ORDER, RELEASE, recommend } from '@/lib/releases'
 import { links } from '@/lib/site'
 import { THEMES } from '@/lib/themes'
@@ -65,35 +65,41 @@ describe('recommend', () => {
 })
 
 describe('multi-root compatibility matrix', () => {
-  it('lists all sixteen allowlist entries as verified, in order', () => {
-    const verified = COMPAT_ROWS.filter((r) => r.status === 'verified').map((r) => r.release)
-    expect(verified).toEqual([
-      '0.1.5-rc.2',
-      '0.1.6-alpha.1',
-      '0.1.6-alpha.2',
-      '0.1.7-alpha.1',
-      '0.1.7-alpha.2',
-      '0.1.7-rc.1',
-      '0.1.7-rc.2',
-      '0.2.0-rc.1',
-      '0.2.0-rc.2',
-      '0.2.1-alpha.1',
-      '0.2.1-alpha.2',
-      '0.2.1-alpha.3',
-      '0.2.1-alpha.4',
-      '0.2.1-alpha.5',
-      '0.2.1-rc.1',
+  it('lists the full sixteen-release allowlist on the current version, in order', () => {
+    expect(COMPAT_VERSIONS[0]?.release).toBe(`v${COMPAT_PLUGIN_VERSION}`)
+    expect(COMPAT_VERSIONS[0]?.dsh).toEqual([
       '0.2.1-rc.2',
+      '0.2.1-rc.1',
+      '0.2.1-alpha.5',
+      '0.2.1-alpha.4',
+      '0.2.1-alpha.3',
+      '0.2.1-alpha.2',
+      '0.2.1-alpha.1',
+      '0.2.0-rc.2',
+      '0.2.0-rc.1',
+      '0.1.7-rc.2',
+      '0.1.7-rc.1',
+      '0.1.7-alpha.2',
+      '0.1.7-alpha.1',
+      '0.1.6-alpha.2',
+      '0.1.6-alpha.1',
+      '0.1.5-rc.2',
     ])
   })
 
-  it('has no development-branch-only rows in the released package', () => {
-    expect(COMPAT_ROWS.filter((r) => r.status === 'unreleased')).toEqual([])
+  it('has one row per published plugin version, newest first', () => {
+    const releases = COMPAT_VERSIONS.map((r) => r.release)
+    expect(new Set(releases).size).toBe(releases.length)
+    expect(releases).toEqual([...releases].sort().reverse())
   })
 
-  it('ends with an unsupported catch-all row and has unique releases', () => {
-    expect(COMPAT_ROWS.at(-1)?.status).toBe('unsupported')
-    expect(new Set(COMPAT_ROWS.map((r) => r.release)).size).toBe(COMPAT_ROWS.length)
+  it('keeps support sets cumulative and marks the pre-allowlist release as a range', () => {
+    for (let i = 0; i < COMPAT_VERSIONS.length - 1; i++) {
+      const cur = COMPAT_VERSIONS[i]
+      const next = COMPAT_VERSIONS[i + 1]
+      if (cur?.dsh && next?.dsh) expect(cur.dsh).toEqual(expect.arrayContaining([...next.dsh]))
+    }
+    expect(COMPAT_VERSIONS.at(-1)?.range).toMatch(/^>=0\.1\.2-alpha\.4 <0\.2\.0$/)
   })
 })
 

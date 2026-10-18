@@ -2,12 +2,10 @@ import type { ReactNode } from 'react'
 import { ChangelogReleases } from '@/components/changelog/releases'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
-import { ButtonLink } from '@/components/ui/button'
 import { Container } from '@/components/ui/container'
 import { blobUrl, type ChangelogRelease, type DocLinks } from '@/lib/changelog'
 import { localePath, type Locale } from '@/lib/i18n/config'
 import type { Dictionary } from '@/lib/i18n/dictionaries'
-import { fmt } from '@/lib/i18n/format'
 import { links, withBasePath } from '@/lib/site'
 
 /** The plugin dictionary keys the changelog shell consumes (all three plugin pages share them). */
@@ -143,22 +141,19 @@ export function PluginChangelogPage({
       <main id="main">
         <section aria-labelledby="cl-hero-title">
           <Container className="pt-20 pb-12 sm:pt-28">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[13px] text-fg-muted">
-              <span className="text-fg">{cfg.packageName}</span>
-              <span>{fmt(c.metaLine, { count: releases.length, version: `v${cfg.latestVersion}` })}</span>
-            </div>
-            <h1 id="cl-hero-title" className="mt-6 max-w-4xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
+            <h1 id="cl-hero-title" className="max-w-4xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
               {c.title}
             </h1>
-            <p className="mt-6 max-w-xl text-[17px] leading-7 text-fg-muted">{c.lead}</p>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <ButtonLink href={pluginPath} variant="secondary" newTab={newTab}>
-                {c.nav.plugin}
-              </ButtonLink>
-              <ButtonLink href={blobUrl(cfg.repo, `v${cfg.latestVersion}`, sourceFile)} variant="ghost" newTab={newTab}>
-                {sourceFile} ↗
-              </ButtonLink>
-            </div>
+            <a
+              href={blobUrl(cfg.repo, `v${cfg.latestVersion}`, sourceFile)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-1 font-mono text-[13px] text-fg-muted transition-colors hover:text-fg"
+            >
+              {cfg.packageName}
+              <span aria-hidden="true">↗</span>
+              <span className="sr-only">{newTab}</span>
+            </a>
           </Container>
         </section>
 
