@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { JsonLd } from '@/components/json-ld'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { CompatTable } from '@/components/plugin/compat-table'
@@ -18,6 +19,7 @@ import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
 import { fmt } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
 import { GIT_COMPAT_PLATFORMS, GIT_COMPAT_VERSIONS, GIT_PLUGIN_VERSION } from '@/lib/git-compat'
+import { breadcrumbList, pluginApp } from '@/lib/jsonld'
 import { SHOTS } from '@/lib/screenshots'
 import { GIT_PACKAGE, links, withBasePath } from '@/lib/site'
 
@@ -107,6 +109,24 @@ export default async function GitPage({ params }: PageProps<'/[lang]/plugins/git
 
   return (
     <div data-identity="git">
+      <JsonLd
+        data={pluginApp({
+          locale: lang,
+          path: PATH,
+          changelogPath: `${PATH}/changelog`,
+          name: 'Git for DSH',
+          version: GIT_PLUGIN_VERSION,
+          description: t.meta.description,
+          npm: links.git.npm,
+          repo: links.git.repo,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbList(lang, [
+          { path: '/', name: 'Rivetdeck' },
+          { path: PATH, name: 'Git' },
+        ])}
+      />
       <SiteHeader
         locale={lang}
         path={PATH}

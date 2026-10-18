@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { JsonLd } from '@/components/json-ld'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { DownloadPanel, HeroActions } from '@/components/home/download'
@@ -18,6 +19,7 @@ import { isLocale, localePath, type Locale } from '@/lib/i18n/config'
 import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
 import { fmt, formatDate } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
+import { rivetdeckApp } from '@/lib/jsonld'
 import { RELEASE, assetUrl } from '@/lib/releases'
 import { SHOTS } from '@/lib/screenshots'
 import { links, withBasePath } from '@/lib/site'
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: PageProps<'/[lang]'>): Promis
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const t = getDictionary(lang).home.meta
-  return pageMetadata({ locale: lang, path: PATH, title: t.title, description: t.description, siteName: 'Rivetdeck' })
+  return pageMetadata({ locale: lang, path: PATH, title: t.title, description: t.description, keywords: t.keywords, siteName: 'Rivetdeck' })
 }
 
 export default async function HomePage({ params }: PageProps<'/[lang]'>) {
@@ -82,6 +84,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
 
   return (
     <>
+      <JsonLd data={rivetdeckApp(lang, dict.home.meta.description)} />
       <SiteHeader
         locale={lang}
         path={PATH}

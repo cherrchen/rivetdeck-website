@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PluginChangelogPage } from '@/components/changelog/plugin-page'
+import { JsonLd } from '@/components/json-ld'
 import { PaletteMark } from '@/components/ui/logo'
 import { CHANGELOG_SOURCE_FILE, THEME_STUDIO_DOC_LINKS } from '@/lib/changelog'
 import { isLocale, localePath } from '@/lib/i18n/config'
 import { getDictionary } from '@/lib/i18n/dictionaries'
 import { pageMetadata } from '@/lib/i18n/metadata'
+import { breadcrumbList } from '@/lib/jsonld'
 import { links, THEME_STUDIO_PACKAGE } from '@/lib/site'
 import { THEME_STUDIO_PLUGIN_VERSION } from '@/lib/theme-studio-compat'
 
@@ -16,7 +18,7 @@ export async function generateMetadata({ params }: PageProps<'/[lang]/plugins/th
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const t = getDictionary(lang).themeStudio.changelog.meta
-  return pageMetadata({ locale: lang, path: PATH, title: t.title, description: t.description, siteName: 'Theme Studio for DSH' })
+  return pageMetadata({ locale: lang, path: PATH, title: t.title, description: t.description, keywords: t.keywords, siteName: 'Theme Studio for DSH' })
 }
 
 export default async function ThemeStudioChangelogPage({ params }: PageProps<'/[lang]/plugins/theme-studio/changelog'>) {
@@ -26,7 +28,15 @@ export default async function ThemeStudioChangelogPage({ params }: PageProps<'/[
   const t = dict.themeStudio
   const pluginSection = localePath(lang, PLUGIN_PATH)
   return (
-    <PluginChangelogPage
+    <>
+      <JsonLd
+        data={breadcrumbList(lang, [
+          { path: '/', name: 'Rivetdeck' },
+          { path: PLUGIN_PATH, name: 'Theme Studio' },
+          { path: PATH, name: t.nav.changelog },
+        ])}
+      />
+      <PluginChangelogPage
       locale={lang}
       dict={dict}
       t={t}
@@ -62,5 +72,6 @@ export default async function ThemeStudioChangelogPage({ params }: PageProps<'/[
         latestVersion: THEME_STUDIO_PLUGIN_VERSION,
       }}
     />
+    </>
   )
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { JsonLd } from '@/components/json-ld'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { ThemePreview } from '@/components/home/theme-preview'
@@ -19,6 +20,7 @@ import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
 import { fmt } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
 import { THEME_STUDIO_COMPAT_VERSIONS, THEME_STUDIO_PLUGIN_VERSION } from '@/lib/theme-studio-compat'
+import { breadcrumbList, pluginApp } from '@/lib/jsonld'
 import { SHOTS } from '@/lib/screenshots'
 import { links, THEME_STUDIO_PACKAGE, withBasePath } from '@/lib/site'
 import { THEMES } from '@/lib/themes'
@@ -110,6 +112,24 @@ export default async function ThemeStudioPage({ params }: PageProps<'/[lang]/plu
 
   return (
     <div data-identity="theme-studio">
+      <JsonLd
+        data={pluginApp({
+          locale: lang,
+          path: PATH,
+          changelogPath: `${PATH}/changelog`,
+          name: 'Theme Studio for DSH',
+          version: THEME_STUDIO_PLUGIN_VERSION,
+          description: t.meta.description,
+          npm: links.themeStudio.npm,
+          repo: links.themeStudio.repo,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbList(lang, [
+          { path: '/', name: 'Rivetdeck' },
+          { path: PATH, name: 'Theme Studio' },
+        ])}
+      />
       <SiteHeader
         locale={lang}
         path={PATH}

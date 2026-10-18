@@ -68,6 +68,7 @@ const zh: Dictionary = {
       title: 'Rivetdeck — DeepSeek Harness 的原生桌面应用',
       description:
         'Rivetdeck 把 DeepSeek Harness 智能体运行时打包成适用于 macOS、Windows 和 Linux 的桌面应用，预装 Git 与 Theme Studio。非官方、开源、MIT 许可。',
+    keywords: ['DeepSeek Harness', 'DeepSeek Harness 桌面端', 'Rivetdeck', '编程智能体', 'AI 智能体', '开源'],
     },
     brandHome: 'Rivetdeck 首页',
     nav: { features: '功能', plugins: '插件', download: '下载', github: 'GitHub' },
@@ -190,6 +191,7 @@ const zh: Dictionary = {
         title: 'Rivetdeck 更新日志 — 全部版本',
         description:
           'Rivetdeck 的每个已发布版本，按时间倒序排列；发布说明在 GitHub Releases 上。',
+      keywords: ['Rivetdeck 更新日志', '发布说明', 'DeepSeek Harness 桌面端', '全部版本'],
       },
       nav: { home: '概览' },
       title: '更新日志',
@@ -497,6 +499,7 @@ const zh: Dictionary = {
         title: 'Multi-root Workspace 更新日志 — 插件的全部版本',
         description:
           'DeepSeek Harness Multi-root Workspace 插件的发布历史：每个已发布版本的新功能、变更与修复，按时间倒序排列。',
+      keywords: ['Multi-root Workspace 更新日志', 'DSH 插件版本', '发布说明', 'monorepo'],
       },
       nav: { plugin: '概览' },
       title: '更新日志',
@@ -829,6 +832,7 @@ const zh: Dictionary = {
         title: 'Git 更新日志 — Git 插件的全部版本',
         description:
           'DeepSeek Harness Git 插件的发布历史：每个已发布版本的新功能、变更与修复，按时间倒序排列。',
+      keywords: ['Git 插件更新日志', 'DSH 插件版本', '发布说明', 'DeepSeek Harness'],
       },
       nav: { plugin: '概览' },
       title: '更新日志',
@@ -1102,6 +1106,7 @@ const zh: Dictionary = {
         title: 'Theme Studio 更新日志 — 插件的全部版本',
         description:
           'DeepSeek Harness Theme Studio 插件的发布历史：每个已发布版本的新功能、变更与修复，按时间倒序排列。',
+      keywords: ['Theme Studio 更新日志', 'DSH 插件版本', '发布说明', 'DeepSeek Harness 主题'],
       },
       nav: { plugin: '概览' },
       title: '更新日志',

@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PluginChangelogPage } from '@/components/changelog/plugin-page'
+import { JsonLd } from '@/components/json-ld'
 import { RootsMark } from '@/components/ui/logo'
 import { CHANGELOG_SOURCE_FILE, MULTI_ROOT_DOC_LINKS } from '@/lib/changelog'
 import { isLocale, localePath } from '@/lib/i18n/config'
 import { getDictionary } from '@/lib/i18n/dictionaries'
 import { pageMetadata } from '@/lib/i18n/metadata'
+import { breadcrumbList } from '@/lib/jsonld'
 import { COMPAT_PLUGIN_VERSION } from '@/lib/multi-root-compat'
 import { links, MULTI_ROOT_PACKAGE } from '@/lib/site'
 
@@ -16,7 +18,7 @@ export async function generateMetadata({ params }: PageProps<'/[lang]/plugins/mu
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const t = getDictionary(lang).multiRoot.changelog.meta
-  return pageMetadata({ locale: lang, path: PATH, title: t.title, description: t.description, siteName: 'Multi-root Workspace for DSH' })
+  return pageMetadata({ locale: lang, path: PATH, title: t.title, description: t.description, keywords: t.keywords, siteName: 'Multi-root Workspace for DSH' })
 }
 
 export default async function MultiRootChangelogPage({ params }: PageProps<'/[lang]/plugins/multi-root-workspace/changelog'>) {
@@ -26,7 +28,15 @@ export default async function MultiRootChangelogPage({ params }: PageProps<'/[la
   const t = dict.multiRoot
   const pluginSection = localePath(lang, PLUGIN_PATH)
   return (
-    <PluginChangelogPage
+    <>
+      <JsonLd
+        data={breadcrumbList(lang, [
+          { path: '/', name: 'Rivetdeck' },
+          { path: PLUGIN_PATH, name: 'Multi-root Workspace' },
+          { path: PATH, name: t.nav.changelog },
+        ])}
+      />
+      <PluginChangelogPage
       locale={lang}
       dict={dict}
       t={t}
@@ -63,5 +73,6 @@ export default async function MultiRootChangelogPage({ params }: PageProps<'/[la
         latestVersion: COMPAT_PLUGIN_VERSION,
       }}
     />
+    </>
   )
 }

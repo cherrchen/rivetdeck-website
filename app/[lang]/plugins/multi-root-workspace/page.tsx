@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { JsonLd } from '@/components/json-ld'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { BeforeAfter } from '@/components/multi-root/before-after'
@@ -21,6 +22,7 @@ import { getDictionary, type Dictionary } from '@/lib/i18n/dictionaries'
 import { fmt } from '@/lib/i18n/format'
 import { pageMetadata } from '@/lib/i18n/metadata'
 import { COMPAT_PLATFORMS, COMPAT_PLUGIN_VERSION, COMPAT_VERSIONS } from '@/lib/multi-root-compat'
+import { breadcrumbList, pluginApp } from '@/lib/jsonld'
 import { SHOTS } from '@/lib/screenshots'
 import { links, MULTI_ROOT_PACKAGE, withBasePath } from '@/lib/site'
 
@@ -111,6 +113,24 @@ export default async function MultiRootPage({ params }: PageProps<'/[lang]/plugi
 
   return (
     <div data-identity="multi-root">
+      <JsonLd
+        data={pluginApp({
+          locale: lang,
+          path: PATH,
+          changelogPath: `${PATH}/changelog`,
+          name: 'Multi-root Workspace for DSH',
+          version: COMPAT_PLUGIN_VERSION,
+          description: t.meta.description,
+          npm: links.multiRoot.npm,
+          repo: links.multiRoot.repo,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbList(lang, [
+          { path: '/', name: 'Rivetdeck' },
+          { path: PATH, name: 'Multi-root Workspace' },
+        ])}
+      />
       <SiteHeader
         locale={lang}
         path={PATH}

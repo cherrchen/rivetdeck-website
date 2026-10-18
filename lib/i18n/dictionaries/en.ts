@@ -77,6 +77,7 @@ const en = {
       title: 'Rivetdeck — a native desktop app for DeepSeek Harness',
       description:
         'Rivetdeck packages the DeepSeek Harness agent runtime as a desktop app for macOS, Windows and Linux, with Git and Theme Studio preinstalled. Unofficial, open source, MIT.',
+    keywords: ['DeepSeek Harness', 'DeepSeek Harness desktop', 'Rivetdeck', 'coding agent', 'AI agent', 'open source'],
     },
     brandHome: 'Rivetdeck home',
     nav: { features: 'Features', plugins: 'Plugins', download: 'Download', github: 'GitHub' },
@@ -199,6 +200,7 @@ const en = {
         title: 'Rivetdeck changelog — every release',
         description:
           'Every published Rivetdeck release, newest first. Release notes live on GitHub Releases.',
+      keywords: ['Rivetdeck changelog', 'release notes', 'DeepSeek Harness desktop', 'releases'],
       },
       nav: { home: 'Overview' },
       title: 'Changelog',
@@ -517,6 +519,7 @@ const en = {
         title: 'Multi-root Workspace changelog — every release of the plugin for DSH',
         description:
           'Release history of the Multi-root Workspace plugin for DeepSeek Harness: every published version with its features, changes and fixes, newest first.',
+      keywords: ['Multi-root Workspace changelog', 'DSH plugin releases', 'release notes', 'monorepo'],
       },
       nav: { plugin: 'Overview' },
       title: 'Changelog',
@@ -861,6 +864,7 @@ const en = {
         title: 'Git changelog — every release of the Git plugin for DSH',
         description:
           'Release history of the Git plugin for DeepSeek Harness: every published version with its features, changes and fixes, newest first.',
+      keywords: ['Git plugin changelog', 'DSH plugin releases', 'release notes', 'DeepSeek Harness'],
       },
       nav: { plugin: 'Overview' },
       title: 'Changelog',
@@ -1144,6 +1148,7 @@ const en = {
         title: 'Theme Studio changelog — every release of the plugin for DSH',
         description:
           'Release history of the Theme Studio plugin for DeepSeek Harness: every published version with its features, changes and fixes, newest first.',
+      keywords: ['Theme Studio changelog', 'DSH plugin releases', 'release notes', 'DeepSeek Harness themes'],
       },
       nav: { plugin: 'Overview' },
       title: 'Changelog',
