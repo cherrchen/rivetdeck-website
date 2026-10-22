@@ -57,15 +57,15 @@ export const links = {
   multiRoot: {
     repo: multiRootRepo,
     npm: 'https://www.npmjs.com/package/@dsh-electron/dsh-plugin-multi-root-workspace',
-    architecture: `${multiRootRepo}/blob/v0.1.8/docs/architecture/multi-root-workspace.md`,
-    readme: `${multiRootRepo}/blob/v0.1.8/README.en.md`,
+    architecture: `${multiRootRepo}/blob/v0.1.9/docs/architecture/multi-root-workspace.md`,
+    readme: `${multiRootRepo}/blob/v0.1.9/README.en.md`,
     issues: `${multiRootRepo}/issues`,
     adr: {
-      dialect: `${multiRootRepo}/blob/v0.1.8/docs/decisions/ADR-0003-dialect-grant-widening.md`,
-      lease: `${multiRootRepo}/blob/v0.1.8/docs/decisions/ADR-0007-registry-authority-lease.md`,
-      panel: `${multiRootRepo}/blob/v0.1.8/docs/decisions/ADR-0008-panel-session-derived-authority.md`,
-      compat: `${multiRootRepo}/blob/v0.1.8/docs/decisions/ADR-0009-dsh-compat-contract.md`,
-      instructions: `${multiRootRepo}/blob/v0.1.8/docs/decisions/ADR-0010-additional-root-instruction-scope.md`,
+      dialect: `${multiRootRepo}/blob/v0.1.9/docs/decisions/ADR-0003-dialect-grant-widening.md`,
+      lease: `${multiRootRepo}/blob/v0.1.9/docs/decisions/ADR-0007-registry-authority-lease.md`,
+      panel: `${multiRootRepo}/blob/v0.1.9/docs/decisions/ADR-0008-panel-session-derived-authority.md`,
+      compat: `${multiRootRepo}/blob/v0.1.9/docs/decisions/ADR-0009-dsh-compat-contract.md`,
+      instructions: `${multiRootRepo}/blob/v0.1.9/docs/decisions/ADR-0010-additional-root-instruction-scope.md`,
     },
   },
 } as const

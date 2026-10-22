@@ -124,6 +124,14 @@ const en = {
           title: 'Same runtime as upstream',
           body: 'Rivetdeck keeps the upstream Web application, agent runtime, profiles and workspace workflow. Provider setup happens in the Harness UI you already know.',
         },
+        {
+          title: 'Verified session checkpoints',
+          body: 'A clean exit saves verified session checkpoints. If startup finds changed or unreadable session logs, a confirmation dialog lets you restore the last verified copy while keeping replaced data in quarantine.',
+        },
+        {
+          title: 'Selective Windows uninstall cleanup',
+          body: 'The NSIS uninstaller removes verified rebuildable toolchains and caches while keeping preferences, credentials, browser storage and Harness homes by default. Microsoft Store cleanup parity is not yet verified.',
+        },
       ],
     },
     plugins: {
@@ -211,6 +219,7 @@ const en = {
       compare: 'Compare with the previous release on GitHub',
       releaseNotes: 'Release notes',
       releases: [
+        { version: '0.2.0-beta.5', date: '2026-10-21' },
         { version: '0.2.0-beta.4', date: '2026-10-17' },
         { version: '0.2.0-beta.3', date: '2026-10-14' },
         { version: '0.2.0-beta.2', date: '2026-10-09' },
@@ -274,7 +283,7 @@ const en = {
       changelog: ' changelog',
       titleLine1: 'One Workspace.',
       titleLine2: 'Multiple Roots.',
-      lead: 'Let a DSH agent read, edit and run commands across several repositories in a single session. The plugin widens the workspace sandbox from one root to a primary root plus N additional roots, and changes nothing else about how the agent works.',
+      lead: 'Let a DSH agent read, edit and run commands across several repositories in a single session. The plugin widens the workspace sandbox from one root to a primary root plus N additional roots, keeps the native agent tools, and offers optional Auto Review with multi-root context (off by default).',
       install: 'Install the plugin',
       architecture: 'Read the architecture ↗',
       bullets: ['Native read, write, edit and bash tools', 'Kernel and in-process enforcement', 'Absent when you add no roots'],
@@ -348,6 +357,7 @@ const en = {
         points: [
           'bash and the PTY keep the primary root as their default working directory',
           'Language servers treat each additional root as a separate workspace',
+          'Optional Auto Review is off by default; enable the /auto-review row in Plugin Manager on DSH 0.2.1-rc.2 to give the reviewer root topology, access levels and live instructions',
           'The additional-root topology reaches the model as part of the sandbox policy context, so it needs no introspection tool',
           'Sandbox modes still apply to inherited roots: read-only grants none of them',
           'On DSH 0.2.1 the session can move its working directory — grants and the registry stay keyed to the session origin',
@@ -494,7 +504,7 @@ const en = {
       eyebrow: 'Compatibility',
       title: 'An exact list, not a range.',
       lead: 'The plugin replaces sandbox providers whose internals carry no semver promise, so it supports exact DSH releases that CI has run — each row lists the releases a published plugin version accepts; the current package is v{version}.',
-      footnote: 'Status is declared per release and never inferred from version order. A green CI run on an unlisted release is evidence, not support. Read <contract>the compatibility contract</contract> for the rules.',
+      footnote: 'Status is declared per release and never inferred from version order. A green CI run on an unlisted release is evidence, not support. Read <contract>the compatibility contract</contract> for the rules. Optional Auto Review is supported only on DSH 0.2.1-rc.2 and ships disabled.',
       region: 'DSH release support matrix',
       caption: 'DSH releases supported by each published plugin version',
       columns: { version: 'Plugin version', supported: 'Supported DSH releases' },
@@ -538,6 +548,12 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.9', date: '2026-10-20', sections: [
+            { kind: 'added', items: [
+                "<b>Optional Auto Review (off by default)</b>: the main package gains an <code>./auto-review</code> subpath export and a <code>multi-root-auto-review</code> patch row — a fork of upstream's experimental \"auto review\" that feeds the reviewer the additional roots' context: the current workspace topology, each root's effective access level, and live instruction files. The row ships <code>disabled: true</code>; while off it mounts neither the reviewer nor the review context and does not register the Auto preset. The ordinary support matrix is unchanged — only DSH <code>0.2.1-rc.2</code> can enable it, and enabling it on any other release fails loudly rather than silently degrading. To turn it on, open the <code>@dsh-electron/dsh-plugin-multi-root-workspace/auto-review</code> row in the Plugin Manager row list (profiles without hot reload ask for a restart), or set <code>disabled: false</code> in the profile's <code>cordis.patch.yml</code>; the context and the reviewer share this single switch.",
+                "<b>Takes over the official reviewer while on</b>: the same switch mounts the multi-root review context and the fork reviewer, and stops the official <code>@deepseek-ai/dsh-experimental-auto-review</code> row in the same group at run time — the official bundle may sit before or after this package, the takeover only touches runtime state and never writes back the official row's persisted configuration; when the official bundle was never selected, the row runs standalone (it registers its own Auto preset). Disabling restores the official row per its original configuration on the next reload/restart and never re-selects Auto on its own; unloading any live Auto owner keeps the official Auto → Full access semantics. A profile that ever installed the old standalone companion package from a local tarball/link must remove its bundle selection and dependency before enabling this row (a leftover companion alongside the built-in entry is refused explicitly). Usage notes live in <autoReviewReadme>src/auto-review/README.en.md</autoReviewReadme> (<adr0021>ADR-0021</adr0021>, <adr0022>ADR-0022</adr0022>)."
+              ] }
+          ] },
         { version: '0.1.8', date: '2026-10-18', sections: [
             { kind: 'fixed', items: [
                 '<b>Permission settings page unavailable on DSH 0.2.0</b>: when installed via <code>link:</code>, the plugin resolved optional packages it never loads — packages consumed only as mounted host services (<code>dsh-lsp</code> / <code>dsh-lsp-stdio</code> / <code>dsh-working-directory</code>, among others) — to the checkout’s own devDependencies, so a uniformly-versioned host was misjudged as <code>mixed</code>; and because the two replacement provider rows injected the compatibility gate while upstream <code>fs-sandbox</code> / <code>sandbox</code> were already disabled unconditionally, a refused gate removed <code>ctx.fs</code> / <code>ctx.sandbox</code>, taking down <code>ctx.shell</code> and <code>permissionPresets</code> with it (<code>permissionPresets/catalog</code> reported <code>service-unavailable</code>). Optional packages are now classified by who loads the resolved copy and through which anchor — runtime-loaded, host-service, or runner-anchored — so host-service copies inside the plugin root no longer testify, and the Windows ACL package is inspected from the <code>dsh-sandbox-local</code> anchor; the two provider rows no longer inject the gate and degrade to upstream-equivalent behavior on a refused installation, while every widened-authority row stays gated (see <adr0009>ADR-0009 amendment</adr0009>).'

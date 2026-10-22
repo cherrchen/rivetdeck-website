@@ -115,6 +115,14 @@ const zh: Dictionary = {
           title: '与上游相同的运行时',
           body: 'Rivetdeck 保留上游的 Web 应用、智能体运行时、profile 和工作区流程。模型服务商仍在你熟悉的 Harness 界面里配置。',
         },
+        {
+          title: '经过验证的会话检查点',
+          body: '干净退出时保存经过验证的会话检查点。启动时若发现会话日志变化或无法读取，会通过确认对话框让你恢复上一份已验证副本，被替换的数据保留在隔离区。',
+        },
+        {
+          title: 'Windows 卸载按层清理',
+          body: 'NSIS 卸载程序清理经核验、可重建的工具链与缓存，默认保留偏好设置、凭据、浏览器存储和 Harness home。Microsoft Store 版本的清理一致性尚未验证。',
+        },
       ],
     },
     plugins: {
@@ -202,6 +210,7 @@ const zh: Dictionary = {
       compare: '在 GitHub 上与上一版本对比',
       releaseNotes: '发布说明',
       releases: [
+        { version: '0.2.0-beta.5', date: '2026-10-21' },
         { version: '0.2.0-beta.4', date: '2026-10-17' },
         { version: '0.2.0-beta.3', date: '2026-10-14' },
         { version: '0.2.0-beta.2', date: '2026-10-09' },
@@ -265,7 +274,7 @@ const zh: Dictionary = {
       changelog: ' 更新日志',
       titleLine1: '一个工作区。',
       titleLine2: '多个根目录。',
-      lead: '让 DSH 智能体在一次会话里跨多个仓库读取、编辑并运行命令。插件把工作区沙箱从单个根目录扩展为主根目录加 N 个附加根目录，智能体的其他工作方式保持不变。',
+      lead: '让 DSH 智能体在一次会话里跨多个仓库读取、编辑并运行命令。插件把工作区沙箱从单个根目录扩展为主根目录加 N 个附加根目录，保留原生智能体工具，并提供默认关闭、带多根上下文的可选 Auto Review。',
       install: '安装插件',
       architecture: '阅读架构文档 ↗',
       bullets: ['原生的 read、write、edit 和 bash 工具', '内核与进程内双重强制', '不添加根目录时等同于未安装'],
@@ -331,6 +340,7 @@ const zh: Dictionary = {
         points: [
           'bash 和 PTY 仍以主根目录作为默认工作目录',
           '语言服务器把每个附加根目录视为独立的工作区',
+          '可选 Auto Review 默认关闭；仅在 DSH 0.2.1-rc.2 上可通过插件管理器启用 /auto-review 行，为审查器提供根目录拓扑、访问级别和实时指令',
           '附加根目录的拓扑作为沙箱策略上下文的一部分传给模型，不需要额外的查询工具',
           '沙箱模式对继承的根目录依然生效：只读模式不授予它们',
           '在 DSH 0.2.1 上会话可以移动工作目录——授权和登记表仍以会话起点为键',
@@ -474,7 +484,7 @@ const zh: Dictionary = {
       eyebrow: '兼容性',
       title: '一份确切的清单，而不是一个范围。',
       lead: '插件替换的沙箱提供者，其内部实现没有语义化版本承诺，所以只支持 CI 实际跑过的确切 DSH 版本——表中每行列出一个已发布插件版本接受的集合，当前包为 v{version}。',
-      footnote: '状态按版本逐项声明，绝不按版本号顺序推断。未列出的版本即使 CI 全绿，也只是证据，而不是支持。规则请阅读<contract>兼容性约定</contract>。',
+      footnote: '状态按版本逐项声明，绝不按版本号顺序推断。未列出的版本即使 CI 全绿，也只是证据，而不是支持。规则请阅读<contract>兼容性约定</contract>。可选 Auto Review 仅支持 DSH 0.2.1-rc.2，默认关闭。',
       region: 'DSH 版本支持矩阵',
       caption: '各已发布插件版本支持的 DSH 版本',
       columns: { version: '插件版本', supported: '支持的 DSH 版本' },
@@ -518,6 +528,12 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.9', date: '2026-10-20', sections: [
+            { kind: 'added', items: [
+                "<b>可选 Auto Review（默认关闭）</b>：主包新增 <code>./auto-review</code> 子路径导出与 <code>multi-root-auto-review</code> patch 行——fork 上游实验性「自动授权审查」，向 Reviewer 补充附加根的审查上下文：当前工作区拓扑、各根有效访问级别与实时指令文件。该行出厂 <code>disabled: true</code>，关闭时不挂载 reviewer 或 review context、不注册 Auto preset；普通支持矩阵不变，仅 DSH <code>0.2.1-rc.2</code> 可启用——在任何其他版本上打开会响亮失败，不会静默降级。启用方式：在插件管理器的行列表中打开 <code>@dsh-electron/dsh-plugin-multi-root-workspace/auto-review</code> 行（无热重载的 profile 按提示重启），或在 profile 的 <code>cordis.patch.yml</code> 中置 <code>disabled: false</code>；context 与 reviewer 共用这一个开关。",
+                "<b>启用后接管官方 reviewer</b>：同一个开关挂载多根 review context 与 fork reviewer，并在运行时停止同组官方 <code>@deepseek-ai/dsh-experimental-auto-review</code> 行——官方 bundle 位于主包前后均可，接管只改运行时状态、不写回官方的持久配置；官方 bundle 未被选择时该行独立运行（自带注册 Auto preset）。关闭后官方按原配置随 reload/restart 恢复，不自动重选 Auto；任何存活 Auto owner 的卸载沿用官方 Auto → Full access 语义。曾以本地 tarball/link 安装过旧独立 companion 包的 profile，须先移除其 bundle 与依赖再启用本行（残留 companion 与内置入口共存会被明确拒绝）。使用说明见 <autoReviewReadme>src/auto-review/README.md</autoReviewReadme>（<adr0021>ADR-0021</adr0021>、<adr0022>ADR-0022</adr0022>）。"
+              ] }
+          ] },
         { version: '0.1.8', date: '2026-10-18', sections: [
             { kind: 'fixed', items: [
                 '<b>DSH 0.2.0 上权限设置页不可用</b>：以 <code>link:</code> 方式安装时，插件把只作为宿主服务消费、自身从不加载的可选包（<code>dsh-lsp</code> / <code>dsh-lsp-stdio</code> / <code>dsh-working-directory</code> 等）解析到检出目录自己的 devDependencies，版本统一的宿主被误判为 <code>mixed</code>；同时两个 provider 替身行 inject 兼容门禁而上游 <code>fs-sandbox</code> / <code>sandbox</code> 已被无条件禁用，门禁一旦拒绝，<code>ctx.fs</code> / <code>ctx.sandbox</code> 消失并连带 <code>ctx.shell</code> 与 <code>permissionPresets</code> 瘫痪（<code>permissionPresets/catalog</code> 报 <code>service-unavailable</code>）。可选包现按"谁加载副本、经哪个锚点"分为运行时加载、宿主服务与 runner 锚定三类——插件根内的宿主服务副本不再作证，Windows ACL 包改从 <code>dsh-sandbox-local</code> 锚点取证；两个 provider 行不再 inject 门禁，在被拒安装上退化为上游等价行为，宽授权行的门禁不变（<adr0009>ADR-0009 修订</adr0009>）。'

@@ -1,14 +1,14 @@
 /**
  * Rivetdeck release data. Every GitHub asset name and size below was read from
- * the GitHub Release `v0.2.0-beta.4` of cherrchen/rivetdeck (published
- * 2026-10-17). Nothing here is invented: a platform without a published asset
+ * the GitHub Release `v0.2.0-beta.5` of cherrchen/rivetdeck (published
+ * 2026-10-21). Nothing here is invented: a platform without a published asset
  * is not listed. Update this file together with a new release; the download
  * links point at the release asset URLs, never at a mirror.
  *
  * Windows lists the Microsoft Store first, then the GitHub installers. The
- * Store build of this release is package version 1.0.49.0 (the release's
- * `store-request-49.json` names tag `v0.2.0-beta.4` and both architectures;
- * `store-published-49.json` reports it published).
+ * Store build of this release is package version 1.0.54.0 (the release's
+ * `store-request-54.json` names tag `v0.2.0-beta.5` and both architectures;
+ * `store-published-54.json` reports it published).
  */
 
 import { links } from './site'
@@ -33,13 +33,13 @@ export interface DownloadOption {
 }
 
 export const RELEASE = {
-  tag: 'v0.2.0-beta.4',
-  version: '0.2.0-beta.4',
+  tag: 'v0.2.0-beta.5',
+  version: '0.2.0-beta.5',
   prerelease: true,
-  publishedAt: '2026-10-17',
-  url: `${links.rivetdeck.releases}/tag/v0.2.0-beta.4`,
+  publishedAt: '2026-10-21',
+  url: `${links.rivetdeck.releases}/tag/v0.2.0-beta.5`,
   checksums: 'SHA256SUMS.txt',
-  storePackageVersion: '1.0.49.0',
+  storePackageVersion: '1.0.54.0',
 } as const
 
 export function assetUrl(file: string): string {
@@ -61,21 +61,21 @@ function github(platform: PlatformId, format: AssetFormat, arch: Arch, suffix: s
  */
 export const DOWNLOADS: Record<PlatformId, readonly DownloadOption[]> = {
   macos: [
-    github('macos', 'dmg', 'arm64', 'mac-arm64.dmg', 290_537_591),
-    github('macos', 'dmg', 'x64', 'mac-x64.dmg', 297_401_706),
-    github('macos', 'zip', 'arm64', 'mac-arm64.zip', 302_300_646),
-    github('macos', 'zip', 'x64', 'mac-x64.zip', 309_287_370),
+    github('macos', 'dmg', 'arm64', 'mac-arm64.dmg', 290_628_666),
+    github('macos', 'dmg', 'x64', 'mac-x64.dmg', 297_476_842),
+    github('macos', 'zip', 'arm64', 'mac-arm64.zip', 302_386_657),
+    github('macos', 'zip', 'x64', 'mac-x64.zip', 309_373_366),
   ],
   windows: [
     { platform: 'windows', channel: 'store', format: 'store', arch: 'universal', href: links.rivetdeck.microsoftStore },
-    github('windows', 'exe', 'x64', 'win-x64.exe', 358_569_161),
-    github('windows', 'exe', 'arm64', 'win-arm64.exe', 338_056_591),
+    github('windows', 'exe', 'x64', 'win-x64.exe', 358_720_066),
+    github('windows', 'exe', 'arm64', 'win-arm64.exe', 338_206_620),
   ],
   linux: [
-    github('linux', 'appimage', 'x64', 'linux-x86_64.AppImage', 282_841_362),
-    github('linux', 'appimage', 'arm64', 'linux-arm64.AppImage', 284_342_733),
-    github('linux', 'deb', 'x64', 'linux-amd64.deb', 212_870_544),
-    github('linux', 'deb', 'arm64', 'linux-arm64.deb', 207_247_028),
+    github('linux', 'appimage', 'x64', 'linux-x86_64.AppImage', 282_919_119),
+    github('linux', 'appimage', 'arm64', 'linux-arm64.AppImage', 284_420_434),
+    github('linux', 'deb', 'x64', 'linux-amd64.deb', 212_924_636),
+    github('linux', 'deb', 'arm64', 'linux-arm64.deb', 207_158_152),
   ],
 }
 
