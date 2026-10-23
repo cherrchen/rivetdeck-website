@@ -127,7 +127,7 @@ describe('Rivetdeck changelog draft', () => {
 
   it('mirrors the GitHub release history including legacy tag names', () => {
     const releases = en.home.changelog.releases
-    expect(releases[0]).toMatchObject({ version: '0.2.0-beta.5', date: '2026-10-21' })
+    expect(releases[0]).toMatchObject({ version: '0.2.1-beta.1', date: '2026-10-23' })
     expect(releases).toContainEqual(expect.objectContaining({ tag: 'electron-dsh-v0.1.0-rc.7' }))
     expect(zh.home.changelog.releases.map((r) => r.version)).toEqual(releases.map((r) => r.version))
     expect(releases.length).toBeGreaterThan(30)

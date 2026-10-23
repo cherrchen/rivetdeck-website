@@ -210,6 +210,7 @@ const zh: Dictionary = {
       compare: '在 GitHub 上与上一版本对比',
       releaseNotes: '发布说明',
       releases: [
+        { version: '0.2.1-beta.1', date: '2026-10-23' },
         { version: '0.2.0-beta.5', date: '2026-10-21' },
         { version: '0.2.0-beta.4', date: '2026-10-17' },
         { version: '0.2.0-beta.3', date: '2026-10-14' },
