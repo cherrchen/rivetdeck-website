@@ -219,6 +219,7 @@ const en = {
       compare: 'Compare with the previous release on GitHub',
       releaseNotes: 'Release notes',
       releases: [
+        { version: '0.2.1-beta.2', date: '2026-10-25' },
         { version: '0.2.1-beta.1', date: '2026-10-23' },
         { version: '0.2.0-beta.5', date: '2026-10-21' },
         { version: '0.2.0-beta.4', date: '2026-10-17' },
