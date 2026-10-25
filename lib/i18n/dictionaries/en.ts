@@ -266,7 +266,7 @@ const en = {
     meta: {
       title: 'Multi-root Workspace — one agent session, several writable folders',
       description:
-        'A DSH plugin that widens the workspace sandbox from one root to a primary root plus additional roots, so the agent can read, edit and run commands across several repositories. Native tools, kernel-level enforcement, fail-closed.',
+        'A DSH plugin that widens the workspace sandbox from one root to a primary root plus additional roots, so the agent can read, edit and run commands across several repositories. Native tools, per-root Skills, kernel-level enforcement, fail-closed.',
       keywords: ['DeepSeek Harness', 'DSH plugin', 'multi-root workspace', 'monorepo', 'coding agent', 'sandbox'],
     },
     brandHome: 'Multi-root Workspace home',
@@ -284,10 +284,10 @@ const en = {
       changelog: ' changelog',
       titleLine1: 'One Workspace.',
       titleLine2: 'Multiple Roots.',
-      lead: 'Let a DSH agent read, edit and run commands across several repositories in a single session. The plugin widens the workspace sandbox from one root to a primary root plus N additional roots, keeps the native agent tools, and offers optional Auto Review with multi-root context (off by default).',
+      lead: 'Let a DSH agent read, edit and run commands across several repositories in a single session. The plugin widens the workspace sandbox from one root to a primary root plus N additional roots, keeps the native agent tools, surfaces each root’s own skills under a stable /alias-id:name namespace, and offers optional Auto Review with multi-root context (off by default).',
       install: 'Install the plugin',
       architecture: 'Read the architecture ↗',
-      bullets: ['Native read, write, edit and bash tools', 'Kernel and in-process enforcement', 'Absent when you add no roots'],
+      bullets: ['Native read, write, edit and bash tools', 'Per-root Skills as /alias-id:name', 'Kernel and in-process enforcement', 'Absent when you add no roots'],
     },
     topology: {
       title: 'Multi-root Workspace topology',
@@ -343,7 +343,7 @@ const en = {
       roots: {
         kicker: 'Multiple roots',
         title: 'A primary root plus as many additional roots as you register',
-        body: 'The primary root is the session origin and cannot be removed. Additional roots are canonicalized, checked against the primary root and each other, and kept in an ordered list. Each one carries an access level — inherit, read-only or read-write — and can be aliased, reordered, copied or revealed in your file manager.',
+        body: 'The primary root is the session origin and cannot be removed. Additional roots are canonicalized, checked against the primary root and each other, and kept in an ordered list. Each one carries an access level — inherit, read-only or read-write — a Skills toggle with an editable aliasId, and can be aliased, reordered, copied or revealed in your file manager.',
         points: [
           'Overlapping or nested roots are rejected at registration',
           'A root that disappears or is swapped for a symlink stays listed but is not granted',
@@ -358,6 +358,7 @@ const en = {
         points: [
           'bash and the PTY keep the primary root as their default working directory',
           'Language servers treat each additional root as a separate workspace',
+          'Skills found in a root’s .dsh/skills and .agents/skills reach the model as /alias-id:name through the native skill tool — read-only roots default off',
           'Optional Auto Review is off by default; enable the /auto-review row in Plugin Manager on DSH 0.2.1-rc.2 to give the reviewer root topology, access levels and live instructions',
           'The additional-root topology reaches the model as part of the sandbox policy context, so it needs no introspection tool',
           'Sandbox modes still apply to inherited roots: read-only grants none of them',
@@ -376,6 +377,7 @@ const en = {
           'Panel authority comes from the live session, never from a client-supplied path',
           'Only one process per store may grant roots; a contending process fails closed',
           'The dialog also browses an additional root’s files — expandable directories and text previews',
+          'An independent Skills toggle and the stable aliasId namespace are edited per root in the same dialog, under a global setting that defaults on',
           'The Files tab switches to any additional root — a native tree fork keeps rows identical',
           'The panel is bilingual and follows the interface language',
         ],
@@ -470,7 +472,7 @@ const en = {
         registryLines: ['validated', 'per primary root', 'one authority'],
         gate: 'Startup compatibility gate',
         gateLine: 'Exact DSH release allowlist. If the release is not listed, the fence, sandbox, registry, instruction, LSP and file-browsing rows do not start.',
-        caption: 'Enforcement path of the released plugin (v0.1.7). The numbered controls below list what each part guarantees and what it does not.',
+        caption: 'Enforcement path of the released plugin (v0.1.10). The numbered controls below list what each part guarantees and what it does not.',
       },
     },
     install: {
@@ -549,6 +551,16 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.10', date: '2026-10-25', sections: [
+            { kind: 'added', items: [
+                "<b>Additional-root Skills</b>: skills are discovered in each additional folder's <code>.dsh/skills</code> and <code>.agents/skills</code>; names and descriptions are visible before the first model step and bodies load on invocation. The primary root uses <code>/skill-name</code>; additional roots always use the namespaced <code>/alias-id:skill-name</code> reference (completable from the Slash menu, invoked by the model through the native <code>skill</code> tool under an internal name). New <code>inherit</code> / <code>read-write</code> registrations enable Skills by default, <code>read-only</code> ones disable them; the Workspace Folders dialog provides an independent Skills toggle and <code>aliasId</code> editing, and the global <b>Enable additional-root Skills</b> switch under Settings → Plugins → Multi-root Workspace defaults to on — disabling it only stops new discovery and invocation while preserving each root's choice. On upgrade, legacy <code>inherit</code> / <code>read-write</code> registrations start with Skills enabled; migration preserves existing grants, but an older plugin writing the registry may strip <code>aliasId</code> and manual toggles — <b>lossless downgrade of Skills preferences is not guaranteed</b> (back up <code>$DSH_HOME/storages/multi_root_workspace.json</code> before downgrading). Enabling Skills on a read-only root grants no write access; disabling does not reclaim delivered bodies or stop started processes (<adr0023>ADR-0023</adr0023>).",
+                '<b>Exact support for DSH <code>0.2.1-rc.3</code></b>. The upstream <code>rc.2</code>→<code>rc.3</code> delta is purely additive (new sidebar slots, navigation pins, and a DeepSeek <code>/models</code> listing), so no new adapter branch is needed; the dev pin moves to <code>0.2.1-rc.3</code> (cordis <code>4.0.5</code> unchanged).'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Workspace Folders panel aligned with upstream UI</b>: the settings switch row layout, the Skills toggle folded into the icon actions, button backgrounds confined to hover, action appearance preserved during saves, and the folder policy and effective access combined into one label; the move up/down reorder buttons (the ordering interface is retained for a future drag interaction) and the permission introduction text at the top of the dialog are removed.',
+                '<b>Namespaced skill reference rendering</b>: a sent <code>/alias-id:skill-name</code> reference renders as ordinary user text, without a dedicated button style, highlighting, or click-to-preview (same-day ADR-0023 revision); ordinary session activity/title updates no longer close an open skill body preview.'
+              ] }
+          ] },
         { version: '0.1.9', date: '2026-10-20', sections: [
             { kind: 'added', items: [
                 "<b>Optional Auto Review (off by default)</b>: the main package gains an <code>./auto-review</code> subpath export and a <code>multi-root-auto-review</code> patch row — a fork of upstream's experimental \"auto review\" that feeds the reviewer the additional roots' context: the current workspace topology, each root's effective access level, and live instruction files. The row ships <code>disabled: true</code>; while off it mounts neither the reviewer nor the review context and does not register the Auto preset. The ordinary support matrix is unchanged — only DSH <code>0.2.1-rc.2</code> can enable it, and enabling it on any other release fails loudly rather than silently degrading. To turn it on, open the <code>@dsh-electron/dsh-plugin-multi-root-workspace/auto-review</code> row in the Plugin Manager row list (profiles without hot reload ask for a restart), or set <code>disabled: false</code> in the profile's <code>cordis.patch.yml</code>; the context and the reviewer share this single switch.",
@@ -690,7 +702,7 @@ const en = {
     meta: {
       title: 'Git for DSH — status, diffs and commits in the right sidebar',
       description:
-        'A portable DSH plugin that puts local Git status, staged and working-tree diffs, a lane graph and branch controls into the right sidebar. Git runs through ctx.subprocess with separate argv values — never a shell.',
+        'A portable DSH plugin that puts local Git status, staged and working-tree diffs, a lane graph, branch controls and GitHub Remote workflows into the right sidebar. Git runs through ctx.subprocess with separate argv values — never a shell.',
       keywords: ['DeepSeek Harness', 'DSH plugin', 'git', 'sidebar', 'diff', 'commit graph', 'coding agent'],
     },
     brandHome: 'Git plugin home',
@@ -708,16 +720,16 @@ const en = {
       changelog: ' changelog',
       titleLine1: 'The repository,',
       titleLine2: 'inside the session.',
-      lead: 'One portable plugin gives a DSH host a real Git surface: status, diffs, history and branch controls in the right sidebar. The same package runs on a web profile and in Rivetdeck, where it is preinstalled.',
+      lead: 'One portable plugin gives a DSH host a real Git surface: status, diffs, history and branch controls in the right sidebar — plus GitHub Remote where the host offers the credentials seam. The same package runs on a web profile and in Rivetdeck, where it is preinstalled.',
       install: 'Install the plugin',
       readme: 'Read the README ↗',
-      bullets: ['Changes, Graph and Worktrees tabs in the right sidebar', 'Git through ctx.subprocess — never a shell', 'No model tools, no prompt content'],
+      bullets: ['Changes, Graph, Worktrees and Remote tabs in the right sidebar', 'Git through ctx.subprocess — never a shell', 'No model tools, no prompt content'],
       shotCaption: 'The Changes tab in Rivetdeck: two modified files and one untracked file on feat/checkout-flow.',
     },
     features: {
       eyebrow: 'Features',
       title: 'The whole review loop, without leaving the window.',
-      lead: 'Changes, Graph and Worktrees join the upstream right sidebar as pages through its standard registration — and every file comparison opens as a dsh-resource diff.',
+      lead: 'Changes, Graph, Worktrees and Remote join the upstream right sidebar as pages through its standard registration — and every file comparison opens as a dsh-resource diff.',
       changes: {
         kicker: 'Changes',
         title: 'Status, staging and the commit in one tab',
@@ -770,6 +782,18 @@ const en = {
         listTitle: 'Checkouts of this repository',
         mock: { current: 'current', useInSession: 'Use in this session' },
       },
+      remote: {
+        kicker: 'GitHub Remote',
+        title: 'Pull requests and issues, beside the commit graph',
+        body: 'Where the host provides the optional credentials seam, Remote adds GitHub to the same sidebar: browse PRs and issues, open each in its own detail tab, and follow a timeline of comments, commits and reviews.',
+        points: [
+          'Verified PR checkout and Issue branches; create, close and merge stay protected actions',
+          'Lists and file comparisons page in progressively, with rate-limit recovery',
+          'Platform sign-in is its own dialog — it never configures Git fetch/push authentication',
+          'Without the seam the package stays local Git; Remote simply does not register',
+        ],
+        mock: { title: 'Pull requests', signedIn: 'signed in · GitHub CLI', open: 'Open', merged: 'Merged' },
+      },
       composer: {
         kicker: 'Composer',
         title: 'Branch and change count, before you type',
@@ -808,7 +832,7 @@ const en = {
         },
         {
           title: 'Credentials stay with Git',
-          body: 'Push and sync invoke git push and git pull --rebase as argv. A missing origin or rejected auth surfaces Git’s own error; the plugin has no credential UI to misplace trust in.',
+          body: 'Push and sync invoke git push and git pull --rebase as argv. A missing origin or rejected auth surfaces Git’s own error. Remote’s platform sign-in lives in its own dialog and never configures Git authentication.',
         },
         {
           title: 'Desktop is optional',
@@ -900,6 +924,25 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.2.8', date: '2026-10-25', sections: [
+            { kind: 'added', items: [
+                'Portable <b>GitHub Remote</b> workflows in the right sidebar: PR/Issue browsing, independent detail tabs, PR comments and reviews, verified PR checkout, Issue branches, and protected PR creation from already-pushed branches, closing, and merging. Remote requires the complete optional Host credentials seam; older hosts retain local Git with Remote disabled. Platform login does not configure Git fetch/push authentication. External-platform acceptance remains tracked in the <remotePlan>remote integration plan</remotePlan>.',
+                'A platform-authentication dialog showing the active credential source and account, with GitHub CLI and configured OAuth device-login choices, reconnect/disconnect flows, and isolated credential lifecycle handling. Credential references and Git credential helpers remain supported by the runtime.',
+                'Isolated browser E2E coverage for authentication sources in Chinese and English, disconnect/reconnect, device login/cancellation, token redaction, and independent browser contexts.'
+              ] },
+            { kind: 'changed', items: [
+                'Extend verified DSH support to <code>0.2.1-rc.3</code> in the canonical release list, <code>engines.dsh</code>, and exact peer ranges, including the optional credentials seam. Existing structural adapters remain compatible with navigation customization and model discovery; the development pin stays at <code>0.2.0-rc.2</code>.',
+                'GitHub PR/Issue lists, comments, commits, reviews, and comparison files load progressively with cursor continuation, deduplication, cancellation, generation checks, and rate-limit recovery. <code>RemotePage.next</code> and the <code>cursor</code>/<code>pages</code> RPC fields replace the fixed pagination budget; file continuations verify <code>expectedBaseSha</code>/<code>expectedHeadSha</code> to retain a stable comparison snapshot.',
+                "PR/Issue details use a chronological timeline with comments, commits, reviews, and read-only inline threads grouped under their reviews. File changes open GitHub's Files page. GitHub Markdown and supported HTML render through the Host's Markdown component, with native details disclosures and validated GitHub avatars.",
+                'Remote surfaces use upstream primitives and resource tabs. Git guide entries are grouped together, graph/remote icons are clearer, local Git views retain cached data between visits, and remote loading progress stays visible and responsive.',
+                'Document the upstream Session-log downgrade boundary when newer mandatory events are present.'
+              ] },
+            { kind: 'fixed', items: [
+                'Stop detail-load and external-open failures from repeatedly retrying for the same target and revision.',
+                'Recover temporary viewer-lookup failures and reject out-of-range numeric GitHub entity identifiers.',
+                'Preserve legacy Host Markdown rendering and Client bundle compatibility.'
+              ] }
+          ] },
         { version: '0.2.7', date: '2026-10-17', sections: [
             { kind: 'changed', items: [
                 'The exact DSH support list now covers <code>0.2.1-rc.2</code>, extending the verified range to every published release from <code>0.1.5-rc.2</code> through <code>0.2.1-rc.2</code>. The manifest also declares <code>engines.dsh</code> with the same exact-version set — the field hosts since <code>0.2.1-alpha.4</code> evaluate alone for admission when present — and <code>pnpm compat:check</code> keeps it in lockstep with the peer ranges.'
@@ -1023,7 +1066,7 @@ const en = {
     meta: {
       title: 'Theme Studio — eight palettes for DSH',
       description:
-        'A portable DSH plugin that adds a Themes row to Settings → General: eight built-in palettes and imported .dsh-theme.json themes with hover preview, click to apply, and a Default that restores the official appearance. Token overlays only — mode and fonts stay with the host.',
+        'A portable DSH plugin that adds a Themes row to Settings → General: eight built-in palettes, imported .dsh-theme.json themes and a manual token editor with hover preview, click to apply, and a Default that restores the official appearance. Token overlays only — mode and fonts stay with the host.',
       keywords: ['DeepSeek Harness', 'DSH plugin', 'themes', 'dark mode', 'appearance', 'color palette'],
     },
     brandHome: 'Theme Studio home',
@@ -1041,7 +1084,7 @@ const en = {
       changelog: ' changelog',
       titleLine1: 'Eight palettes.',
       titleLine2: 'One click away.',
-      lead: 'DSH ships light, dark and follow-system. Theme Studio adds a Themes row to Settings → General with eight built-in palettes and your imported themes — hover to preview, click to apply, Default to give every color back.',
+      lead: 'DSH ships light, dark and follow-system. Theme Studio adds a Themes row to Settings → General with eight built-in palettes and your own — imported, or built token by token in the editor — hover to preview, click to apply, Default to give every color back.',
       install: 'Install the plugin',
       readme: 'Read the README ↗',
       bullets: ['Every theme ships light and dark values', 'Preview is transient; nothing persists until you click', 'Preinstalled in Rivetdeck'],
@@ -1055,7 +1098,7 @@ const en = {
         points: [
           'The menu lists Default, the eight built-ins and your imported themes, each with its swatch',
           'Import accepts a .dsh-theme.json file; Manage exports and removes your copies',
-          '“Create your own theme…” pre-fills the bundled creator skill where the host supports it',
+          '“Create theme manually…” opens the token editor; “Create your own theme…” pre-fills the bundled creator skill where the host supports it',
           'The row and its menu follow the interface language',
           'With no theme chosen, the settings page is item-for-item identical to an uninstalled harness',
         ],
@@ -1074,6 +1117,18 @@ const en = {
         menuPreview: 'hover — previewing',
         menuApplied: 'applied & saved',
         menuDefault: 'clears every overlay',
+      },
+      editor: {
+        kicker: 'Manual creation',
+        title: 'A token editor, not just a file format',
+        body: 'Create theme manually… picks any builtin or imported palette as the base, asks for a name, ID, author and description, then opens a Settings-style editor over every editable token — light and dark values side by side. Expressions such as var() and color-mix() stay verbatim.',
+        points: [
+          'Categories and groups with global search and a modified-only filter',
+          'A color popover covers RGB literals, expressions and a structured color-mix builder',
+          'Per-token bilingual usage notes, restore-to-base and static light/dark preview cards',
+          'Saving appends a new theme and previews it once the host accepts; a rejected save keeps the draft',
+        ],
+        mock: { search: 'Search tokens…', modifiedOnly: 'Modified only', light: 'Light', dark: 'Dark' },
       },
       palettes: {
         kicker: 'Eight built-in palettes',
@@ -1108,7 +1163,7 @@ const en = {
     limits: {
       title: 'What this does not claim',
       points: [
-        'Import and export speak the dsh-theme.json v1 format; a visual theme editor stays a roadmap item.',
+        'Every theme file still speaks dsh-theme.json v1 — manual creation saves a new theme; builtin palettes are never edited in place.',
         'The contrast check is a diagnostic, not a gate — some palettes fall below threshold and are neither repaired nor blocked.',
         'Preview is hover-driven: keyboard focus does not preview; press Enter to apply.',
         'The read-only catalog ctx.themeStudio.catalog exists only on the Client — no dynamic registration and no Host RPC.',
@@ -1184,6 +1239,21 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.6', date: '2026-10-25', sections: [
+            { kind: 'added', items: [
+                '<b>Create theme manually…</b> in the Themes menu: choose a builtin or imported base, enter a name, ID, author and description, and edit every editable token\'s Light/Dark values. Expressions such as <code>var()</code> / <code>color-mix()</code> are preserved. Saving appends a new theme, previews it after Host acceptance, and supports export/reimport. The draft survives closing the dialog or a rejected save within the theme row\'s lifetime.',
+                'A Settings-style navigation rail and content pane with categories/groups, global search, a modified-only filter, bilingual token usage notes, restore-to-base actions and static light/dark preview cards. Error navigation, contrast summaries and modification counts share the footer, with a responsive layout for narrow screens.',
+                'A color editing popover with RGB / color-mix tabs, literal or expression input, a base palette and color picker, a structured mix builder, and base/current color comparison and restore. Compatibility adapters cover controls, icons and ref support missing on older hosts.',
+                'Support DSH <code>0.2.1-rc.3</code> and move the development baseline to that release.'
+              ] },
+            { kind: 'changed', items: [
+                'The four public <code>ThemePreview</code> fields now allow <code>string | null</code>: imported-theme samples resolve in the theme\'s own complete token graph, with unresolvable colors represented explicitly as null.'
+              ] },
+            { kind: 'fixed', items: [
+                'Imported themes\' four-color Mosaic resolves against each theme\'s compiled token graph, including <code>var()</code> / <code>color-mix()</code>; samples that cannot resolve to an opaque color use a striped placeholder.',
+                'Editor base swatches resolve against the base theme\'s complete token graph and no longer drift when a referenced draft token changes.'
+              ] }
+          ] },
         { version: '0.1.5', date: '2026-10-17', sections: [
             { kind: 'added', items: [
                 'Public <code>dsh-theme.json</code> v1 theme file format with a packaged JSON Schema (<code>schemas/dsh-theme.schema.json</code>): <code>palette</code> requires all 13 fields per scheme, optional sparse <code>overrides</code> layer over derived tokens; color values are limited to the contrast resolver’s supported subset and an omitted <code>version</code> defaults to 1.',

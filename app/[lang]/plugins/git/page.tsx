@@ -249,6 +249,8 @@ function Features({ dict }: { dict: Dictionary }) {
           points={t.worktrees.points}
           visual={<WorktreesVisual t={t.worktrees} />}
         />
+
+        <FeatureRow kicker={t.remote.kicker} title={t.remote.title} body={t.remote.body} points={t.remote.points} visual={<RemoteVisual t={t.remote} />} />
       </div>
     </Section>
   )
@@ -324,6 +326,35 @@ function WorktreesVisual({ t }: { t: PageDict['features']['worktrees'] }) {
             </div>
             <span className={`shrink-0 rounded-md px-2 py-1 text-[11px] font-medium ${row.badge ? 'bg-accent-soft text-accent' : 'bg-bg-muted text-fg-subtle'}`}>
               {row.badge ?? t.mock.useInSession}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function RemoteVisual({ t }: { t: PageDict['features']['remote'] }) {
+  const rows = [
+    { no: '#42', subject: 'feat(remote): guarded PR create, close and merge', state: t.mock.open },
+    { no: '#38', subject: 'Issue branch: refresh worktrees after checkout', state: t.mock.open },
+    { no: '#19', subject: 'Merge pull request #19: support the 0.2.1 release candidates', state: t.mock.merged },
+  ]
+  return (
+    <div className="overflow-hidden rounded-xl border border-border bg-surface">
+      <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-3">
+        <p className="text-xs font-medium text-fg-subtle">{t.mock.title}</p>
+        <span className="shrink-0 rounded-md bg-accent-soft px-2 py-0.5 text-[11px] font-medium text-accent">{t.mock.signedIn}</span>
+      </div>
+      <ul className="divide-y divide-border/70">
+        {rows.map((row) => (
+          <li key={row.no} className="flex items-center gap-3 px-5 py-3.5">
+            <span className="shrink-0 font-mono text-[13px] text-fg-subtle">{row.no}</span>
+            <p className="min-w-0 flex-1 truncate text-[13px] font-medium">{row.subject}</p>
+            <span
+              className={`shrink-0 rounded-md px-1.5 py-0.5 text-[11px] font-medium ${row.state === t.mock.open ? 'bg-ok/15 text-ok' : 'bg-bg-muted text-fg-subtle'}`}
+            >
+              {row.state}
             </span>
           </li>
         ))}

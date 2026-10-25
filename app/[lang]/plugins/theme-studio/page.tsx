@@ -217,6 +217,8 @@ function Features({ dict }: { dict: Dictionary }) {
         <FeatureRow kicker={t.row.kicker} title={t.row.title} body={t.row.body} points={t.row.points} visual={<SettingsRowVisual t={t.row} />} />
 
         <FeatureRow reverse kicker={t.preview.kicker} title={t.preview.title} body={t.preview.body} points={t.preview.points} visual={<MenuVisual t={t.preview} />} />
+
+        <FeatureRow kicker={t.editor.kicker} title={t.editor.title} body={t.editor.body} points={t.editor.points} visual={<EditorVisual t={t.editor} />} />
       </div>
 
       <div className="mt-20">
@@ -302,6 +304,46 @@ function MenuVisual({ t }: { t: PageDict['features']['preview'] }) {
           <span className="text-sm text-fg-muted">Default</span>
           <span className="text-[11px] text-fg-subtle">{t.menuDefault}</span>
         </li>
+      </ul>
+    </div>
+  )
+}
+
+function EditorVisual({ t }: { t: PageDict['features']['editor'] }) {
+  const nordic = THEMES.find((theme) => theme.id === 'nordic') ?? THEMES[0]!
+  const rows = [
+    { token: 'brand', light: nordic.light.accent, dark: nordic.dark.accent, modified: true },
+    { token: 'bgBase', light: nordic.light.base, dark: nordic.dark.base, modified: true },
+    { token: 'bgLayer1', light: nordic.light.surface, dark: nordic.dark.surface, modified: false },
+    { token: 'labelPrimary', light: nordic.light.text, dark: nordic.dark.text, modified: false },
+    { token: 'labelSecondary', light: nordic.light.muted, dark: nordic.dark.muted, modified: false },
+  ]
+  const swatch = (color: string, modified: boolean) => (
+    <span className="inline-flex min-w-0 items-center gap-1.5 rounded-md border border-border bg-bg-subtle px-1.5 py-1">
+      <span className="h-3 w-3 shrink-0 rounded-sm" style={{ background: color }} />
+      <span className="truncate font-mono text-[11px] text-fg-muted">{color}</span>
+      {modified ? <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" /> : null}
+    </span>
+  )
+  return (
+    <div className="overflow-hidden rounded-xl border border-border bg-surface">
+      <div className="flex items-center gap-2 border-b border-border px-5 py-3">
+        <span className="min-w-0 flex-1 truncate rounded-md bg-bg-subtle px-3 py-1.5 font-mono text-xs text-fg-subtle">{t.mock.search}</span>
+        <span className="shrink-0 rounded-md bg-accent-soft px-2 py-1 text-[11px] font-medium text-accent">{t.mock.modifiedOnly}</span>
+      </div>
+      <div className="grid grid-cols-[1fr_1.35fr_1.35fr] gap-x-3 border-b border-border px-5 py-2 text-[11px] font-medium text-fg-subtle">
+        <span>Token</span>
+        <span>{t.mock.light}</span>
+        <span>{t.mock.dark}</span>
+      </div>
+      <ul className="divide-y divide-border/70">
+        {rows.map((row) => (
+          <li key={row.token} className="grid grid-cols-[1fr_1.35fr_1.35fr] items-center gap-x-3 px-5 py-2.5">
+            <span className="truncate font-mono text-[13px] font-medium">{row.token}</span>
+            {swatch(row.light, row.modified)}
+            {swatch(row.dark, row.modified)}
+          </li>
+        ))}
       </ul>
     </div>
   )

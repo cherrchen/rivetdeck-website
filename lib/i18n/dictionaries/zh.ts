@@ -257,7 +257,7 @@ const zh: Dictionary = {
     meta: {
       title: 'Multi-root Workspace — 一个智能体会话，多个可写文件夹',
       description:
-        '一个 DSH 插件，把工作区沙箱从单个根目录扩展为主根目录加若干附加根目录，让智能体在一次会话里跨多个仓库读取、编辑和运行命令。原生工具、内核级强制、失败即拒绝。',
+        '一个 DSH 插件，把工作区沙箱从单个根目录扩展为主根目录加若干附加根目录，让智能体在一次会话里跨多个仓库读取、编辑和运行命令。原生工具、逐根 Skills、内核级强制、失败即拒绝。',
       keywords: ['DeepSeek Harness', 'DSH 插件', '多根工作区', 'monorepo', '编程智能体', '沙箱'],
     },
     brandHome: 'Multi-root Workspace 首页',
@@ -275,10 +275,10 @@ const zh: Dictionary = {
       changelog: ' 更新日志',
       titleLine1: '一个工作区。',
       titleLine2: '多个根目录。',
-      lead: '让 DSH 智能体在一次会话里跨多个仓库读取、编辑并运行命令。插件把工作区沙箱从单个根目录扩展为主根目录加 N 个附加根目录，保留原生智能体工具，并提供默认关闭、带多根上下文的可选 Auto Review。',
+      lead: '让 DSH 智能体在一次会话里跨多个仓库读取、编辑并运行命令。插件把工作区沙箱从单个根目录扩展为主根目录加 N 个附加根目录，保留原生智能体工具，把每个根目录自己的 skills 以稳定的 /alias-id:name 命名空间提供出来，并提供默认关闭、带多根上下文的可选 Auto Review。',
       install: '安装插件',
       architecture: '阅读架构文档 ↗',
-      bullets: ['原生的 read、write、edit 和 bash 工具', '内核与进程内双重强制', '不添加根目录时等同于未安装'],
+      bullets: ['原生的 read、write、edit 和 bash 工具', '逐根 Skills，以 /alias-id:name 调用', '内核与进程内双重强制', '不添加根目录时等同于未安装'],
     },
     topology: {
       title: 'Multi-root Workspace 拓扑',
@@ -330,7 +330,7 @@ const zh: Dictionary = {
       roots: {
         kicker: '多个根目录',
         title: '一个主根目录，加上你登记的任意多个附加根目录',
-        body: '主根目录是会话起点，不能被移除。附加根目录会被规范化，并与主根目录及彼此校验，保存为有序列表。每个根目录都有自己的访问级别——inherit、read-only 或 read-write——并可设置别名、调整顺序、复制路径，或在文件管理器中显示。',
+        body: '主根目录是会话起点，不能被移除。附加根目录会被规范化，并与主根目录及彼此校验，保存为有序列表。每个根目录都有自己的访问级别——inherit、read-only 或 read-write——独立的 Skills 开关与可编辑的 aliasId，并可设置别名、调整顺序、复制路径，或在文件管理器中显示。',
         points: ['登记时会拒绝相互重叠或嵌套的根目录', '消失或被符号链接替换的根目录仍会列出，但不会被授权', '没有附加根目录时，行为与未安装插件的 Harness 一致'],
         caption: 'Rivetdeck 中的工作区文件夹对话框（插件 v0.1.5，DSH 0.2.0-rc.2）。',
       },
@@ -341,6 +341,7 @@ const zh: Dictionary = {
         points: [
           'bash 和 PTY 仍以主根目录作为默认工作目录',
           '语言服务器把每个附加根目录视为独立的工作区',
+          '根目录的 .dsh/skills 与 .agents/skills 中发现的 skills 以 /alias-id:name 经原生 skill 工具到达模型——read-only 根默认关闭',
           '可选 Auto Review 默认关闭；仅在 DSH 0.2.1-rc.2 上可通过插件管理器启用 /auto-review 行，为审查器提供根目录拓扑、访问级别和实时指令',
           '附加根目录的拓扑作为沙箱策略上下文的一部分传给模型，不需要额外的查询工具',
           '沙箱模式对继承的根目录依然生效：只读模式不授予它们',
@@ -359,6 +360,7 @@ const zh: Dictionary = {
           '面板的权限来自当前会话，绝不接受客户端提供的路径',
           '每个存储同一时刻只允许一个进程授予根目录，争用的进程会拒绝（fail closed）',
           '对话框还可以浏览附加根目录的文件——可展开的目录树和文本预览',
+          '同一对话框中可独立开关每个根目录的 Skills、编辑稳定的 aliasId 命名空间；全局开关默认开启',
           '“文件”页可以切到任意附加根目录——分叉的原生目录树逐项保持一致',
           '面板支持中英双语，并跟随界面语言',
         ],
@@ -450,7 +452,7 @@ const zh: Dictionary = {
         registryLines: ['经过校验', '按主根目录保存', '唯一授权者'],
         gate: '启动兼容性门禁',
         gateLine: '确切的 DSH 版本白名单。版本不在名单里时，围栏、沙箱、登记表、指令、LSP 和文件浏览相关组件都不会启动。',
-        caption: '已发布插件（v0.1.7）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
+        caption: '已发布插件（v0.1.10）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
       },
     },
     install: {
@@ -529,6 +531,16 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.10', date: '2026-10-25', sections: [
+            { kind: 'added', items: [
+                '<b>附属根 Skills</b>：发现附属目录的 <code>.dsh/skills</code> 和 <code>.agents/skills</code>，首个模型步骤前即可见名称与描述，正文按调用加载。主根使用 <code>/skill-name</code>；附属根始终使用 <code>/alias-id:skill-name</code> 命名空间引用（Slash 菜单可补全，模型经原生 <code>skill</code> 工具以内部名称调用）。新登记的 <code>inherit</code> / <code>read-write</code> 根默认开启，<code>read-only</code> 根默认关闭；Workspace Folders 对话框提供独立的 Skills 开关与 <code>aliasId</code> 编辑，Settings → Plugins → Multi-root Workspace 的<b>「启用附属根 Skills」</b>全局开关默认开启，关闭只阻止新发现与调用、保留每根选择。升级时旧 <code>inherit</code> / <code>read-write</code> 登记默认开启 Skills；持久化迁移保留原有授权，但旧版插件写回注册表可能剥离 <code>aliasId</code> 与手动开关，<b>不保证 Skills 配置无损降级</b>（降级前可备份 <code>$DSH_HOME/storages/multi_root_workspace.json</code>）。只读根开启 Skills 不授予写权限；禁用不回收已投递正文或已启动进程（<adr0023>ADR-0023</adr0023>）。',
+                '<b>精确支持 DSH <code>0.2.1-rc.3</code></b>。上游 <code>rc.2</code>→<code>rc.3</code> 的差异全部为新增（新 sidebar 槽位、导航 pins、DeepSeek <code>/models</code> 列表），不需要新增适配分支；开发 pin 提升到 <code>0.2.1-rc.3</code>（cordis <code>4.0.5</code> 不变）。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Workspace Folders 面板与上游 UI 对齐</b>：设置开关行布局、Skills 开关收入图标动作区、按钮背景只出现在 hover、保存期间动作外观保持、根策略与生效访问合并为一个标签；移除上移/下移排序按钮（排序接口保留，供后续拖动排序）与对话框顶部的权限说明文字。',
+                '<b>命名空间 Skill 引用的展示</b>：已发送的 <code>/alias-id:skill-name</code> 引用按普通用户文字渲染，不再携带独立按钮样式、高亮或点击预览（ADR-0023 同日修订）；普通会话的 activity/title 更新不再误关闭已打开的 Skill 正文预览。'
+              ] }
+          ] },
         { version: '0.1.9', date: '2026-10-20', sections: [
             { kind: 'added', items: [
                 "<b>可选 Auto Review（默认关闭）</b>：主包新增 <code>./auto-review</code> 子路径导出与 <code>multi-root-auto-review</code> patch 行——fork 上游实验性「自动授权审查」，向 Reviewer 补充附加根的审查上下文：当前工作区拓扑、各根有效访问级别与实时指令文件。该行出厂 <code>disabled: true</code>，关闭时不挂载 reviewer 或 review context、不注册 Auto preset；普通支持矩阵不变，仅 DSH <code>0.2.1-rc.2</code> 可启用——在任何其他版本上打开会响亮失败，不会静默降级。启用方式：在插件管理器的行列表中打开 <code>@dsh-electron/dsh-plugin-multi-root-workspace/auto-review</code> 行（无热重载的 profile 按提示重启），或在 profile 的 <code>cordis.patch.yml</code> 中置 <code>disabled: false</code>；context 与 reviewer 共用这一个开关。",
@@ -670,7 +682,7 @@ const zh: Dictionary = {
     meta: {
       title: 'Git for DSH — 右侧边栏里的状态、差异与提交',
       description:
-        '一个可移植的 DSH 插件，把本地 Git 状态、暂存区与工作区差异、车道图和分支操作放进右侧边栏。Git 通过 ctx.subprocess 以独立 argv 参数启动，从不经过 shell。',
+        '一个可移植的 DSH 插件，把本地 Git 状态、暂存区与工作区差异、车道图、分支操作和 GitHub Remote 工作流放进右侧边栏。Git 通过 ctx.subprocess 以独立 argv 参数启动，从不经过 shell。',
       keywords: ['DeepSeek Harness', 'DSH 插件', 'git', '侧边栏', 'diff', '提交历史', '编程智能体'],
     },
     brandHome: 'Git 插件首页',
@@ -688,16 +700,16 @@ const zh: Dictionary = {
       changelog: ' 更新日志',
       titleLine1: '仓库，',
       titleLine2: '就在会话里。',
-      lead: '一个可移植插件就能给 DSH 宿主带来完整的 Git 界面：右侧边栏中的状态、差异、历史和分支操作。同一个包可以运行在 web profile 和 Rivetdeck 中——后者已经预装。',
+      lead: '一个可移植插件就能给 DSH 宿主带来完整的 Git 界面：右侧边栏中的状态、差异、历史和分支操作——宿主提供 credentials seam 时还有 GitHub Remote。同一个包可以运行在 web profile 和 Rivetdeck 中——后者已经预装。',
       install: '安装插件',
       readme: '阅读 README ↗',
-      bullets: ['右侧边栏中的 Changes、Graph 与 Worktrees 标签页', 'Git 通过 ctx.subprocess 启动——从不经过 shell', '不注册任何模型工具，不注入提示词'],
+      bullets: ['右侧边栏中的 Changes、Graph、Worktrees 与 Remote 标签页', 'Git 通过 ctx.subprocess 启动——从不经过 shell', '不注册任何模型工具，不注入提示词'],
       shotCaption: 'Rivetdeck 中的 Changes 标签页：feat/checkout-flow 分支上的两个已修改文件和一个未跟踪文件。',
     },
     features: {
       eyebrow: '功能',
       title: '完整的审阅闭环，不用离开窗口。',
-      lead: 'Changes、Graph 与 Worktrees 以页面形式接入上游右侧边栏的标准注册，每个文件比较都是一个 dsh-resource 差异页。',
+      lead: 'Changes、Graph、Worktrees 与 Remote 以页面形式接入上游右侧边栏的标准注册，每个文件比较都是一个 dsh-resource 差异页。',
       changes: {
         kicker: 'Changes',
         title: '状态、暂存与提交，集中在一个标签页',
@@ -742,6 +754,18 @@ const zh: Dictionary = {
         listTitle: '此仓库的检出',
         mock: { current: '当前检出', useInSession: 'Use in this session' },
       },
+      remote: {
+        kicker: 'GitHub Remote',
+        title: 'PR 与 Issue，就在提交图旁边',
+        body: '宿主提供可选 credentials seam 时，Remote 把 GitHub 带进同一条侧栏：浏览 PR 与 Issue、在独立详情标签页中打开，沿着评论、提交和 review 组成的时间线阅读。',
+        points: [
+          '核验过的 PR checkout 与 Issue 分支；创建、关闭、合并始终是受保护操作',
+          '列表与文件比较按游标渐进分页，并带限流恢复',
+          '平台登录是独立弹窗——不配置 Git fetch/push 认证',
+          '宿主缺少该 seam 时，包保持纯本地 Git——Remote 不注册',
+        ],
+        mock: { title: 'Pull requests', signedIn: '已登录 · GitHub CLI', open: 'Open', merged: 'Merged' },
+      },
       composer: {
         kicker: '输入框',
         title: '先看到分支和改动数，再开始输入',
@@ -776,7 +800,7 @@ const zh: Dictionary = {
         },
         {
           title: '凭据留在 Git 一侧',
-          body: 'push 和 sync 以 argv 形式调用 git push 与 git pull --rebase。缺少 origin 或鉴权被拒时呈现的是 Git 自己的错误；插件没有凭据界面可供误信。',
+          body: 'push 和 sync 以 argv 形式调用 git push 与 git pull --rebase。缺少 origin 或鉴权被拒时呈现的是 Git 自己的错误；Remote 的平台登录在独立弹窗中管理平台凭据，从不配置 Git 认证。',
         },
         {
           title: '桌面增强是可选的',
@@ -868,6 +892,25 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.2.8', date: '2026-10-25', sections: [
+            { kind: 'added', items: [
+                '新增右侧栏可移植 <b>GitHub Remote</b> 工作流：PR/Issue 浏览、独立详情标签页、PR 评论与 review、核验 PR checkout、Issue 分支，以及从已推送分支创建 PR、关闭和合并等受保护操作。Remote 需要宿主完整可选 credentials seam；旧宿主保持本地 Git 可用并关闭 Remote。平台登录不配置 Git fetch/push 认证；外部平台验收继续由<remotePlan>远程集成计划</remotePlan>跟踪。',
+                '新增平台认证弹窗，显示当前凭据来源与账号，提供 GitHub CLI、已配置的 OAuth 设备码登录、重连和断开连接流程，并隔离凭据生命周期。运行时继续支持凭据引用与 Git 凭据助手。',
+                '新增隔离浏览器 E2E，覆盖认证来源的中英文展示、断开与重连、设备码登录与取消、令牌不泄漏及独立浏览器上下文。'
+              ] },
+            { kind: 'changed', items: [
+                '将已验证 DSH 支持扩展至 <code>0.2.1-rc.3</code>，同步唯一版本清单、<code>engines.dsh</code> 与精确 peer 范围（含可选 credentials seam）。既有结构适配层兼容导航自定义与模型发现；开发 pin 保持 <code>0.2.0-rc.2</code>。',
+                'GitHub PR/Issue 列表、评论、提交、review 与比较文件改为游标渐进加载，支持去重、取消、generation 校验与限流恢复。<code>RemotePage.next</code> 与 <code>cursor</code>/<code>pages</code> RPC 字段取代固定分页预算；文件续页校验 <code>expectedBaseSha</code>/<code>expectedHeadSha</code>，保持比较快照稳定。',
+                'PR/Issue 详情使用按时间排列的时间线，交错展示评论、提交、review，以及归属 review 的只读行内 thread；文件改动跳转 GitHub Files 页面。GitHub Markdown 与受支持 HTML 经宿主 Markdown 组件渲染，使用原生 details 折叠块与经过校验的 GitHub 头像。',
+                'Remote 界面改用上游 primitives 与资源标签页；Git 导航入口集中排列，图谱与远程图标更清晰，本地 Git 视图在切换后保留缓存，远程加载进度持续可见且保持响应。',
+                '补充包含新版必需事件时，上游 Session 日志的降级回读边界说明。'
+              ] },
+            { kind: 'fixed', items: [
+                '修复详情加载或外部打开失败后，对同一目标与 revision 紧密循环重试的问题。',
+                '支持从暂时的 viewer 查询失败恢复，拒绝越界的 GitHub 数值实体标识。',
+                '保持旧宿主的 Markdown 渲染与 Client bundle 兼容。'
+              ] }
+          ] },
         { version: '0.2.7', date: '2026-10-17', sections: [
             { kind: 'changed', items: [
                 '精确 DSH 支持清单纳入 <code>0.2.1-rc.2</code>，验证范围覆盖 <code>0.1.5-rc.2</code> 至 <code>0.2.1-rc.2</code> 的全部已发布版本。manifest 同时新增 <code>engines.dsh</code> 声明，内容与精确版本集合一致——自 <code>0.2.1-alpha.4</code> 起宿主准入预检在该字段存在时只读它——<code>pnpm compat:check</code> 强制其与 peer 范围同步。'
@@ -991,7 +1034,7 @@ const zh: Dictionary = {
     meta: {
       title: 'Theme Studio — 给 DSH 的八套配色',
       description:
-        '一个可移植的 DSH 插件，在“设置 → 通用”里加入“主题”行：八套内置配色与导入的 .dsh-theme.json 主题，悬停预览、点击应用，Default 恢复官方外观。只产出 token 覆盖——模式与字体仍归宿主所有。',
+        '一个可移植的 DSH 插件，在“设置 → 通用”里加入“主题”行：八套内置配色、导入的 .dsh-theme.json 主题与手动 token 编辑器，悬停预览、点击应用，Default 恢复官方外观。只产出 token 覆盖——模式与字体仍归宿主所有。',
       keywords: ['DeepSeek Harness', 'DSH 插件', '主题', '深色模式', '外观', '配色'],
     },
     brandHome: 'Theme Studio 首页',
@@ -1009,7 +1052,7 @@ const zh: Dictionary = {
       changelog: ' 更新日志',
       titleLine1: '八套配色。',
       titleLine2: '一键换上。',
-      lead: 'DSH 自带浅色、深色和跟随系统。Theme Studio 在“设置 → 通用”里加入“主题”行，提供八套内置配色，也接受你自己导入的主题——悬停即预览，点击才应用，选 Default 则把颜色全部还给官方。',
+      lead: 'DSH 自带浅色、深色和跟随系统。Theme Studio 在“设置 → 通用”里加入“主题”行，提供八套内置配色，也接受你自己的主题——导入，或在编辑器里逐 token 调出——悬停即预览，点击才应用，选 Default 则把颜色全部还给官方。',
       install: '安装插件',
       readme: '阅读 README ↗',
       bullets: ['每套配色都带浅色与深色两份数值', '预览是临时的，点击之前不落盘', '已在 Rivetdeck 中预装'],
@@ -1023,7 +1066,7 @@ const zh: Dictionary = {
         points: [
           '菜单列出 Default、八套内置配色和你导入的主题，各带色板',
           '“导入主题…”接受 .dsh-theme.json 文件；“管理主题…”导出或移除你的副本',
-          '“创建自己的主题…”在宿主支持时预填随包的主题创作 skill',
+          '“手动创建主题…”打开 token 编辑器；“创建自己的主题…”在宿主支持时预填随包的主题创作 skill',
           '行与菜单跟随界面语言，中英双语',
           '未选择任何主题时，设置页与未安装插件的 Harness 逐项一致',
         ],
@@ -1038,6 +1081,18 @@ const zh: Dictionary = {
         menuPreview: '悬停 — 预览中',
         menuApplied: '已应用并保存',
         menuDefault: '清除全部覆盖',
+      },
+      editor: {
+        kicker: '手动创建',
+        title: '不只是文件格式，还有 token 编辑器',
+        body: '「手动创建主题…」以任意内置或导入配色为基底，填写名称、ID、作者和描述，然后打开一个 Settings 风格的编辑器，逐个编辑可编辑 token——浅色与深色的值并排呈现。var()、color-mix() 这类表达式原样保留。',
+        points: [
+          '类别与分组视图，带全局搜索和“仅显示已修改”过滤',
+          '色值浮层覆盖 RGB 字面量、表达式与结构化 color-mix 拼装器',
+          '逐 token 的双语用途说明、恢复基底操作和静态明暗预览卡',
+          '保存只新增主题并在宿主接受后预览；保存被拒时草稿仍在',
+        ],
+        mock: { search: '搜索 token…', modifiedOnly: '仅显示已修改', light: '浅色', dark: '深色' },
       },
       palettes: {
         kicker: '八套内置配色',
@@ -1066,7 +1121,7 @@ const zh: Dictionary = {
     limits: {
       title: '不做的保证',
       points: [
-        '导入与导出使用 dsh-theme.json v1 格式；可视化的主题编辑器仍在路线图上。',
+        '主题文件始终是 dsh-theme.json v1——手动创建只新增主题，内置配色不会被原地修改。',
         '对比度检查是诊断而不是门禁——有些配色低于阈值，既不自动修复也不阻止预览或应用。',
         '预览由悬停驱动：键盘聚焦不触发预览，直接按回车即应用。',
         '只读目录 ctx.themeStudio.catalog 只存在于客户端——不支持动态注册，也没有 Host RPC。',
@@ -1142,6 +1197,21 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.6', date: '2026-10-25', sections: [
+            { kind: 'added', items: [
+                'Themes 菜单新增<b>「手动创建主题…」</b>：任选内置或导入主题为基底，填写名称、ID、作者和描述，编辑全部可编辑 token 的浅色/深色值；保留 <code>var()</code> / <code>color-mix()</code> 表达式，保存仅新增，经 Host 接受后自动预览，并可导出回导。草稿在主题行生命周期内保留，关闭或保存被拒后可继续编辑。',
+                '编辑器采用 Settings 式左导航与右内容面，提供类别/分组、全局搜索、仅显示已修改、逐 token 双语用途说明、恢复基底及静态明暗预览卡；错误定位、对比度摘要和修改计数集中在页脚，窄屏自动调整布局。',
+                '色值编辑浮层提供 RGB / color-mix 标签、字面量或表达式输入、基底调色板与取色器、结构化混色拼装器，以及基底/当前色对比和恢复操作；旧宿主缺失的控件、图标与 ref 能力由兼容层适配。',
+                '支持 DSH <code>0.2.1-rc.3</code>，开发基线同步提升至该版本。'
+              ] },
+            { kind: 'changed', items: [
+                '公共 <code>ThemePreview</code> 四个字段类型放宽为 <code>string | null</code>：导入主题的预览样本在自身完整 token 图中解析，不能解析的颜色显式为空。'
+              ] },
+            { kind: 'fixed', items: [
+                '导入主题的四色 Mosaic 按自身编译后的 token 图解析（含 <code>var()</code> / <code>color-mix()</code>）；无法解析为不透明色的样本显示占位条纹。',
+                '编辑器基底色块使用基底的完整 token 图解析，不再随草稿引用目标的修改而漂移。'
+              ] }
+          ] },
         { version: '0.1.5', date: '2026-10-17', sections: [
             { kind: 'added', items: [
                 '公开 <code>dsh-theme.json</code> v1 主题文件格式并随包发布 JSON Schema（<code>schemas/dsh-theme.schema.json</code>）：<code>palette</code> 明暗各 13 字段必填，可选稀疏 <code>overrides</code> 叠加在派生 token 之上；色值限对比度 resolver 支持的子集，<code>version</code> 可省略默认为 1。',

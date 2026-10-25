@@ -47,6 +47,7 @@ export type DocLinks = Record<string, string | { en: string; zh: string }>
 
 export const GIT_DOC_LINKS: DocLinks = {
   readmeInstallation: { en: 'README.md#installation', zh: 'README.zh.md#installation' },
+  remotePlan: { en: 'docs/plans/active/remote-platform-integration.en.md', zh: 'docs/plans/active/remote-platform-integration.md' },
   tbWindowsFlood: 'docs/troubleshooting/windows-desktop-console-flood.md',
 }
 
@@ -66,6 +67,7 @@ export const MULTI_ROOT_DOC_LINKS: DocLinks = {
   adr0020: 'docs/decisions/ADR-0020-windows-normal-deny-groups.md',
   adr0021: 'docs/decisions/ADR-0021-auto-review-context-companion.md',
   adr0022: 'docs/decisions/ADR-0022-auto-review-loader-entry.md',
+  adr0023: 'docs/decisions/ADR-0023-multi-root-skill-discovery-and-invocation.md',
   autoReviewReadme: { en: 'src/auto-review/README.en.md', zh: 'src/auto-review/README.md' },
   tbInstallApproval: 'docs/troubleshooting/install-stops-at-build-approval.md',
   tbRegistryOwner: 'docs/troubleshooting/registry-owned-by-another-process.md',

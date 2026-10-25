@@ -65,9 +65,10 @@ describe('recommend', () => {
 })
 
 describe('multi-root compatibility matrix', () => {
-  it('lists the full sixteen-release allowlist on the current version, in order', () => {
+  it('lists the full seventeen-release allowlist on the current version, in order', () => {
     expect(COMPAT_VERSIONS[0]?.release).toBe(`v${COMPAT_PLUGIN_VERSION}`)
     expect(COMPAT_VERSIONS[0]?.dsh).toEqual([
+      '0.2.1-rc.3',
       '0.2.1-rc.2',
       '0.2.1-rc.1',
       '0.2.1-alpha.5',
@@ -90,7 +91,9 @@ describe('multi-root compatibility matrix', () => {
   it('has one row per published plugin version, newest first', () => {
     const releases = COMPAT_VERSIONS.map((r) => r.release)
     expect(new Set(releases).size).toBe(releases.length)
-    expect(releases).toEqual([...releases].sort().reverse())
+    // Numeric-aware collation: 'v0.1.10' must sort after 'v0.1.9'.
+    const byVersion = new Intl.Collator('en', { numeric: true })
+    expect(releases).toEqual([...releases].sort((a, b) => byVersion.compare(b, a)))
   })
 
   it('keeps support sets cumulative and marks the pre-allowlist release as a range', () => {
@@ -122,7 +125,7 @@ describe('external links', () => {
   })
 
   it('pin Multi-root documentation to the released tag', () => {
-    expect(links.multiRoot.architecture).toContain('/blob/v0.1.9/')
-    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.9/')
+    expect(links.multiRoot.architecture).toContain('/blob/v0.1.10/')
+    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.10/')
   })
 })

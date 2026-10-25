@@ -223,6 +223,8 @@ function Features({ dict }: { dict: Dictionary }) {
     manageComment ?? '',
     '/workspace-folders add ~/code/another-repo',
     '/workspace-folders access 1 read-only',
+    '/workspace-folders skills 1 on',
+    '/workspace-folders alias-id 1 payments',
     '/workspace-folders alias 1 payments',
     '/workspace-folders reveal 1',
     '/workspace-folders remove 1',
