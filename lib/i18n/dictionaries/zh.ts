@@ -453,7 +453,7 @@ const zh: Dictionary = {
         registryLines: ['经过校验', '按主根目录保存', '唯一授权者'],
         gate: '启动兼容性门禁',
         gateLine: '确切的 DSH 版本白名单。版本不在名单里时，围栏、沙箱、登记表、指令、LSP 和文件浏览相关组件都不会启动。',
-        caption: '已发布插件（v0.1.10）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
+        caption: '已发布插件（v0.1.12）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
       },
     },
     install: {
@@ -532,6 +532,24 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.12', date: '2026-10-30', sections: [
+            { kind: 'added', items: [
+                '<b>多个 Host 可同时使用附加根（默认开启）</b>：bundle 现默认配置共享存储权威（<code>sharedStorageRoot</code>）——此前只有持有 store 租约的 Host 能使用附加根，共享同一登记的第二个 Host 一律 fail-closed。现在唯一 owner 打开存储介质并管理持久化，其余 Host 经内核认证的本机 IPC 通过各自的 Registry facade 读写；所有变更与每个新操作的准入在 owner 处统一排序：撤权后到达的新操作立即被拒，撤权前已准入的操作可以完成，断线/失联保留既有拒绝边界；owner 退出或崩溃时 follower 竞选接管并以新 epoch 恢复，丢失的已提交应答不会重放。已复制的执行参数与过期句柄不能顶替新准入，同步 confine/spawn 入口保持原有返回形状；fs、sandbox、shell/PTC/agent PTY、LSP、Files/watch、指令与 Skills 消费路径全部接入准入。未启用 <code>sharedStorageRoot</code> 的 profile 保留旧的「争用即 fail-closed」行为（<adr0024>ADR-0024</adr0024>、<adr0025>ADR-0025</adr0025>、<registryService>共享服务架构</registryService>）。',
+                '<b>精确支持 DSH <code>0.2.1-rc.5</code></b>：相对 <code>0.2.1-rc.4</code> 没有触及本插件的接口变化，不新增适配分支；开发 pin 保持 <code>0.2.2-alpha.2</code>，支持矩阵现为 20 个精确版本。'
+              ] },
+            { kind: 'changed', items: [
+                '<b>依赖安全下限提升</b>：本插件直接依赖的 <code>zod</code> 下限升至 <code>^4.6.7</code>；开发侧 <code>vitest</code> 升至 <code>^4.1.12</code>，并显式声明 <code>@modelcontextprotocol/sdk</code> <code>^1.32.2</code> 以保留 GenAI <code>mcpToTool</code> 的可选能力。完整开发树的公告告警从 1 critical / 17 high / 27 moderate 降为 5 high / 6 moderate；宿主树中剩余告警均由 DSH 精确 pin 引入（如 zod <code>4.4.3</code>、Undici <code>8.11.2</code>），不随本插件版本解决（<tbDependencySecurity>依赖安全排查</tbDependencySecurity>）。'
+              ] }
+          ] },
+        { version: '0.1.11', date: '2026-10-29', sections: [
+            { kind: 'added', items: [
+                '<b>精确支持 DSH <code>0.2.1-rc.4</code> 与 <code>0.2.2-alpha.2</code></b>：<code>rc.4</code> 探针全绿、无需任何适配改动；<code>0.2.2-alpha.2</code> 把工具执行从 <code>dsh-tools</code> 拆为独立执行器，<code>AgentRegistry</code> 新增 <code>sessionProjections</code> 注入——均不触及插件源码。上游新增 <code>SandboxExecutionPolicy.additionalWritableRoots</code>（原生第三路可写根，与本 fork 无关），与宽授权 provider 正确复合——新回归用例钉住双方 grant 同时生效。开发 pin 提升至 <code>0.2.2-alpha.2</code>（cordis <code>4.0.6-alpha.1</code>，Node ≥24.9）；客户端 fork（files-tree、open-in-app）已对齐 <code>0.2.2-alpha.2</code> 基线——hover 规则移入 <code>@media (hover: hover)</code>，open-in-app 失败反馈改为应用级 <code>shell.overlay</code> outcome toast。',
+                '<b>升级通道与 CI</b>：CI verify 矩阵改为按已知名单分流——<code>0.1.*</code> / <code>0.2.0</code> / <code>0.2.1</code> 走 Node <code>22.19.0</code>，其余（含 0.2.2 及以后）走 <code>24.9.0</code>；升级脚本重指旧版本时顺带钉住该版本自带的 cordis 生态（plugin-loader/group/include、schemastery、cosmokit），避免与提交锁文件的 alpha 行混树。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Registry Authority 重复通知引发的 Skills 刷新反馈循环（Issue #24）</b>：第二个 DSH 进程争用登记表 lease（或存储打开失败）时，附加根 Skills 的每次查询都经 <code>refresh()</code> 重试 lease；失败后 <code>setRegistryAuthority(false)</code> 即使状态未变也通知监听者，使 Skills 缓存失效并广播 <code>skills/change</code>，客户端收到事件立即重查，形成无界反馈循环——等待方 Host 空闲时持续占用约一个 CPU 核心、内存增长直至 V8 OOM，零附加根同样可触发。现仅在实际 <code>available</code>/<code>unavailable</code> 切换时通知；lease 重试、持锁方退出后的接管、以及「权限不可用时仅主根可写」的 fail-closed 语义不变（<tbRegistryOwner>故障排查</tbRegistryOwner>、<adr0023>ADR-0023 修订</adr0023>）。'
+              ] }
+          ] },
         { version: '0.1.10', date: '2026-10-25', sections: [
             { kind: 'added', items: [
                 '<b>附属根 Skills</b>：发现附属目录的 <code>.dsh/skills</code> 和 <code>.agents/skills</code>，首个模型步骤前即可见名称与描述，正文按调用加载。主根使用 <code>/skill-name</code>；附属根始终使用 <code>/alias-id:skill-name</code> 命名空间引用（Slash 菜单可补全，模型经原生 <code>skill</code> 工具以内部名称调用）。新登记的 <code>inherit</code> / <code>read-write</code> 根默认开启，<code>read-only</code> 根默认关闭；Workspace Folders 对话框提供独立的 Skills 开关与 <code>aliasId</code> 编辑，Settings → Plugins → Multi-root Workspace 的<b>「启用附属根 Skills」</b>全局开关默认开启，关闭只阻止新发现与调用、保留每根选择。升级时旧 <code>inherit</code> / <code>read-write</code> 登记默认开启 Skills；持久化迁移保留原有授权，但旧版插件写回注册表可能剥离 <code>aliasId</code> 与手动开关，<b>不保证 Skills 配置无损降级</b>（降级前可备份 <code>$DSH_HOME/storages/multi_root_workspace.json</code>）。只读根开启 Skills 不授予写权限；禁用不回收已投递正文或已启动进程（<adr0023>ADR-0023</adr0023>）。',
@@ -893,6 +911,30 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.2.9', date: '2026-10-30', sections: [
+            { kind: 'added', items: [
+                '插件设置页新增「平台账号」分区，可查看并管理 GitHub/GitLab 登录。'
+              ] },
+            { kind: 'changed', items: [
+                '远端与本地 Git 操作错误改为 toast 呈现：显示简短本地化摘要，原始错误码仅经「复制详情」操作查看；面板不再渲染内联红色错误文案，首载失败仅保留同色提示行。',
+                '平台认证弹窗重构为「{platform} 账号」：身份卡 + 带说明的连接方式卡片；「已移除实例的授权清理」从弹窗「高级」折叠区移至设置页「平台账号」分区。',
+                '将 DSH 兼容范围扩展至 <code>0.2.1-rc.4</code> 与 <code>0.2.2-alpha.2</code>（含可选 credentials seam），接受其宿主 Cordis/schemastery 副本，保留全部旧版支持与 <code>0.2.0-rc.2</code> 开发 pin。',
+                '将 DSH 兼容范围扩展至 <code>0.2.1-rc.5</code>：该版本仅有 manifest 重发，其推理块 Slot 契约变化不在本插件使用面内；宿主运行时下限、Node 车道与开发 pin 均不变。',
+                '隔离 DSH 矩阵车道快照补上 <code>oauth-apps.json</code>，使车道安装可以执行独立 bundle 构建。',
+                '隔离本地矩阵支持未列入清单的候选验证；联网车道使用干净依赖树并检查 peer，避免遗留 Cordis 配套包。0.2.2 alpha CI 车道使用 Node 24.9，并修正开发锁文件的 include peer 解析。',
+                '通过 devDependencies 升级与按作用域限定的 pnpm override 修复开发树公告：vitest <code>4.1.12</code>、katex <code>0.19.1</code>、jsdom 的 undici、css-tree 的 source-map-js、开发 pin 的 undici 与 ajv 的 fast-uri；剩余一条公告（<code>dsh-llm</code> 的 <code>zod</code>）由上游宿主精确锁定，不在本插件可处置范围。'
+              ] },
+            { kind: 'fixed', items: [
+                'GitLab 认证 generation 变化后会撤回旧条目、游标与筛选缓存，新读取或续页失败也不保留旧身份内容。',
+                '本地 Git 失败在同一控制器下只显示一条共享 toast，编辑器与侧栏面板按实际失败操作显示一致文案。',
+                '平台账号支持完整的 16 个自建实例加内建 GitLab.com 与 GitHub 配置。',
+                'GitHub 有作用域写操作的对账现会等待详情全部续页完成后再开放确认；续页失败或刷新被取代时继续阻止重复写入。',
+                '平台账号重新发现后会刷新已显示的 GitLab 能力，覆盖同 URL 配置变化与重进设置页，并避免打断设备码登录或形成轮询循环。',
+                '复制错误详情时，剪贴板 API 不可用或写入器同步抛错均会显示失败提示。',
+                '远端写入受阻提示现会显示详情复制成功或失败的反馈，并保留核对确认操作。',
+                'GitLab 认证账号与作者头像现可显示（含 Gravatar 默认头像）。'
+              ] }
+          ] },
         { version: '0.2.8', date: '2026-10-25', sections: [
             { kind: 'added', items: [
                 '新增右侧栏可移植 <b>GitHub Remote</b> 工作流：PR/Issue 浏览、独立详情标签页、PR 评论与 review、核验 PR checkout、Issue 分支，以及从已推送分支创建 PR、关闭和合并等受保护操作。Remote 需要宿主完整可选 credentials seam；旧宿主保持本地 Git 可用并关闭 Remote。平台登录不配置 Git fetch/push 认证；外部平台验收继续由<remotePlan>远程集成计划</remotePlan>跟踪。',
@@ -1198,6 +1240,13 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.7', date: '2026-10-30', sections: [
+            { kind: 'added', items: [
+                '支持 DSH <code>0.2.1-rc.4</code> 与 <code>0.2.2-alpha.2</code>，开发基线同步提升至 <code>0.2.2-alpha.2</code>。',
+                '支持 DSH <code>0.2.1-rc.5</code>，开发基线保持 <code>0.2.2-alpha.2</code>。',
+                '派生 token 新增六个空状态插画色（<code>--dsw-alias-illustration-background/surface/backing/detail/inset/shadow</code>）与完成态主色 <code>--dsw-alias-state-done-primary</code>，覆盖 <code>0.2.2-alpha.2</code> 上游新增语义 token；旧版本把它们当作未引用的多余 override 安全忽略。'
+              ] }
+          ] },
         { version: '0.1.6', date: '2026-10-25', sections: [
             { kind: 'added', items: [
                 'Themes 菜单新增<b>「手动创建主题…」</b>：任选内置或导入主题为基底，填写名称、ID、作者和描述，编辑全部可编辑 token 的浅色/深色值；保留 <code>var()</code> / <code>color-mix()</code> 表达式，保存仅新增，经 Host 接受后自动预览，并可导出回导。草稿在主题行生命周期内保留，关闭或保存被拒后可继续编辑。',

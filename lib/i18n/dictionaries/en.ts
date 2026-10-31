@@ -473,7 +473,7 @@ const en = {
         registryLines: ['validated', 'per primary root', 'one authority'],
         gate: 'Startup compatibility gate',
         gateLine: 'Exact DSH release allowlist. If the release is not listed, the fence, sandbox, registry, instruction, LSP and file-browsing rows do not start.',
-        caption: 'Enforcement path of the released plugin (v0.1.10). The numbered controls below list what each part guarantees and what it does not.',
+        caption: 'Enforcement path of the released plugin (v0.1.12). The numbered controls below list what each part guarantees and what it does not.',
       },
     },
     install: {
@@ -552,6 +552,24 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.12', date: '2026-10-30', sections: [
+            { kind: 'added', items: [
+                '<b>Multiple Hosts can use additional roots at the same time (on by default)</b>: the bundle now configures a shared storage authority (<code>sharedStorageRoot</code>) — previously only the Host holding the store lease could use additional roots, and a second Host sharing the same registry was fail-closed. Now a single owner opens the storage medium and manages persistence, while the other Hosts read and write through their own Registry facades over kernel-authenticated local IPC; every mutation and each new operation’s admission is ordered at the owner: operations that arrive after a revocation are refused immediately, ones admitted before it may finish, and a disconnect preserves the established deny boundary; when the owner exits or crashes a follower contends, takes over, and recovers under a new epoch, and a lost committed reply is never replayed. Copied exec argv and expired handles cannot stand in for a fresh admission, the synchronous confine/spawn entry points keep their return shape, and every consumer path (fs, sandbox, shell/PTC/agent PTY, LSP, Files/watch, instructions, Skills) goes through admission. Profiles without <code>sharedStorageRoot</code> keep the legacy contended-fail-closed behavior (<adr0024>ADR-0024</adr0024>, <adr0025>ADR-0025</adr0025>, <registryService>shared service architecture</registryService>).',
+                '<b>Exact support for DSH <code>0.2.1-rc.5</code></b>: the delta from <code>0.2.1-rc.4</code> does not touch this plugin’s interfaces, so no new adapter branch is needed; the dev pin stays at <code>0.2.2-alpha.2</code> and the support matrix now covers 20 exact releases.'
+              ] },
+            { kind: 'changed', items: [
+                '<b>Dependency security floors raised</b>: the plugin’s direct <code>zod</code> floor moves to <code>^4.6.7</code>; on the development side <code>vitest</code> moves to <code>^4.1.12</code>, and <code>@modelcontextprotocol/sdk</code> <code>^1.32.2</code> is declared explicitly to keep GenAI’s optional <code>mcpToTool</code> capability on a fixed release. The full development tree’s advisories drop from 1 critical / 17 high / 27 moderate to 5 high / 6 moderate; the remaining advisories in host trees are introduced by DSH’s own exact pins (e.g. zod <code>4.4.3</code>, Undici <code>8.11.2</code>) and are not resolved by this plugin release (<tbDependencySecurity>dependency security review</tbDependencySecurity>).'
+              ] }
+          ] },
+        { version: '0.1.11', date: '2026-10-29', sections: [
+            { kind: 'added', items: [
+                '<b>Exact support for DSH <code>0.2.1-rc.4</code> and <code>0.2.2-alpha.2</code></b>: the <code>rc.4</code> probe was fully green with no adapter changes; <code>0.2.2-alpha.2</code> splits tool execution out of <code>dsh-tools</code> into executors and gives <code>AgentRegistry</code> a new <code>sessionProjections</code> injection — neither touches plugin source. Upstream’s new <code>SandboxExecutionPolicy.additionalWritableRoots</code> (a native third writable-root path unrelated to this fork) composes correctly with the widened provider, pinned by a new regression spec asserting both grants take effect. The dev pin moves to <code>0.2.2-alpha.2</code> (cordis <code>4.0.6-alpha.1</code>, Node ≥24.9). The client forks (files-tree, open-in-app) are re-synced to the <code>0.2.2-alpha.2</code> baseline — hover rules moved under <code>@media (hover: hover)</code> and open-in-app failure feedback became an app-wide <code>shell.overlay</code> outcome toast.',
+                '<b>Upgrade lane and CI</b>: the CI verify matrix now routes by a known list — <code>0.1.*</code> / <code>0.2.0</code> / <code>0.2.1</code> run on Node <code>22.19.0</code>, everything else (including 0.2.2 and later) on <code>24.9.0</code>; the upgrade script additionally pins the target release’s own cordis ecosystem (plugin-loader/group/include, schemastery, cosmokit) when repointing, so an older tree cannot mix with the alpha-line packages the committed lockfile prefers.'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Skills refresh feedback loop caused by repeated Registry-authority notifications (Issue #24)</b>: while a second DSH process contends for the registry lease (or the store fails to open), every additional-root Skills query retried the lease through <code>refresh()</code>; on failure <code>setRegistryAuthority(false)</code> notified listeners even though the state had not changed, invalidating the Skills cache and broadcasting <code>skills/change</code> — clients re-query on every event, closing an unbounded feedback loop: the contending Host burned about one CPU core while idle, grew memory, and eventually died of V8 OOM, and zero additional roots did not prevent it. Listeners are now notified only on a real <code>available</code>/<code>unavailable</code> transition; the lease retry, takeover after the holder exits, and the fail-closed "primary root only while authority is unavailable" semantics are unchanged (<tbRegistryOwner>troubleshooting</tbRegistryOwner>, <adr0023>ADR-0023 revision</adr0023>).'
+              ] }
+          ] },
         { version: '0.1.10', date: '2026-10-25', sections: [
             { kind: 'added', items: [
                 "<b>Additional-root Skills</b>: skills are discovered in each additional folder's <code>.dsh/skills</code> and <code>.agents/skills</code>; names and descriptions are visible before the first model step and bodies load on invocation. The primary root uses <code>/skill-name</code>; additional roots always use the namespaced <code>/alias-id:skill-name</code> reference (completable from the Slash menu, invoked by the model through the native <code>skill</code> tool under an internal name). New <code>inherit</code> / <code>read-write</code> registrations enable Skills by default, <code>read-only</code> ones disable them; the Workspace Folders dialog provides an independent Skills toggle and <code>aliasId</code> editing, and the global <b>Enable additional-root Skills</b> switch under Settings → Plugins → Multi-root Workspace defaults to on — disabling it only stops new discovery and invocation while preserving each root's choice. On upgrade, legacy <code>inherit</code> / <code>read-write</code> registrations start with Skills enabled; migration preserves existing grants, but an older plugin writing the registry may strip <code>aliasId</code> and manual toggles — <b>lossless downgrade of Skills preferences is not guaranteed</b> (back up <code>$DSH_HOME/storages/multi_root_workspace.json</code> before downgrading). Enabling Skills on a read-only root grants no write access; disabling does not reclaim delivered bodies or stop started processes (<adr0023>ADR-0023</adr0023>).",
@@ -925,6 +943,30 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.2.9', date: '2026-10-30', sections: [
+            { kind: 'added', items: [
+                'The plugin settings page gains a "Platform accounts" section for viewing and managing GitHub/GitLab sign-in.'
+              ] },
+            { kind: 'changed', items: [
+                'Remote and local Git operation errors now surface as toasts: a short localized summary hides the raw code, which stays reachable only through the copy-details action; panels no longer render inline red error text and keep only a muted hint on first-load failures.',
+                'The platform authentication dialog is redesigned as "{platform} account" with an identity card and described method cards; the removed-instance grant cleanup moves from the dialog\'s Advanced fold to the settings "Platform accounts" section.',
+                'Extend DSH compatibility to <code>0.2.1-rc.4</code> and <code>0.2.2-alpha.2</code>, including the optional credentials seam; the plugin accepts their host Cordis/schemastery copies while retaining all earlier supported releases and the <code>0.2.0-rc.2</code> development pin.',
+                'Extend DSH compatibility to <code>0.2.1-rc.5</code>, a manifest-only republish whose reasoning-body slot contract change stays outside this plugin\'s surface; the host runtime floors, Node lane and development pin are unchanged.',
+                'Copy <code>oauth-apps.json</code> into isolated DSH matrix lanes so lane installs can run the standalone bundle build.',
+                'Validate unlisted candidates in the isolated local matrix; resolve online lanes from clean dependency trees and check peers to prevent stale Cordis companion packages. Use Node 24.9 for the 0.2.2 alpha CI lane and repair the development lockfile\'s include peer resolution.',
+                'Patch development-tree advisories through dev-dependency upgrades and scoped pnpm overrides: vitest <code>4.1.12</code>, katex <code>0.19.1</code>, jsdom\'s undici, css-tree\'s source-map-js, the development pin\'s undici and ajv\'s fast-uri. The one remaining advisory (<code>zod</code> via <code>dsh-llm</code>) is exact-pinned by the upstream host and outside this plugin\'s ownership.'
+              ] },
+            { kind: 'fixed', items: [
+                'GitLab authentication generation changes now withdraw old rows, cursors and filter caches even if the new read or pagination fails.',
+                'Local Git failures show one shared toast per controller, with copy matching the failed operation across the composer and sidebar panels.',
+                'Platform accounts accepts the full configuration of sixteen self-hosted instances plus built-in GitLab.com and GitHub.',
+                'GitHub scoped write reconciliation now waits for every refreshed detail page before allowing acknowledgement; failed or superseded continuations keep repeat writes locked.',
+                'Platform account rediscovery refreshes visible GitLab capabilities after same-URL configuration changes and on settings reentry, without interrupting device login or triggering a polling loop.',
+                'Copying error details now reports a failure when the clipboard API is unavailable or the writer throws synchronously.',
+                'Blocked remote-write notices now report copy success or failure while keeping their reconciliation controls available.',
+                'GitLab authenticated-account and author avatars now display, including Gravatar default avatars.'
+              ] }
+          ] },
         { version: '0.2.8', date: '2026-10-25', sections: [
             { kind: 'added', items: [
                 'Portable <b>GitHub Remote</b> workflows in the right sidebar: PR/Issue browsing, independent detail tabs, PR comments and reviews, verified PR checkout, Issue branches, and protected PR creation from already-pushed branches, closing, and merging. Remote requires the complete optional Host credentials seam; older hosts retain local Git with Remote disabled. Platform login does not configure Git fetch/push authentication. External-platform acceptance remains tracked in the <remotePlan>remote integration plan</remotePlan>.',
@@ -1240,6 +1282,13 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.7', date: '2026-10-30', sections: [
+            { kind: 'added', items: [
+                'Support DSH <code>0.2.1-rc.4</code> and <code>0.2.2-alpha.2</code>, moving the development baseline to <code>0.2.2-alpha.2</code>.',
+                'Support DSH <code>0.2.1-rc.5</code>; the development baseline stays <code>0.2.2-alpha.2</code>.',
+                'Seven new derived tokens recolor empty-state illustrations (<code>--dsw-alias-illustration-background/surface/backing/detail/inset/shadow</code>) and the done state (<code>--dsw-alias-state-done-primary</code>), covering semantic tokens added upstream in <code>0.2.2-alpha.2</code>; older releases safely ignore them as unreferenced overrides.'
+              ] }
+          ] },
         { version: '0.1.6', date: '2026-10-25', sections: [
             { kind: 'added', items: [
                 '<b>Create theme manually…</b> in the Themes menu: choose a builtin or imported base, enter a name, ID, author and description, and edit every editable token\'s Light/Dark values. Expressions such as <code>var()</code> / <code>color-mix()</code> are preserved. Saving appends a new theme, previews it after Host acceptance, and supports export/reimport. The draft survives closing the dialog or a rejected save within the theme row\'s lifetime.',

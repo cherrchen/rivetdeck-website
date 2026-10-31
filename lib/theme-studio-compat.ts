@@ -9,11 +9,19 @@
  */
 import type { CompatVersionRow } from './compat'
 
-export const THEME_STUDIO_PLUGIN_VERSION = '0.1.6'
+export const THEME_STUDIO_PLUGIN_VERSION = '0.1.7'
 
 const exact = (release: string, dsh: readonly string[]): CompatVersionRow => ({ release, dsh })
 
 export const THEME_STUDIO_COMPAT_VERSIONS: readonly CompatVersionRow[] = [
+  exact('v0.1.7', [
+    '0.2.2-alpha.2', '0.2.1-rc.5', '0.2.1-rc.4', '0.2.1-rc.3',
+    '0.2.1-rc.2', '0.2.1-rc.1', '0.2.1-alpha.5', '0.2.1-alpha.4',
+    '0.2.1-alpha.3', '0.2.1-alpha.2', '0.2.1-alpha.1', '0.2.0-rc.2',
+    '0.2.0-rc.1', '0.1.7-rc.2', '0.1.7-rc.1', '0.1.7-alpha.2',
+    '0.1.7-alpha.1', '0.1.6-alpha.2', '0.1.6-alpha.1', '0.1.5-rc.3',
+    '0.1.5-rc.2',
+  ]),
   exact('v0.1.6', [
     '0.2.1-rc.3', '0.2.1-rc.2', '0.2.1-rc.1', '0.2.1-alpha.5',
     '0.2.1-alpha.4', '0.2.1-alpha.3', '0.2.1-alpha.2', '0.2.1-alpha.1',
