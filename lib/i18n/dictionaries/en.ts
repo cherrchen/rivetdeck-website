@@ -212,9 +212,6 @@ const en = {
       },
       nav: { home: 'Overview' },
       title: 'Changelog',
-      lead: 'Every published Rivetdeck release, newest first.',
-      note: 'Release notes live on GitHub Releases; early versions shipped as DeepSeek Harness Desktop.',
-      metaLine: '{count} releases · latest {version}',
       latest: 'Latest',
       compare: 'Compare with the previous release on GitHub',
       releaseNotes: 'Release notes',
@@ -454,13 +451,6 @@ const en = {
                 'Fix Electron Host bootstrap parsing: Host index now injects <code>globalThis["__DSH_BOOT__"]</code>, while the desktop scraper still expected <code>window.__DSH_BOOT__</code>, which broke <code>getBootstrap</code> on startup. Align the scraper, tests, and notes with the current Host render marker. (#39)',
               ] }
           ] },
-        { version: '0.1.1-beta.1', date: '2026-08-21' },
-        { version: '0.1.0-beta.5', date: '2026-08-21' },
-        { version: '0.1.0-beta.4', date: '2026-08-21' },
-        { version: '0.1.0-beta.3', date: '2026-08-21' },
-        { version: '0.1.0-rc.8', date: '2026-08-20' },
-        { version: '0.1.0-beta.2', date: '2026-08-20' },
-        { version: '0.1.0-beta.1', date: '2026-08-20' },
       ],
     },
 

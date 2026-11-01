@@ -131,6 +131,6 @@ describe('Rivetdeck changelog page', () => {
     expect(releases.every((r) => tagOf(r) === `v${r.version}`)).toBe(true)
     expect(releases[0]?.sections?.flatMap((s) => s.items).length).toBeGreaterThan(0)
     expect(zh.home.changelog.releases.map((r) => r.version)).toEqual(releases.map((r) => r.version))
-    expect(releases.length).toBeGreaterThan(30)
+    expect(releases).toHaveLength(30)
   })
 })

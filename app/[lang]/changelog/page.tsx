@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ChangelogReleases } from '@/components/changelog/releases'
-import { tagOf } from '@/lib/changelog'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { ButtonLink } from '@/components/ui/button'
@@ -33,7 +32,6 @@ export default async function RivetdeckChangelogPage({ params }: PageProps<'/[la
   const newTab = dict.common.opensInNewTab
   const home = withBasePath(localePath(lang, '/'))
   const releases = c.releases
-  const latest = releases[0]
 
   const nav = [
     { label: c.nav.home, href: home },
@@ -95,15 +93,9 @@ export default async function RivetdeckChangelogPage({ params }: PageProps<'/[la
       <main id="main">
         <section aria-labelledby="cl-hero-title">
           <Container className="pt-20 pb-12 sm:pt-28">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[13px] text-fg-muted">
-              <span className="text-fg">Rivetdeck</span>
-              <span>{latest ? fmt(c.metaLine, { count: releases.length, version: tagOf(latest) }) : null}</span>
-            </div>
-            <h1 id="cl-hero-title" className="mt-6 max-w-4xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
+            <h1 id="cl-hero-title" className="max-w-4xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
               {c.title}
             </h1>
-            <p className="mt-6 max-w-xl text-[17px] leading-7 text-fg-muted">{c.lead}</p>
-            <p className="mt-3 max-w-xl text-sm leading-6 text-fg-subtle">{c.note}</p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <ButtonLink href={home} variant="secondary" newTab={newTab}>
                 {c.nav.home}

@@ -203,9 +203,6 @@ const zh: Dictionary = {
       },
       nav: { home: '概览' },
       title: '更新日志',
-      lead: 'Rivetdeck 的每个已发布版本，按时间倒序排列。',
-      note: '发布说明见 GitHub Releases；早期版本以 DeepSeek Harness Desktop 名义发布。',
-      metaLine: '{count} 个已发布版本 · 最新 {version}',
       latest: '最新',
       compare: '在 GitHub 上与上一版本对比',
       releaseNotes: '发布说明',
@@ -445,13 +442,6 @@ const zh: Dictionary = {
                 '修复 Electron Host bootstrap 解析：Host 页面注入已改为 <code>globalThis["__DSH_BOOT__"]</code>，桌面端仍按旧的 <code>window.__DSH_BOOT__</code> 抓取，导致启动时 <code>getBootstrap</code> 失败。已对齐 scraper、单测与相关说明。(#39)',
               ] }
           ] },
-        { version: '0.1.1-beta.1', date: '2026-08-21' },
-        { version: '0.1.0-beta.5', date: '2026-08-21' },
-        { version: '0.1.0-beta.4', date: '2026-08-21' },
-        { version: '0.1.0-beta.3', date: '2026-08-21' },
-        { version: '0.1.0-rc.8', date: '2026-08-20' },
-        { version: '0.1.0-beta.2', date: '2026-08-20' },
-        { version: '0.1.0-beta.1', date: '2026-08-20' },
       ],
 
     },
