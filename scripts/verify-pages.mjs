@@ -15,10 +15,11 @@ export async function verifyPages(directory, origin, basePath) {
     'plugins/theme-studio/changelog',
     'plugins/multi-root-workspace',
     'plugins/multi-root-workspace/changelog',
+    'changelog',
   ]
   const social = (p) => {
     const leaf = p.split('/').pop()
-    return leaf === 'changelog' ? `${p.split('/').at(-2)}-changelog` : leaf
+    return leaf === 'changelog' ? `${p.split('/').at(-2) ?? 'rivetdeck'}-changelog` : leaf
   }
   for (const file of ['404.html', '.nojekyll', 'sitemap.xml', 'robots.txt', 'social/rivetdeck.png', ...pluginPages.map((p) => `social/${social(p)}.png`)]) {
     assert(await exists(path.join(directory, file)), `Missing export: ${file}`)

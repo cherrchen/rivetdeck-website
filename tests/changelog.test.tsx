@@ -119,10 +119,10 @@ describe('ChangelogReleases', () => {
   })
 })
 
-describe('Rivetdeck changelog draft', () => {
-  it('stays unrouted while the design lives under a private folder', () => {
-    expect(existsSync('app/[lang]/_changelog/page.tsx')).toBe(true)
-    expect(existsSync('app/[lang]/changelog/page.tsx')).toBe(false)
+describe('Rivetdeck changelog page', () => {
+  it('is routed at /changelog with no leftover draft folder', () => {
+    expect(existsSync('app/[lang]/changelog/page.tsx')).toBe(true)
+    expect(existsSync('app/[lang]/_changelog/page.tsx')).toBe(false)
   })
 
   it('mirrors the GitHub release history including legacy tag names', () => {

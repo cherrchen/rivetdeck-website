@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { generateMetadata as changelogMetadata } from '@/app/[lang]/changelog/page'
 import { generateMetadata as homeMetadata } from '@/app/[lang]/page'
 import { generateMetadata as gitMetadata } from '@/app/[lang]/plugins/git/page'
 import { generateMetadata as gitChangelogMetadata } from '@/app/[lang]/plugins/git/changelog/page'
@@ -16,7 +17,7 @@ const meta = (fn: (props: never) => Promise<import('next').Metadata>, lang: stri
 
 describe('page metadata', () => {
   it('gives each page its own title, description and canonical path per locale', async () => {
-    const [home, git, themeStudio, multiRoot, gitCl, themeStudioCl, multiRootCl, homeZh, multiRootZh] = await Promise.all([
+    const [home, git, themeStudio, multiRoot, gitCl, themeStudioCl, multiRootCl, changelog, homeZh, multiRootZh] = await Promise.all([
       meta(homeMetadata, 'en'),
       meta(gitMetadata, 'en'),
       meta(themeStudioMetadata, 'en'),
@@ -24,10 +25,11 @@ describe('page metadata', () => {
       meta(gitChangelogMetadata, 'en'),
       meta(themeStudioChangelogMetadata, 'en'),
       meta(multiRootChangelogMetadata, 'en'),
+      meta(changelogMetadata, 'en'),
       meta(homeMetadata, 'zh'),
       meta(multiRootMetadata, 'zh'),
     ])
-    expect(new Set([home.title, git.title, themeStudio.title, multiRoot.title, gitCl.title, themeStudioCl.title, multiRootCl.title]).size).toBe(7)
+    expect(new Set([home.title, git.title, themeStudio.title, multiRoot.title, gitCl.title, themeStudioCl.title, multiRootCl.title, changelog.title]).size).toBe(8)
     expect(home.alternates?.canonical).toBe('/')
     expect(git.alternates?.canonical).toBe('/plugins/git')
     expect(themeStudio.alternates?.canonical).toBe('/plugins/theme-studio')
@@ -35,6 +37,7 @@ describe('page metadata', () => {
     expect(gitCl.alternates?.canonical).toBe('/plugins/git/changelog')
     expect(themeStudioCl.alternates?.canonical).toBe('/plugins/theme-studio/changelog')
     expect(multiRootCl.alternates?.canonical).toBe('/plugins/multi-root-workspace/changelog')
+    expect(changelog.alternates?.canonical).toBe('/changelog')
     expect(homeZh.alternates?.canonical).toBe('/zh')
     expect(multiRootZh.alternates?.canonical).toBe('/zh/plugins/multi-root-workspace')
     expect(homeZh.title).not.toEqual(home.title)
@@ -58,7 +61,7 @@ describe('page metadata', () => {
   })
 
   it('declares Open Graph and Twitter cards on every page in both locales', async () => {
-    for (const fn of [homeMetadata, gitMetadata, themeStudioMetadata, multiRootMetadata, gitChangelogMetadata, themeStudioChangelogMetadata, multiRootChangelogMetadata]) {
+    for (const fn of [homeMetadata, gitMetadata, themeStudioMetadata, multiRootMetadata, gitChangelogMetadata, themeStudioChangelogMetadata, multiRootChangelogMetadata, changelogMetadata]) {
       for (const lang of locales) {
         const m = await meta(fn, lang)
         expect(m.openGraph?.title).toBe(m.title)
@@ -88,6 +91,8 @@ describe('page metadata', () => {
       '/zh/plugins/theme-studio/changelog',
       '/plugins/multi-root-workspace/changelog',
       '/zh/plugins/multi-root-workspace/changelog',
+      '/changelog',
+      '/zh/changelog',
     ])
     for (const entry of entries) expect(Object.keys(entry.alternates?.languages ?? {})).toEqual(['x-default', 'en', 'zh-CN'])
     expect(String(robots().sitemap)).toMatch(/\/sitemap\.xml$/)

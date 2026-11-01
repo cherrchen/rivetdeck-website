@@ -80,7 +80,7 @@ const en = {
     keywords: ['DeepSeek Harness', 'DeepSeek Harness desktop', 'Rivetdeck', 'coding agent', 'AI agent', 'open source'],
     },
     brandHome: 'Rivetdeck home',
-    nav: { features: 'Features', plugins: 'Plugins', download: 'Download', github: 'GitHub' },
+    nav: { features: 'Features', plugins: 'Plugins', download: 'Download', changelog: 'Changelog', github: 'GitHub' },
     cta: 'Download',
     footer: {
       rivetdeck: { title: 'Rivetdeck', features: 'Features', plugins: 'Plugins', download: 'Download', release: 'Release {tag}' },

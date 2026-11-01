@@ -44,6 +44,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
     { label: t.nav.features, href: '#features' },
     { label: t.nav.plugins, href: '#plugins' },
     { label: t.nav.download, href: '#download' },
+    { label: t.nav.changelog, href: withBasePath(localePath(lang, '/changelog')) },
     { label: t.nav.github, href: links.rivetdeck.repo, external: true },
   ]
 

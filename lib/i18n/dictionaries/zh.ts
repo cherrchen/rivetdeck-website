@@ -71,7 +71,7 @@ const zh: Dictionary = {
     keywords: ['DeepSeek Harness', 'DeepSeek Harness 桌面端', 'Rivetdeck', '编程智能体', 'AI 智能体', '开源'],
     },
     brandHome: 'Rivetdeck 首页',
-    nav: { features: '功能', plugins: '插件', download: '下载', github: 'GitHub' },
+    nav: { features: '功能', plugins: '插件', download: '下载', changelog: '更新日志', github: 'GitHub' },
     cta: '下载',
     footer: {
       rivetdeck: { title: 'Rivetdeck', features: '功能', plugins: '插件', download: '下载', release: '版本 {tag}' },

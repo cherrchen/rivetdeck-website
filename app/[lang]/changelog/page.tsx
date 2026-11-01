@@ -1,17 +1,3 @@
-/**
- * Draft — Rivetdeck changelog page. Designed, intentionally not published.
- *
- * Lives under a private folder (`_changelog`) so Next.js does not route it and
- * nothing links here. To launch it:
- *
- *  1. Move this file to `app/[lang]/changelog/page.tsx` and retype the params
- *     as `PageProps<'/[lang]/changelog'>` once route types exist.
- *  2. Add `{ path: '/changelog', priority: 0.6 }` to `PAGES` in `app/sitemap.ts`.
- *  3. Add `'changelog'` to `pages` in `scripts/build-pages.mjs` and to
- *     `pluginPages` in `scripts/verify-pages.mjs` (the social name is
- *     `rivetdeck-changelog`); give it an `opengraph-image.tsx` sibling.
- *  4. Add a `Changelog` item to the home page header nav.
- */
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -30,14 +16,14 @@ import { links, withBasePath } from '@/lib/site'
 
 const PATH = '/changelog'
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<'/[lang]/changelog'>): Promise<Metadata> {
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const t = getDictionary(lang).home.changelog.meta
-  return pageMetadata({ locale: lang, path: PATH, title: t.title, description: t.description, siteName: 'Rivetdeck' })
+  return pageMetadata({ locale: lang, path: PATH, title: t.title, description: t.description, keywords: t.keywords, siteName: 'Rivetdeck' })
 }
 
-export default async function RivetdeckChangelogPage({ params }: { params: Promise<{ lang: string }> }) {
+export default async function RivetdeckChangelogPage({ params }: PageProps<'/[lang]/changelog'>) {
   const { lang } = await params
   if (!isLocale(lang)) notFound()
   const dict = getDictionary(lang)

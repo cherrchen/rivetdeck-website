@@ -46,6 +46,7 @@ const pages = [
   'plugins/theme-studio/changelog',
   'plugins/multi-root-workspace',
   'plugins/multi-root-workspace/changelog',
+  'changelog',
 ]
 for (const route of pages) {
   const target = path.join(english, route)
@@ -65,7 +66,7 @@ const socialName = (route) => {
   if (route === '') return 'rivetdeck'
   const segments = route.split('/')
   const leaf = segments.at(-1)
-  return leaf === 'changelog' ? `${segments.at(-2)}-changelog` : leaf
+  return leaf === 'changelog' ? `${segments.at(-2) ?? 'rivetdeck'}-changelog` : leaf
 }
 for (const route of pages) {
   const name = socialName(route)

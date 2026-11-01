@@ -19,6 +19,7 @@ const PAGES = [
   { path: '/plugins/git/changelog', priority: 0.6, lastModified: gitLatest },
   { path: '/plugins/theme-studio/changelog', priority: 0.6, lastModified: themeStudioLatest },
   { path: '/plugins/multi-root-workspace/changelog', priority: 0.6, lastModified: multiRootLatest },
+  { path: '/changelog', priority: 0.6, lastModified: RELEASE.publishedAt },
 ] as const
 
 /** One entry per page and locale; each lists every language version so crawlers can pair them. */
