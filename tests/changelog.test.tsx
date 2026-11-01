@@ -125,10 +125,11 @@ describe('Rivetdeck changelog page', () => {
     expect(existsSync('app/[lang]/_changelog/page.tsx')).toBe(false)
   })
 
-  it('mirrors the GitHub release history including legacy tag names', () => {
+  it('mirrors the GitHub release history with notes from the release pages', () => {
     const releases = en.home.changelog.releases
     expect(releases[0]).toMatchObject({ version: '0.2.1-beta.3', date: '2026-10-31' })
-    expect(releases).toContainEqual(expect.objectContaining({ tag: 'electron-dsh-v0.1.0-rc.7' }))
+    expect(releases.every((r) => tagOf(r) === `v${r.version}`)).toBe(true)
+    expect(releases[0]?.sections?.flatMap((s) => s.items).length).toBeGreaterThan(0)
     expect(zh.home.changelog.releases.map((r) => r.version)).toEqual(releases.map((r) => r.version))
     expect(releases.length).toBeGreaterThan(30)
   })

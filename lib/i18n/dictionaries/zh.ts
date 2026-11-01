@@ -204,42 +204,247 @@ const zh: Dictionary = {
       nav: { home: '概览' },
       title: '更新日志',
       lead: 'Rivetdeck 的每个已发布版本，按时间倒序排列。',
-      note: '发布说明见 GitHub Releases；早期版本以 DeepSeek Harness Desktop 名义发布，使用 electron-dsh-* 标签。',
+      note: '发布说明见 GitHub Releases；早期版本以 DeepSeek Harness Desktop 名义发布。',
       metaLine: '{count} 个已发布版本 · 最新 {version}',
       latest: '最新',
       compare: '在 GitHub 上与上一版本对比',
       releaseNotes: '发布说明',
       releases: [
-        { version: '0.2.1-beta.3', date: '2026-10-31' },
-        { version: '0.2.1-beta.2', date: '2026-10-25' },
-        { version: '0.2.1-beta.1', date: '2026-10-23' },
-        { version: '0.2.0-beta.5', date: '2026-10-21' },
-        { version: '0.2.0-beta.4', date: '2026-10-17' },
-        { version: '0.2.0-beta.3', date: '2026-10-14' },
-        { version: '0.2.0-beta.2', date: '2026-10-09' },
-        { version: '0.2.0-beta.1', date: '2026-10-05' },
-        { version: '0.1.7-beta.2', date: '2026-09-30' },
-        { version: '0.1.7-beta.1', date: '2026-09-28' },
-        { version: '0.1.5-beta.3', date: '2026-09-24' },
-        { version: '0.1.5-beta.2', date: '2026-09-14' },
-        { version: '0.1.5-beta.1', date: '2026-09-14' },
-        { version: '0.1.2-rc.1', date: '2026-09-11' },
-        { version: '0.1.2-beta.5', date: '2026-09-07' },
-        { version: '0.1.2-beta.4', date: '2026-09-06' },
-        { version: '0.1.2-beta.3', date: '2026-09-05' },
-        { version: '0.1.2-beta.2', date: '2026-09-04' },
-        { version: '0.1.2-beta.1', date: '2026-09-03' },
-        { version: '0.1.1-rc.2', date: '2026-08-28' },
-        { version: '0.1.1-beta.11', date: '2026-08-26' },
-        { version: '0.1.1-beta.10', date: '2026-08-25' },
-        { version: '0.1.1-beta.9', date: '2026-08-24' },
-        { version: '0.1.1-beta.8', date: '2026-08-24' },
-        { version: '0.1.1-beta.7', date: '2026-08-23' },
-        { version: '0.1.1-beta.6', date: '2026-08-23' },
-        { version: '0.1.1-beta.5', date: '2026-08-23' },
-        { version: '0.1.1-beta.4', date: '2026-08-22' },
-        { version: '0.1.1-beta.3', date: '2026-08-22' },
-        { version: '0.1.1-beta.2', date: '2026-08-21' },
+        { version: '0.2.1-beta.3', date: '2026-10-31', lead: '内置 DeepSeek Harness <code>0.2.1-rc.5</code>。', sections: [
+            { title: '更新内容', items: [
+                '更新至 DeepSeek Harness <code>0.2.1-rc.5</code>，优化对话中思考内容的显示。详见上游 rc.5 和 rc.4 发行说明。',
+                '随附 Git 插件 <code>0.2.9</code>、Multi-root Workspace 插件 <code>0.1.12</code> 和 Theme Studio <code>0.1.7</code>。',
+                '会话视图标签仅在名称预计被截断时显示完整名称提示。',
+              ] }
+          ] },
+        { version: '0.2.1-beta.2', date: '2026-10-25', lead: '内置 DeepSeek Harness <code>0.2.1-rc.3</code>。', sections: [
+            { title: '更新内容', items: [
+                '<b>内置上游 DeepSeek Harness <code>0.2.1-rc.3</code></b>：左侧栏、会话视图与右侧栏新增「更多」菜单，可直接浏览和创建插件；修复切换会话后点击「新会话」丢失未发送草稿的问题；DeepSeek API Key 适配器的模型列表更新方式与账号登录模式保持一致。完整清单见上游 0.2.1-rc.3 发行说明。',
+                '<b>新预装多根工作区插件</b>：<code>@dsh-electron/dsh-plugin-multi-root-workspace</code> 0.1.10 成为第三个随应用分发的生态插件。',
+                '<b>内置生态插件升级</b>：Git 插件更新至 0.2.8，Theme Studio 更新至 0.1.6，两者均已声明对上游 <code>0.2.1-rc.3</code> 的 peer 依赖。',
+                '<b>修复插件重载时的 Agent 生命周期问题</b>：file-upload 在其属主重载时正确释放 Agent resolver；file-reference-local 跳过作用域已在卸载的 Agent，避免悬挂引用。',
+                '桌面依赖清单的第三方声明已随上游同步重新生成。',
+              ] }
+          ] },
+        { version: '0.2.1-beta.1', date: '2026-10-23', lead: '内置 DeepSeek Harness <code>0.2.1-rc.2</code>。', sections: [
+            { title: '更新内容', items: [
+                '<b>内置上游 DeepSeek Harness <code>0.2.1-rc.2</code></b>：同步 <code>0.2.0-rc.2</code> 以来的上游更新。要点包括：适配 DeepSeek-V4.1-Flash-1017 模型；新增可在网页搜索设置中开启的 DeepSeek Search 与 Fetch API；支持自定义插件索引源与插件启用/更新后的依赖同步和热重载；SSH 独立 helper 运行时；识别已发送消息中的密钥并默认脱敏；正文、代码与终端字体可分别设置；大量会话的列表加载与搜索性能优化等。完整清单见上游 0.2.1-rc.1 与 0.2.1-rc.2 发行说明。',
+                '<b>修复打包应用启动崩溃</b>：打包管线使用的 pnpm 依赖收集器会跳过重复出现的包子树，导致 <code>cordis-plugin-loader</code> 等 7 个依赖缺失于 <code>Resources/app/node_modules</code>，打包应用启动即报 <code>ERR_MODULE_NOT_FOUND</code>；已修正收集器的去重遍历逻辑。',
+                '<b>品牌与链接修正</b>：关于页主页链接改指 GitHub Pages 站点，并清理残留的 <code>deepseek-harness-electron</code> 引用；桌面依赖清单的第三方声明已随上游同步重新生成。',
+              ] }
+          ] },
+        { version: '0.2.0-beta.5', date: '2026-10-21', lead: '内置 DeepSeek Harness <code>0.2.0-rc.2</code>。', sections: [
+            { title: '更新内容', items: [
+                '<b>会话检查点与恢复</b>：每次干净退出后自动捕获会话及其配置状态的检查点，逐文件生成 SHA-256 摘要并在独立进程中通过内置 Harness 的真实读取路径逐会话验证，验证失败的会话沿用上一份已验证副本；启动时检测到会话日志漂移或无法读取（例如被更新版本的 Harness 写入）时，会在启动 Host 前弹出本地化确认对话框，确认后以日志化事务完成恢复——被替换的现场字节移入隔离区保留，中断的恢复在下次启动自动收敛；Host 运行期间确认的恢复会排队并在重启后执行。',
+                '<b>Windows 卸载分层清理</b>：NSIS 卸载程序只删除经归属与清单核验的可重建数据（托管工具链、缓存目录、更新缓存），默认保留偏好设置、凭据、浏览器存储与 Harness home；安装目录外的删除由原生助手执行、不跟随链接，验证失败或与受保护路径重叠的目标整体跳过并记录到残留日志；新增中英文卸载清理说明与各平台手动清理指南。Microsoft Store 版本的清理一致性尚未验证。',
+              ] }
+          ] },
+        { version: '0.2.0-beta.4', date: '2026-10-17', lead: '内置 DeepSeek Harness <code>0.2.0-rc.2</code>。', sections: [
+            { title: '更新内容', items: [
+                '<b>预装生态插件升级</b>：Git 插件升级至 <code>0.2.7</code>，新增 VS Code 风格提交图行、提交悬停卡片、滚动分页与 Worktree 管理标签页；Theme Studio 升级至 <code>0.1.5</code>，新增 Theme Creator 运行时技能（含可见性模式）、<code>dsh-theme.json</code> 主题导入导出，主题行改为 Language 行式下拉菜单。',
+              ] }
+          ] },
+        { version: '0.2.0-beta.3', date: '2026-10-14', lead: '内置 DeepSeek Harness <code>0.2.0-rc.2</code>。', sections: [
+            { title: '更新内容', items: [
+                '<b>内置插件版本管理</b>：随应用源码构建的 Runtime 插件（Desktop Capabilities、Network Subprocess）版本号现在跟随应用版本，由版本脚本统一设定；预装生态插件升级至 Git <code>0.2.5</code>、Theme Studio <code>0.1.4</code>。',
+                '<b>托管运行时安装修复</b>：托管运行时改为先落位到最终不可变目录再执行校验，修复 Windows 上校验器执行后镜像残留锁定导致的安装失败；失败的未激活代际会被清理。',
+                '<b>Store 送审确认</b>：发布脚本提交送审后等待 Partner Center 完成 commit 处理，并确认两种架构的安装包均被接受后才报告成功，不再误报草稿状态。',
+              ] }
+          ] },
+        { version: '0.2.0-beta.2', date: '2026-10-09', lead: '内置 DeepSeek Harness <code>0.2.0-rc.2</code>。', sections: [
+            { title: '更新内容', items: [
+                '<b>Rivetdeck 品牌</b>：应用名称、原生窗口、菜单、安装包和可执行文件统一使用 Rivetdeck。',
+                '<b>全新 About 窗口</b>：展示应用图标、版本、构建号和提交信息，并提供 GitHub 与主页入口；修复主页链接打开行为。',
+                '<b>桌面文案本地化</b>：原生菜单、About 和更新提示支持中文与英文。',
+                '<b>Microsoft Store 支持</b>：提供 Windows x64 与 ARM64 AppX 包。Store 安装的应用由 Microsoft Store 管理更新，原生菜单显示对应提示。',
+                '<b>Store 自动发版</b>：安装与启动验证通过后，发布流程保留 Store 包并按版本顺序提交，持续跟踪认证与上架状态。',
+              ] }
+          ] },
+        { version: '0.2.0-beta.1', date: '2026-10-05', lead: '内置 DeepSeek Harness <code>0.2.0-rc.2</code>。', sections: [
+            { title: '更新内容', items: [
+                '<b>升级内置 Harness</b>：升级至上游 <code>0.2.0-rc.2</code>，包含上游 0.2.0 预览版的功能与修复；首次使用时会显示预览版提示。',
+                '<b>Core 与可选工具链分离</b>：应用核心运行不再依赖托管 Node.js/Python 工具链。可从引导流程或「设置 → 运行时」按需安装、检查与移除 Node.js 和 Python；工具链不可用或离线时，Core 仍可启动。',
+                '<b>网络与运行时设置整合</b>：「设置」中统一管理网络连接和托管运行时；网络诊断与运行时状态/操作集中在同一设置体验内。',
+                '<b>桌面 CLI 启动保护</b>：CLI 安装与启动会校验当前应用安装，避免命令误指向其他版本；PATH 仅暴露 <code>dsh</code> 命令。',
+                '<b>跨平台运行时验证与启动加固</b>：打包 smoke 检查在 macOS、Windows、Linux 上验证实际 Node.js/Python 可执行文件版本；Windows 发布还要求已安装 Core 能通过启动检查。',
+              ] }
+          ] },
+        { version: '0.1.7-beta.2', date: '2026-09-30', lead: '内置 DeepSeek Harness <code>0.1.7-rc.2</code>。', sections: [
+            { title: '更新内容', items: [
+                '<b>随应用提供 Node.js 与 Python 工具链</b>：插件及其子进程可使用打包的 Node.js、Python、npm、npx、pip 和 pip3。工具命令通过统一 shim 暴露；Windows 的 Python/pip 命令也会路由到托管运行时，<code>python -m pip</code> 安装到用户包目录。Agent 的 PATH 与工具链路径按目标平台分隔符组合。',
+                '<b>Desktop 与 Web/CLI 共用 profile 时保持插件解析独立</b>：内置生态插件不再链接到共享 Web profile 的 <code>node_modules</code>；Electron Host 通过专用 profile projection 解析应用自带的插件副本。Desktop 和 CLI/Web 可共享持久化数据，不会互相接管插件解析。',
+                '<b>协调 profile 插件变更与运行时状态</b>：安装、替换或移除 profile 插件后，Host 会更新已应用的插件组合并重新协调 Loader 条目；必需的 Desktop 组件不作为用户安装的生态插件展示，应用自带的生态插件也会在 profile 插件移除后保持可用。',
+                '<b>更新内置 Git 与 Theme Studio 插件</b>，并扩展 Windows 安装包 smoke 检查，验证打包后的 Node.js 和 Python 工具链。',
+              ] }
+          ] },
+        { version: '0.1.7-beta.1', date: '2026-09-28', lead: '内置 DeepSeek Harness <code>0.1.7-rc.2</code>。', sections: [
+            { title: '更新内容', items: [
+                '<b>升级内置 Harness</b>：从上游 <code>0.1.5-rc.2</code> 升至 <code>0.1.7-rc.2</code>；上游功能与修复详见其发布说明。',
+                '<b>插件交由 Web profile 管理</b>：Git <code>0.2.3</code> 与 Theme Studio <code>0.1.2</code> 作为预装生态 bundle 出现在插件页的 Installed 分组，用户可启用或禁用。Theme Studio 不再是不可关闭的 Desktop runtime 插件。',
+                '<b>Desktop Capabilities 页面更清晰</b>：官方插件页显示包身份和包含的桌面能力，并从 Host inventory 与 Client feature 读取运行状态。',
+                '<b>升级与启动更稳健</b>：旧版 Desktop 插件状态会迁移到 Web profile 并保留禁用状态；启动时串行写入生态插件配置，并避免重复挂载同名插件。',
+                '<b>桌面修复</b>：macOS 不再仅因应用启动就读取 Keychain 中的代理凭据；终端发现可跳过未安装的 shell 候选项。',
+                '<b>文档</b>：README 更新了 Theme Studio 的插件分类，并链接可独立安装的 多根工作区插件；该插件不随本安装包预装。',
+              ] }
+          ] },
+        { version: '0.1.5-beta.3', date: '2026-09-24', sections: [
+            { title: '更新内容', items: [
+                '<b>新增「设置 → 网络」页面</b>：提供 Default、Direct、System Proxy 与 Manual Proxy 四种模式。Default 保持现有应用网络行为；Direct 显式直连并清除 Desktop 控制子进程的代理环境变量；System Proxy 按操作系统策略（Windows 当前用户 WinHTTP、macOS CFNetwork、GNOME/KDE 5/6）解析，并且只执行第一条最终路由，包括显式 <code>DIRECT</code>；Manual Proxy 使用单个 HTTP、HTTPS 或 SOCKS5 端点。选择模式后通过 <code>保存并重启</code> 生效。',
+                '<b>所有托管流量走同一个环回 Gateway</b>：Managed 模式下 Harness 与 Desktop 自有子进程只看到 <code>127.0.0.1</code> 上的本地 Gateway；所选代理失败不会隐式改用其他代理或直连，而是展示失败，并允许重试同一路由、单次使用 <code>Default</code> 或打开网络设置。',
+                '<b>凭据只保存在加密存储与进程内存中</b>：Manual 的 HTTP/HTTPS 用户名密码通过 Electron <code>safeStorage</code> 加密保存（Linux 的 <code>basic_text</code> 视为不可用安全存储），界面以固定占位符表示已保存密码、绝不回显；代理凭据不会写入环境变量，模型可影响的子进程只能看到无凭据的环回地址。',
+                '<b>连接测试与诊断</b>：可测试代理、Internet、GitHub 与 LLM API 的可达性；测试走不产生故障提示的 updater 网络路径，不改变当前所选路由，也不调用模型或消耗 token。Advanced 显示当前模式、Gateway 状态、epoch、所选路由、最近失败与 System 策略细节，并允许编辑测试 URL、重载系统代理配置。',
+                '<b>随安装包分发 Rust Network Runtime</b>：Gateway、操作系统代理 provider、PAC 执行与 connector 由打包的 <code>resources/network-runtime/dsh-electron-network-runtime</code>（Windows 为 <code>.exe</code>）承担；发布工作流在打包前构建该 Runtime，Desktop CI 在 Windows、macOS 与 Linux 上运行其测试，Windows 安装包冒烟检查现在要求该可执行文件存在。',
+                '<b>本版本限制</b>：不支持 Manual bypass、SOCKS5 认证、自定义 HTTPS 代理 CA、客户端证书与集成 NTLM/Negotiate 认证；不支持的 System 后端会 fail closed，Linux 桌面不可用时请改用 Manual 或 Direct。',
+              ] }
+          ] },
+        { version: '0.1.5-beta.2', date: '2026-09-14', sections: [
+            { title: '更新内容', items: [
+                '<b>Windows 不再弹出终端窗口</b>：桌面进程链上没有进程拥有控制台，而 <code>electron.exe</code> 是 GUI 子系统映像，<code>ELECTRON_RUN_AS_NODE</code> 不改变 PE 子系统，因此 <code>windowsHide</code> / <code>CREATE_NO_WINDOW</code> 对 Host 无效，agent 执行 <code>pwsh</code>、<code>git</code> 等命令时每个控制台目标都会被新分配一个可见控制台（Windows 11 默认终端为 Windows Terminal）。现在安装包随附 Node.js 运行时（<code>resources/node/node.exe</code>），Host 与 <code>dsh plugin</code> 命令子进程统一由它承载并以 <code>windowsHide: true</code> 启动，job runner、ACL runner、受限 <code>pwsh</code> 与普通目标继承同一个隐藏控制台；Host 内 <code>process.execPath</code> 即 <code>node.exe</code>，任务管理器中的 Host 映像由 electron.exe 变为 node.exe，安装包体积增加约 30–50 MB。可用 <code>DSH_ELECTRON_NODE_BINARY</code> 覆盖运行时路径，该变量必须指向存在的可执行文件，否则启动即报错并列出全部候选路径。其它平台的进程拓扑与 <code>pnpm start</code> 行为不变。',
+                '<b>Windows / Linux 顶部区域让出系统按钮</b>：右侧面板的「文件」标签条与会话页头右侧控件此前位于 Windows 窗口控制按钮叠加层之下。现在侧栏右侧的各列与 macOS 侧栏一样让出原生控制行：中栏以 40px 的 <code>padding-top</code> 把页头与对话下移，右栏绝对定位面板以该行高度为 <code>top</code>，两列都在空出的带内绘制可拖拽区域，侧栏仍占据窗口顶边；全屏右侧面板保留 <code>inset: 0</code>，以自身的 <code>padding-top</code> 让出该行（Windows/Linux 40px、macOS 28px），其标签条与退出全屏、收起按钮不再与系统按钮重叠。只作用于页头的 <code>--dsh-windows-caption-inset</code> 补丁被移除。',
+                '<b>内置 Git 插件升级到 <code>@dsh-electron/dsh-plugin-git@0.2.1</code></b>：客户端不再为每次窗口焦点变化发起一轮刷新，重叠的仓库刷新按路径与 generation 合并为一次 Host 往返，每一轮的结果都能落地。此前 Windows 上控制台窗口引发的焦点抖动会触发互相取代的多轮刷新，Git 面板因此长期空白；配合上面的隐藏控制台修复，Windows 端 Git 恢复正常。',
+                '<b>Windows 启动路径纳入 CI</b>：<code>desktop-ci</code> 新增 <code>Windows Host startup</code> 作业，在 <code>windows-latest</code> 上运行被监督 Host 的启动用例，覆盖设备路径与控制台附着；此前该用例只在 Linux 运行。',
+              ] }
+          ] },
+        { version: '0.1.5-beta.1', date: '2026-09-14', sections: [
+            { title: '更新内容', items: [
+                '<b>内置 Harness 升级到上游 <code>0.1.5-rc.2</code></b>（此前为 <code>0.1.2-rc.1</code>）：Web 右侧 Sidebar 取代原 Details 面板，支持多标签、分栏、全屏与 Markdown / 代码 / HTML / PDF / 图片预览；支持上传任意类型文件；反馈可独立于对话提交；会话数据格式升级到 V3，升级后的会话不再支持降级读取；新会话默认使用 <code>DeepSeek-V41-Flash</code>；MCP 工具发现拒绝重复分页游标。更早的上游变更见 0.1.5-rc.1 说明。',
+                '<b>插件管理恢复</b>：设置 → 插件中的 Installed 标签重新挂载到上游 <code>settings.plugins.tab</code>，由 <code>host.patch.yml</code> 作为必需项载入；导航、标签栏、选中态与挂载生命周期仍由上游 Plugins 区负责。',
+                '<b>Git 迁入右侧 Sidebar</b>：内置 <code>@dsh-electron/dsh-plugin-git@0.2.0</code>，该版本占用 <code>ctx.sidebarRight</code>，不再依赖 Details 槽位；Git 以精确版本的生产 npm 依赖安装，本仓库不再镜像其源码。',
+                '<b>移除 Details Host</b>：上游删除了 Client <code>details</code> 槽位，本次同步删除 <code>ui-details-host</code> 镜像与 <code>@dsh-electron/dsh-client-ui-details-host</code> 依赖；依赖 Details 的旧 Git 客户端不再随包提供。',
+                '<b>插件变更崩溃恢复</b>：安装或变更插件前写入 <code>packages-pending</code> 标记，并持有 web profile 锁（属主依次为 Main PID → 子进程 PID → Main）；下次启动按只读方式对账并修复热插件软链。对账失败、等待锁超时或 Host 就绪超时不再直接退出，而是打开 Main 恢复窗口，可选择「禁用全部可管理插件」或「重置桌面管理」，两者均不删除 profile 依赖。',
+                '<b>安装加固</b>：启动时与每次 <code>dsh plugin</code> 调用前，向 <code>$DSH_HOME/profiles/web/pnpm-workspace.yaml</code> 合并 <code>strictDepBuilds</code> 与经审阅的 <code>allowBuilds</code>；命令退出码为 0 但依赖未发生变化时按失败处理；启动时对全部热插件执行一次软链巡检。',
+                '<b>可管理类型收紧</b>：profile 中的 <code>runtime-plugin</code> 只有在桌面端记录了安装意图（<code>profileManaged</code> / <code>desktopInstalled</code>）后才会进入 Electron 私有 roster 并热加载，普通可导入的 CLI 依赖只列出、不参与运行时执行；移除 <code>desktopInstalled === false</code> 的包时会提示它由 CLI 或其他环境安装。',
+              ] }
+          ] },
+        { version: '0.1.2-rc.1', date: '2026-09-11', sections: [
+            { title: '更新内容', items: [
+                '<code>0.1.2</code> 系列首个 <b>RC</b> 构建：将 <code>0.1.2-beta.5</code> 及之后的 Desktop 改动提升到 <code>main</code>；内置 Harness 仍为上游 <code>0.1.2-rc.1</code>。(#90)',
+                '<b>审计修复</b>：同步 Details Host 启动器条目，以及 Git 插件 Graph / discard / 过期输出守卫等审计修复。(#89)',
+                '<b>本系列桌面能力</b>（相对 <code>0.1.1-rc.2</code>）：Remote 网关与一次性 token 启动鉴权；会话折叠、字号与 token 用量；Details Host 多标签 Dock 与工作区文件夹选择；Git Changes / Graph / 提交信息生成；Theme Studio；Host Cookie 安全与插件变更排水。细节见各 beta 说明。',
+              ] }
+          ] },
+        { version: '0.1.2-beta.5', date: '2026-09-07', sections: [
+            { title: '更新内容', items: [
+                '<b>Details Host 多标签 Dock 视觉打磨</b>：标签条与页头分隔线对齐并贴边固定，标签改为底部对齐、悬停时上浮，悬停与激活统一使用 launcher-card 填充并恢复基于明确定义的主题令牌的悬停 wash；详情头开关（App Details Toggle）采用共享的交互式悬停 wash；完善原生操作提示文案。',
+                '<b>工作区文件夹打开集成</b>：Details Host 的「连接工作区文件夹」操作改由 Electron 目录选择插件通过 <code>registerFolderOpener</code> 接入真实目录选择；host 状态允许 <code>undefined</code> 工作区路径，并保留类型化会话标识用于工作区查找。',
+                '<b>Git Changes 面板重构（commit-first）</b>：Changes 区域围绕「先提交」草图重排——提交区与变更区拆分保持一致、提交信息字段可随内容增高（为空时保持单行），Git 控件保持在 frame 内。',
+                '<b>Git 工具栏精简</b>：Graph 与 Diff 的刷新入口移至 scope 栏 / 右上角，移除不再使用的 Reveal 按钮，Graph/Diff/Changes 标题顶部对齐趋于一致。',
+                '<b>提交信息生成设置</b>：在 Plugin 配置中注册 commit-message 生成设置接缝，可加载 Git 生成模型，并统一 discard 相关文案。',
+              ] }
+          ] },
+        { version: '0.1.2-beta.4', date: '2026-09-06', sections: [
+            { title: '更新内容', items: [
+                '<b>Host Cookie 安全修复</b>：新增 <code>bindHarnessUrl()</code>，阻止 <code>//host/path</code> 形式的 scheme-relative 路径将 Main Host Cookie 发送到 loopback 之外；Host 相关 fetch 统一改为 <code>redirect: \'manual\'</code>，防止重定向导致 Cookie 外泄。',
+                '<b>插件变更排水（drain）</b>：退出/重启时新增 <code>plugin-mutation.shutdown()</code>，拒绝后续变更并等待队列清空，避免安装/卸载操作被中途截断；Runtime 启动输出扫描增加 256KB 缓冲上限，就绪后不再累积输出。',
+                '<b>WebSocket shim 修复</b>：非 Host URL 直接返回原生 WebSocket 实例，<code>send</code> 恢复正常。',
+                '<b>Git 插件修复</b>：变更操作串行化，workspace 重绑后忽略过期变更（消除竞态）；设置 <code>GIT_LITERAL_PATHSPECS=1</code>，避免 magic pathspec 被误解析；修复 porcelain v2 未合并（<code>u</code>）记录的路径解析。',
+                '<b>Details Host 修复</b>：卸载 surface 的清理现在覆盖所有保留会话，而不仅是当前会话，后台会话不再残留失效 surface。',
+                '<b>文档与测试</b>：新增中英双语审计说明（本轮共修复 8 个缺陷）；补充 harness-proxy、plugin-mutation、runtime、websocket-shim、Git controller/service/status 及 Details Host lifecycle 等测试。',
+              ] }
+          ] },
+        { version: '0.1.2-beta.3', date: '2026-09-05', sections: [
+            { title: '更新内容', items: [
+                '<b>Details Host 升级为多标签页 Dock（API v3）</b>：单一表面的详情宿主演进为多标签页 Dock；"App Details Toggle"（详情入口开关）随宿主内置到会话头部；空 Dock 时展示启动器卡片，标签关闭后保留、接管状态可持久。',
+                '<b>Git 插件迁移至 Details Host v3 表面</b>：Git 面板改用 v3 表面与启动器卡片注册；头部操作改为图标化按钮，并新增画布式 graph 侧栏。',
+                '<b>Git Graph（MVP）</b>：新增提交历史图形视图——活动泳道（active-lane）布局模型、贝塞尔曲线连线渲染、历史查询支持 graph scopes、可见泳道上限 3 条；画布按设计尺寸渲染，修复高 DPI 下被 DPR 缩放的问题。',
+                '<b>提交信息生成器</b>：Git 插件新增 commit message 生成能力，详见插件 README 的配对与使用体验章节。',
+                '<b>头部视觉对齐</b>：主界面发布实时测量的 <code>--app-header-height</code> 令牌（<code>ResizeObserver</code> + 跟随会话头部挂载/卸载的 <code>MutationObserver</code>），Details 标签栏共用同一高度与分隔线，两段底部横线连为一条；宿主 chrome 经 locale seat 完成本地化，并新增 <code>DetailsHeaderAction</code> 原语与响应式标签条。',
+                '<b>打包与工程修复</b>：构建器、运行时校验器和打包测试改为从各插件 <code>./client</code> 的 manifest exports 解析客户端 bundle 文件名（现为 <code>lib/client.cjs</code>）；刷新 details-host fixture 完整性与 lockfile；为插件 subtree 镜像目录配置 oxlint 豁免，并同步更新 v3 tabbed dock 相关测试基线。',
+              ] }
+          ] },
+        { version: '0.1.2-beta.2', date: '2026-09-04', sections: [
+            { title: '更新内容', items: [
+                '<b>修复启动崩溃</b>：<code>v0.1.2-beta.1</code> 在打包后启动时会因 <code>@dsh-electron/dsh-plugin-git</code> 已列入生态插件清单但未声明为生产依赖而崩溃；本版本将该插件写入 <code>dependencies</code>，确保 electron-builder 将其打入安装包。',
+                '<b>打包校验增强</b>：新增 packaging / runtime-plugins 测试，防止已声明的生态插件遗漏生产依赖；<code>sync-version-dependencies</code> 脚本同步维护依赖清单。',
+              ] }
+          ] },
+        { version: '0.1.2-beta.1', date: '2026-09-03', sections: [
+            { title: '更新内容', items: [
+                '同步上游 Harness 至 <code>v0.1.2-rc.1</code>；桌面端适配 Remote 网关与一次性 token 启动鉴权（Main 侧 <code>HarnessProxy.authenticate()</code>、cookie 转发与 <code>/api/remote.mux</code> 事件流）。(#82)',
+                '<b>会话体验</b>：默认折叠过程内容与 System prompt；正文宽度可拖拽；回答末尾显示 token 用量与耗时；支持完整历史回合导航与字号调节。',
+                '<b>模型与插件</b>：Models 页支持插件提供方登录；子代理模型选择更灵活；插件列表按会话/全局分组并支持 Preset 切换。',
+                '<b>连接与性能</b>：显示连接状态并支持断线重试；减少启动与会话初始化开销；流式代码块持续语法高亮；长会话内存与渲染开销优化。',
+                '<b>图片与工具</b>：图片发送后立即显示、后台压缩上传；改善压缩策略与轨迹视图图片展示；<code>web_fetch</code> 默认启用（含 SSRF 防护）。',
+                '<b>其他修复</b>：修复持久 Shell 输出、Windows 目录选择器路径截断、排队/追加图片投递、命令菜单 <code>Tab</code> 补全等问题；Code Mode 统一更名为 PTC mode（历史会话可读）。',
+                '修复 <code>desktop-promote</code> 自动发布 workflow。',
+              ] }
+          ] },
+        { version: '0.1.1-rc.2', date: '2026-08-28', sections: [
+            { title: '更新内容', items: [
+                '<code>0.1.1</code> 系列首个 <b>RC</b> 构建；内置 Harness 仍为上游 <code>0.1.1-rc.2</code>，桌面功能与 <code>0.1.1-beta.11</code> 相同（Theme Studio、插件生命周期、Details Host / Git 等）。',
+                '修复 <code>sync-upstream</code> GitHub Actions workflow 的运行错误。(#79)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.11', date: '2026-08-26', sections: [
+            { title: '更新内容', items: [
+                '将 <code>@dsh-electron/dsh-theme-studio</code> 作为 Electron 必装 runtime plugin 挂入 <code>runtime/host.patch.yml</code>（subtree：<code>apps/electron/runtime/plugins/dsh-theme-studio</code>）；Settings → General 新增 Themes（<code>id = themes</code>），Appearance 保留；内置主题通过 <code>ctx.theme.overrideTokens()</code> 叠 <code>:active</code> / <code>:preview</code> 两层，恢复 Default 只卸 overlay。(#72)',
+                '移除 <code>profile-restart</code> 插件时改为完整重启，避免 Renderer 软刷新加载已删除的 client 脚本导致崩溃；Bundle 移除与安装同样弹出成功对话框与待重启横幅，并提供 <b>Restart Now</b>。(#73)',
+                '同步 Details Host：Windows 平台 details header 增加顶部 padding，使关闭按钮与标题避开 Window Controls Overlay。(#74)',
+                '同步 Git 插件：创建分支改用共享 conversation <code>Modal</code>；空仓库（unborn HEAD）显示明确提示并禁用创建，不再抛出原始 Git object-name 错误。(#75)',
+                '同步 Theme Studio：Theme Unit 卡片改为 Appearance 风格的紧凑布局（左上色块、标题/当前主题、右下 Preview/Apply）。(#76)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.10', date: '2026-08-25', sections: [
+            { title: '更新内容', items: [
+                'Installed Plugins 新增 Registry、GitHub/Git 与 Local 安装入口；通过随附 pnpm 写入 web profile，并统一 runtime plugin、Bundle 与 dependency 的识别及生命周期；支持来源切换、失败残留识别、blocked-build 归因，以及 Bundle/runtime Host 与 client 入口验证；阻止 profile 依赖遮蔽 Desktop 自带包。(#65)',
+                '分离插件激活模式、包健康状态与待重启 Host 状态；通过上游 dsh plugin backend 提供 Main 侧更新检查、来源刷新、重装/修复与安全移除；变更前静默活跃 runtime 代码，从磁盘变更分类恢复，并对 ESM 重激活做 cache-bust；通过 Desktop IPC 暴露包生命周期，并新增更新、包菜单、移除确认与重启横幅 UI。(#66)',
+                '将 <code>@dsh-electron/dsh-client-ui-details-host</code> 同步到 v0.2（surface instance / payload routing / descriptor lifecycle / header actions / per-session navigation、dedupe、back）；同步 <code>dsh-plugin-git</code> dogfood：payload open、<code>registerSurface</code>、Host header actions，并验证 session restore / unload remount。(#68)',
+                '为 canonical 插件仓库补充 <code>cordis.patch.yml</code> 与 <code>dsh.bundle</code> 声明，使 <code>dsh plugin add</code> 无需手动编辑 <code>cordis.yml</code>；同步插件 subtree 并在桌面端 README 记录 bundled plugins。(#70)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.9', date: '2026-08-24', sections: [
+            { title: '更新内容', items: [
+                '将 <code>@dsh-electron/dsh-client-ui-details-host</code> 作为 Electron 必装 portable UI 挂入 <code>runtime/host.patch.yml</code>（subtree：<code>apps/electron/runtime/plugins/ui-details-host</code>）；启动时不抢占第三栏，仅在 <code>open(id)</code> 时接管 details 栏位。',
+                '同步 Git 生态插件的 Details Host 迁移：Git 占用 <code>shell.details.surface</code>，通过 <code>ctx.shellDetails.open(\'git\')</code> 打开详情栏，不再使用 overlay 抽屉；AppFrame details 栏位、resize handle 与 close button 由 Details Host 拥有。',
+                'runtime plugin 客户端构建改用 automatic JSX，修复 Details Host 因缺少 <code>React</code> 标识符崩溃的问题。',
+                'Git <code>dsh.client.external</code> 声明 <code>@dsh-electron/dsh-client-ui-details-host/client</code>；<code>verify-client-packages</code> 将 Details Host runtime-plugin 清单纳入 supplier 校验，避免 Git factory <code>require</code> 打空模块表。',
+                '修复 Details Host 须在 Git client 物化之前 required 挂载的依赖顺序问题。(#62)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.8', date: '2026-08-24', sections: [
+            { title: '更新内容', items: [
+                '修复模态对话框打开时底层窗口拖拽区抢占设置页顶部与关闭按钮指针输入的问题。(#52)',
+                '建立下游 DSH 生态插件路径：新增可独立发布的 <code>@dsh-electron/dsh-plugin-git</code>，提供 portable Git service、Connection RPC、源码管理 UI，以及 Electron custom-scheme 协议代理；通过 <code>runtime/host.patch.yml</code> 挂载 bundled ecosystem plugin artifacts。(#53)',
+                'Git 插件 UX 改版：将侧栏模态改为 Composer 控件 + 右侧抽屉（Changes / Diff / Commit），分支选择与变更计数位于输入框左侧；无 Git 仓库时自动隐藏插槽。(#54)',
+                '新增运行时插件热插拔：通过动态 Cordis include 表达 desired plugin roster，<code>PluginLifecycleController</code> 串行 enable/disable/reload，Desktop-required adapter 不可管理。(#57)',
+                '新增「已安装插件」管理界面（Settings → Plugins → Installed）：提供生命周期轮询、错误回滚、本地搜索与 System Components diagnostics。(#60)',
+                '修复 Windows 上嵌套 pnpm 子进程不可移植的问题，CI Windows 构建与 Electron 测试现已通过。(#61)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.7', date: '2026-08-23', sections: [
+            { title: '更新内容', items: [
+                '通过 bundled runtime 插件 <code>@dsh-electron/dsh-electron-ui-brand</code> 恢复 DeepSeek Harness 品牌展示：无条件填充侧栏品牌标识、名称与会话页 Hero 品牌标识，桌面端不再显示上游 <code>DSH Local Build</code> 回退文案；复用 <code>@deepseek-ai/dsh-client-ui-primitives</code> 的 <code>FishLogo</code> / <code>BrandWordmark</code>，不修改上游 <code>packages/</code> 源码，也不依赖 <code>DSH_CLIENT_BUILD_PROFILE=official</code>。(#51)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.6', date: '2026-08-23', sections: [
+            { title: '更新内容', items: [
+                '修复 Windows/Linux 无边框窗口拖拽命中区域：侧栏顶部避让区默认设为 <code>0px</code>，仅 macOS 保留红绿灯所需留白，使 Windows/Linux 侧栏内容从窗口顶边开始；将全视口弹窗容器、遮罩、Dialog 及内部控件显式标记为 <code>no-drag</code>，避免底层窗体拖拽区域吞掉设置关闭按钮等交互事件。(#50)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.5', date: '2026-08-23', sections: [
+            { title: '更新内容', items: [
+                '整合无边框窗口拖拽区域：移除 Renderer 顶部独立拖拽条带，使侧栏与会话背景直接延伸到原生窗口边缘；将拖拽目标嵌入侧栏留白、空白会话顶部背景与会话 Header 的非交互空隙，同时排除按钮、链接、Tab、输入框与全屏对话框，保留 macOS 红绿灯安全区及 Windows/Linux Window Controls Overlay 系统按钮空间。(#48)',
+                '下游 npm 包名迁移至 <code>@dsh-electron</code> 组织：Electron 应用与 runtime 插件（含 <code>desktop-capabilities</code>、<code>ui-directory-picker</code>）改用 <code>@dsh-electron/dsh-electron*</code> 命名；上游同步的 <code>packages/</code>、<code>vendor/</code> 等包名保持 <code>@deepseek-ai</code> 不变。(#49)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.4', date: '2026-08-22', sections: [
+            { title: '更新内容', items: [
+                '托盘图标改为从纳入版本库的 SVG 源按需构建：新增 <code>build:tray</code> 按 DPI 阶梯生成 black/white/template PNG；macOS 使用 template 图标与 <code>addRepresentation</code>，Windows/Linux 在 HiDPI 下绑定逻辑 DIP 尺寸，菜单栏显示更清晰。(#43)',
+                '窗口框架改为原生 OS 控件：移除自定义 titlebar 与 <code>#root</code> 顶部 padding 模型；Main 进程按平台配置 hidden title bar / Window Controls Overlay；Renderer 通过 <code>window-chrome</code> adapter 为 sidebar、header 与 hero 注入 safe area 与 drag/no-drag 规则，修复 traffic lights 间距与拖动/点击冲突。(#44)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.3', date: '2026-08-22', sections: [
+            { title: '更新内容', items: [
+                '完成桌面功能层插件化：新增通用 <code>runtime/plugins/</code> 构建与链接基础设施，以及 <code>ctx.desktop</code> 桌面能力服务；目录选择器已迁移为能力消费者，并修复 preload bridge 就绪前依赖插件无法完成启动的问题。(#40)',
+                '加固桌面端发布与运行生命周期：校验发布标签，覆盖全部 Electron TypeScript 编译面，正确释放 Host WebSocket 桥接资源、等待 Host 完整退出，并统一更新器接口。(#41)',
+                '新增中英双语桌面架构指南，说明当前实现、目标架构与下游文档所有权。(fd2412b)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.2', date: '2026-08-21', sections: [
+            { title: '更新内容', items: [
+                '修复 Electron Host bootstrap 解析：Host 页面注入已改为 <code>globalThis["__DSH_BOOT__"]</code>，桌面端仍按旧的 <code>window.__DSH_BOOT__</code> 抓取，导致启动时 <code>getBootstrap</code> 失败。已对齐 scraper、单测与相关说明。(#39)',
+              ] }
+          ] },
         { version: '0.1.1-beta.1', date: '2026-08-21' },
         { version: '0.1.0-beta.5', date: '2026-08-21' },
         { version: '0.1.0-beta.4', date: '2026-08-21' },
@@ -247,10 +452,8 @@ const zh: Dictionary = {
         { version: '0.1.0-rc.8', date: '2026-08-20' },
         { version: '0.1.0-beta.2', date: '2026-08-20' },
         { version: '0.1.0-beta.1', date: '2026-08-20' },
-        { version: '0.1.0-rc.7', date: '2026-08-17', tag: 'electron-dsh-v0.1.0-rc.7' },
-        { version: '0.1.0-rc.6', date: '2026-08-17', tag: 'electron-dsh-v0.1.0-rc.6' },
-        { version: '0.1.0-rc.5', date: '2026-08-17', tag: 'electron-dsh-v0.1.0-rc.5' },
       ],
+
     },
 
   },

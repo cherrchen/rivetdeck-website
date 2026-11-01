@@ -213,42 +213,247 @@ const en = {
       nav: { home: 'Overview' },
       title: 'Changelog',
       lead: 'Every published Rivetdeck release, newest first.',
-      note: 'Release notes live on GitHub Releases; early versions shipped as DeepSeek Harness Desktop and carry electron-dsh-* tags.',
+      note: 'Release notes live on GitHub Releases; early versions shipped as DeepSeek Harness Desktop.',
       metaLine: '{count} releases · latest {version}',
       latest: 'Latest',
       compare: 'Compare with the previous release on GitHub',
       releaseNotes: 'Release notes',
       releases: [
-        { version: '0.2.1-beta.3', date: '2026-10-31' },
-        { version: '0.2.1-beta.2', date: '2026-10-25' },
-        { version: '0.2.1-beta.1', date: '2026-10-23' },
-        { version: '0.2.0-beta.5', date: '2026-10-21' },
-        { version: '0.2.0-beta.4', date: '2026-10-17' },
-        { version: '0.2.0-beta.3', date: '2026-10-14' },
-        { version: '0.2.0-beta.2', date: '2026-10-09' },
-        { version: '0.2.0-beta.1', date: '2026-10-05' },
-        { version: '0.1.7-beta.2', date: '2026-09-30' },
-        { version: '0.1.7-beta.1', date: '2026-09-28' },
-        { version: '0.1.5-beta.3', date: '2026-09-24' },
-        { version: '0.1.5-beta.2', date: '2026-09-14' },
-        { version: '0.1.5-beta.1', date: '2026-09-14' },
-        { version: '0.1.2-rc.1', date: '2026-09-11' },
-        { version: '0.1.2-beta.5', date: '2026-09-07' },
-        { version: '0.1.2-beta.4', date: '2026-09-06' },
-        { version: '0.1.2-beta.3', date: '2026-09-05' },
-        { version: '0.1.2-beta.2', date: '2026-09-04' },
-        { version: '0.1.2-beta.1', date: '2026-09-03' },
-        { version: '0.1.1-rc.2', date: '2026-08-28' },
-        { version: '0.1.1-beta.11', date: '2026-08-26' },
-        { version: '0.1.1-beta.10', date: '2026-08-25' },
-        { version: '0.1.1-beta.9', date: '2026-08-24' },
-        { version: '0.1.1-beta.8', date: '2026-08-24' },
-        { version: '0.1.1-beta.7', date: '2026-08-23' },
-        { version: '0.1.1-beta.6', date: '2026-08-23' },
-        { version: '0.1.1-beta.5', date: '2026-08-23' },
-        { version: '0.1.1-beta.4', date: '2026-08-22' },
-        { version: '0.1.1-beta.3', date: '2026-08-22' },
-        { version: '0.1.1-beta.2', date: '2026-08-21' },
+        { version: '0.2.1-beta.3', date: '2026-10-31', lead: 'Bundles DeepSeek Harness <code>0.2.1-rc.5</code>.', sections: [
+            { title: 'What changed', items: [
+                'Updated to DeepSeek Harness <code>0.2.1-rc.5</code>, improving the display of thinking content in conversations. See the upstream rc.5 and rc.4 release notes.',
+                'Bundled Git plugin <code>0.2.9</code>, Multi-root Workspace plugin <code>0.1.12</code>, and Theme Studio <code>0.1.7</code>.',
+                'Conversation view tabs show a full-name tooltip when the label is expected to overflow.',
+              ] }
+          ] },
+        { version: '0.2.1-beta.2', date: '2026-10-25', lead: 'Bundles DeepSeek Harness <code>0.2.1-rc.3</code>.', sections: [
+            { title: 'What changed', items: [
+                '<b>Bundled upstream DeepSeek Harness <code>0.2.1-rc.3</code></b>: new "More" menus in the left sidebar, conversation views, and right sidebar for browsing and creating plugins; a fix for New Session losing an unsent draft after switching sessions; and a DeepSeek API key adapter that now refreshes its model list the same way as account sign-in. See the upstream 0.2.1-rc.3 notes for the full list.',
+                '<b>New preinstalled multi-root workspace plugin</b>: <code>@dsh-electron/dsh-plugin-multi-root-workspace</code> 0.1.10 ships as the third bundled ecosystem plugin.',
+                '<b>Bundled ecosystem plugin updates</b>: the Git plugin moves to 0.2.8 and Theme Studio to 0.1.6, both declaring upstream <code>0.2.1-rc.3</code> peers.',
+                '<b>Fixed Agent lifecycle issues on plugin reload</b>: file-upload now releases its Agent resolver when its owner reloads, and file-reference-local skips Agents whose scope is already unloading, avoiding dangling references.',
+                'Third-party notices regenerated for the synchronized desktop dependencies.',
+              ] }
+          ] },
+        { version: '0.2.1-beta.1', date: '2026-10-23', lead: 'Bundles DeepSeek Harness <code>0.2.1-rc.2</code>.', sections: [
+            { title: 'What changed', items: [
+                '<b>Bundled upstream DeepSeek Harness <code>0.2.1-rc.2</code></b>: picks up all upstream changes since <code>0.2.0-rc.2</code>. Highlights: support for the DeepSeek-V4.1-Flash-1017 model; DeepSeek Search and Fetch APIs that can be enabled in Web Search settings; custom plugin index sources plus dependency sync and hot reload on plugin enable/update; a standalone SSH helper runtime; automatic detection and default redaction of secrets in sent messages; per-surface font settings for body text, code, and terminals; faster session-list loading and search at scale; and more. See the upstream 0.2.1-rc.1 and 0.2.1-rc.2 notes for the full list.',
+                '<b>Fixed a packaged-app boot crash</b>: the pnpm dependency collector used by the packaging lane skipped the subtree of repeated package occurrences, leaving <code>cordis-plugin-loader</code> and six other packages out of <code>Resources/app/node_modules</code>; packaged builds crashed at boot with <code>ERR_MODULE_NOT_FOUND</code>. The collector\'s dedupe traversal has been corrected.',
+                '<b>Branding and link fixes</b>: the About homepage link now points at the GitHub Pages site, stale <code>deepseek-harness-electron</code> references were retargeted to Rivetdeck, and third-party notices were regenerated for the synchronized desktop dependencies.',
+              ] }
+          ] },
+        { version: '0.2.0-beta.5', date: '2026-10-21', lead: 'Bundles DeepSeek Harness <code>0.2.0-rc.2</code>.', sections: [
+            { title: 'What changed', items: [
+                '<b>Session checkpoint and restore</b>: every clean exit captures a checkpoint of sessions and their configuration state — per-file SHA-256 digests, verified per session through the bundled Harness\'s real read path in a separate process, with sessions that fail validation carried forward from their last verified copy. When startup detects session-log drift or unreadable data (for example, written by a newer Harness), a localized confirmation dialog appears before the Host starts; confirming runs a journaled restore transaction — replaced live bytes are preserved in quarantine, interrupted restores converge automatically on the next launch, and restores confirmed while the Host is running are queued and executed after relaunch.',
+                '<b>Tiered Windows uninstall cleanup</b>: the NSIS uninstaller now removes only verified rebuildable data (managed toolchains, cache directories, the updater cache) while preserving preferences, credentials, persisted browser storage, and Harness homes by default. Deletions outside the install directory run through a native helper that verifies attribution and expected inventories and never follows links; targets that fail verification or overlap a protected path are skipped whole and recorded in a residue log. New bilingual documentation describes uninstall cleanup behavior and manual removal on each platform. Store (MSIX) cleanup parity remains unverified.',
+              ] }
+          ] },
+        { version: '0.2.0-beta.4', date: '2026-10-17', lead: 'Bundles DeepSeek Harness <code>0.2.0-rc.2</code>.', sections: [
+            { title: 'What changed', items: [
+                '<b>Bundled ecosystem plugin updates</b>: Git moves to <code>0.2.7</code>, adding VS Code-style graph rows, a commit hover card, scroll paging, and a worktree management tab; Theme Studio moves to <code>0.1.5</code>, adding the Theme Creator runtime skill with visibility modes, <code>dsh-theme.json</code> theme import/export, and a Language-row-style dropdown for the Themes row.',
+              ] }
+          ] },
+        { version: '0.2.0-beta.3', date: '2026-10-14', lead: 'Bundles DeepSeek Harness <code>0.2.0-rc.2</code>.', sections: [
+            { title: 'What changed', items: [
+                '<b>Bundled plugin versioning</b>: source-built runtime plugins (Desktop Capabilities, Network Subprocess) now track the application version, set by the version script; preinstalled ecosystem plugins move to Git <code>0.2.5</code> and Theme Studio <code>0.1.4</code>.',
+                '<b>Managed runtime installation fix</b>: managed runtimes are now verified at their final immutable path instead of before the rename, fixing install failures caused by Windows retaining locks on executed images; failed unselected generations are cleaned up.',
+                '<b>Store submission confirmation</b>: the release script now waits for Partner Center commit processing and verifies both architecture packages are accepted before reporting success, no longer misreporting a draft state.',
+              ] }
+          ] },
+        { version: '0.2.0-beta.2', date: '2026-10-09', lead: 'Bundles DeepSeek Harness <code>0.2.0-rc.2</code>.', sections: [
+            { title: 'What changed', items: [
+                '<b>Rivetdeck branding</b>: application names, native windows, menus, installers, and executables use Rivetdeck.',
+                '<b>New About window</b>: displays the application icon, version, build number, and commit, with GitHub and homepage links. Homepage opening is fixed.',
+                '<b>Localized Desktop copy</b>: native menus, About, and update messages support English and Chinese.',
+                '<b>Microsoft Store support</b>: Windows x64 and ARM64 AppX packages are available. Microsoft Store manages updates for Store installations, with ownership shown in native menus.',
+                '<b>Automatic Store releases</b>: after installation and startup qualification, the release workflow retains Store packages and submits them in version order, tracking certification and publication.',
+              ] }
+          ] },
+        { version: '0.2.0-beta.1', date: '2026-10-05', lead: 'Bundles DeepSeek Harness <code>0.2.0-rc.2</code>.', sections: [
+            { title: 'What changed', items: [
+                '<b>Bundled Harness upgrade</b>: now includes upstream <code>0.2.0-rc.2</code>, with the upstream 0.2.0 preview features and fixes. A preview notice is shown on first use.',
+                '<b>Core separated from optional toolchains</b>: the application Core no longer depends on managed Node.js/Python toolchains. Install, inspect, or remove Node.js and Python on demand from onboarding or Settings → Runtime; Core can still start when toolchains are unavailable or the machine is offline.',
+                '<b>Unified network and runtime settings</b>: network connections and managed runtimes are managed from a unified Settings experience, with network diagnostics and runtime status/actions grouped together.',
+                '<b>Desktop CLI launch safeguards</b>: CLI installation and launch verify the current application installation to avoid targeting another version; only <code>dsh</code> is exposed on PATH.',
+                '<b>Cross-platform runtime validation and startup hardening</b>: packaged smoke checks verify the actual Node.js/Python executable versions on macOS, Windows, and Linux; Windows releases also require the installed Core to pass its startup check.',
+              ] }
+          ] },
+        { version: '0.1.7-beta.2', date: '2026-09-30', lead: 'Bundles DeepSeek Harness <code>0.1.7-rc.2</code>.', sections: [
+            { title: 'What changed', items: [
+                '<b>Bundled Node.js and Python toolchains</b>: plugins and their child processes can use the packaged Node.js, Python, npm, npx, pip, and pip3 commands through shared shims. Windows Python/pip commands also route to the managed runtime, and <code>python -m pip</code> installs into the user package directory. Agent PATH entries and toolchain paths use the target platform\'s delimiter.',
+                '<b>Independent plugin resolution for shared Desktop and Web/CLI profiles</b>: bundled ecosystem plugins are no longer linked into the shared Web profile\'s <code>node_modules</code>; the Electron Host resolves its bundled copies through a private profile projection. Desktop and CLI/Web can share persisted profile data without taking over each other\'s plugin resolution.',
+                '<b>Profile changes reconcile runtime state</b>: after profile plugins are installed, replaced, or removed, the Host updates the applied plugin composition and reconciles Loader entries. Required Desktop components are not shown as user-installed ecosystem plugins, and bundled ecosystem plugins remain available when removed from the profile.',
+                '<b>Updated bundled Git and Theme Studio plugins</b>, plus a Windows installer smoke check for the packaged Node.js and Python toolchains.',
+              ] }
+          ] },
+        { version: '0.1.7-beta.1', date: '2026-09-28', lead: 'Bundles DeepSeek Harness <code>0.1.7-rc.2</code>.', sections: [
+            { title: 'What changed', items: [
+                '<b>Bundled Harness upgrade</b>: upstream moves from <code>0.1.5-rc.2</code> to <code>0.1.7-rc.2</code>. See the upstream release notes for its features and fixes.',
+                '<b>Web profile manages plugins</b>: Git <code>0.2.3</code> and Theme Studio <code>0.1.2</code> are preinstalled ecosystem bundles in the Plugins page\'s Installed group. Users can enable or disable either one. Theme Studio is no longer a required Desktop runtime plugin.',
+                '<b>Clearer Desktop Capabilities page</b>: the Official plugin page shows the package identity and contained desktop capabilities, with status read from the Host inventory and Client features.',
+                '<b>More reliable upgrades and startup</b>: legacy Desktop plugin state migrates into the Web profile with disabled selections preserved; startup serializes ecosystem plugin writes and avoids duplicate mounts for the same plugin.',
+                '<b>Desktop fixes</b>: macOS no longer reads Keychain proxy credentials merely because the app starts; terminal discovery can skip shell candidates that are not installed.',
+                '<b>Documentation</b>: the README corrects Theme Studio\'s plugin classification and links the independently installed multi-root workspace plugin, which is not bundled with these installers.',
+              ] }
+          ] },
+        { version: '0.1.5-beta.3', date: '2026-09-24', sections: [
+            { title: 'What changed', items: [
+                '<b>New Settings → Network page</b>: four modes — Default, Direct, System Proxy, and Manual Proxy. Default keeps the existing application network behavior; Direct connects explicitly and clears the proxy environment variables Desktop hands to child processes; System Proxy resolves through the operating-system policy (current-user WinHTTP on Windows, CFNetwork on macOS, GNOME/KDE 5/6) and executes only the first final route, including an explicit <code>DIRECT</code>; Manual Proxy takes a single HTTP, HTTPS, or SOCKS5 endpoint. Choosing a mode takes effect through <code>Save & Restart</code>.',
+                '<b>All managed traffic goes through one loopback Gateway</b>: in Managed modes the harness and the child processes Desktop owns only see a local Gateway on <code>127.0.0.1</code>; a failing selected proxy never implicitly falls back to another proxy or to a direct connection, but reports the failure and offers retrying the same route, a one-time <code>Use Default This Time</code>, or opening network settings.',
+                '<b>Credentials stay in encrypted storage and process memory</b>: Manual HTTP/HTTPS username and password are encrypted through Electron <code>safeStorage</code> (Linux <code>basic_text</code> counts as no secure storage available), the UI shows a fixed placeholder for a saved password and never echoes it, proxy credentials never enter environment variables, and child processes a model can influence only ever see the credential-free loopback address.',
+                '<b>Connectivity tests and diagnostics</b>: proxy, Internet, GitHub, and LLM API reachability can be tested; the tests use the updater network path, which raises no failure prompt, do not change the selected route, and never call a model or spend tokens. Advanced shows the current mode, Gateway state, epoch, selected route, last failure, and System policy details, and allows editing the test URLs and reloading the system proxy configuration.',
+                '<b>A Rust Network Runtime ships with the installers</b>: the Gateway, the operating-system proxy provider, PAC execution, and the connectors run in the packaged <code>resources/network-runtime/dsh-electron-network-runtime</code> (<code>.exe</code> on Windows); the release workflow builds that runtime before packaging, Desktop CI runs its tests on Windows, macOS, and Linux, and the Windows installer smoke check now requires that executable to be present.',
+                '<b>Limits in this release</b>: no Manual bypass entries, SOCKS5 authentication, custom HTTPS proxy CA, client certificates, or integrated NTLM/Negotiate authentication; unsupported System backends fail closed, and when no Linux desktop is available use Manual or Direct instead.',
+              ] }
+          ] },
+        { version: '0.1.5-beta.2', date: '2026-09-14', sections: [
+            { title: 'What changed', items: [
+                '<b>No more console windows on Windows</b>: no process on the desktop chain owns a console, and <code>electron.exe</code> is a GUI-subsystem image, so <code>ELECTRON_RUN_AS_NODE</code> does not change the PE subsystem and <code>windowsHide</code> / <code>CREATE_NO_WINDOW</code> had no effect on the Host; every console target the agent spawned (<code>pwsh</code>, <code>git</code>, …) therefore got its own visible console, which Windows 11 renders through Windows Terminal. The installer now ships a Node.js runtime (<code>resources/node/node.exe</code>), and the Host and its <code>dsh plugin</code> command children all run on it with <code>windowsHide: true</code>, so the job runner, the ACL runner, the restricted <code>pwsh</code>, and ordinary targets inherit one hidden console; inside the Host <code>process.execPath</code> is <code>node.exe</code>, which changes the Host image in Task Manager, and the installer grows by roughly 30–50 MB. <code>DSH_ELECTRON_NODE_BINARY</code> overrides the runtime and must name an existing executable, otherwise startup fails and lists every candidate path. Process topology and <code>pnpm start</code> are unchanged on other platforms.',
+                '<b>The Windows and Linux top edge yields to the system buttons</b>: the right panel\'s file tab strip and the conversation header\'s right-hand controls sat under Windows\' native Window Controls Overlay. The columns right of the sidebar now hold the native-control row free, exactly as the macOS sidebar holds the traffic-light row: the center column takes the 40px row as <code>padding-top</code> and moves its header and conversation below it, the absolutely positioned right panel takes the row as its <code>top</code>, both columns paint a drag strip over the freed band, and the sidebar keeps the window\'s top edge. The fullscreen right panel keeps <code>inset: 0</code> and holds the row as its own <code>padding-top</code> (40px on Windows and Linux, 28px on macOS), so its pane strip and its exit-fullscreen and collapse controls no longer overlap the system buttons. The header-only <code>--dsh-windows-caption-inset</code> patch is gone.',
+                '<b>Bundled Git plugin upgraded to <code>@dsh-electron/dsh-plugin-git@0.2.1</code></b>: the client no longer starts a refresh round per window focus event, merging overlapping repository refreshes — keyed by path and generation — into one Host round trip so every round\'s result lands. The focus churn from the Windows console windows used to trigger superseding rounds that never rendered the repository, leaving the Git panel blank; with the hidden-console fix above, Git works on Windows again.',
+                '<b>Windows startup path covered by CI</b>: <code>desktop-ci</code> gains a <code>Windows Host startup</code> job that runs the supervised Host\'s startup spec on <code>windows-latest</code>, covering the device path and console attachment; that spec previously ran on Linux only.',
+              ] }
+          ] },
+        { version: '0.1.5-beta.1', date: '2026-09-14', sections: [
+            { title: 'What changed', items: [
+                '<b>Bundled harness upgraded to upstream <code>0.1.5-rc.2</code></b> (from <code>0.1.2-rc.1</code>): the right Sidebar replaces the removed Details panel with multi-tab, split, and fullscreen panes plus Markdown / code / HTML / PDF / image preview; generic file uploads; feedback submission independent of the conversation; session data format V3, where upgraded sessions no longer read on older builds; new conversations default to <code>DeepSeek-V41-Flash</code>; MCP tool discovery rejects repeated pagination cursors. Earlier upstream work is summarized in the 0.1.5-rc.1 notes.',
+                '<b>Plugin Manager restored</b>: the Installed tab mounts again on the upstream <code>settings.plugins.tab</code> slot, loaded as a required row by <code>host.patch.yml</code>; upstream\'s Plugins section still owns navigation, tab chrome, selection, and mount lifecycle.',
+                '<b>Git moved to the right Sidebar</b>: the bundled <code>@dsh-electron/dsh-plugin-git@0.2.0</code> occupies <code>ctx.sidebarRight</code> and no longer depends on the Details slot; it installs as an exact-version production npm dependency, so this repository no longer mirrors its source.',
+                '<b>Details Host removed</b>: upstream deleted the Client <code>details</code> slot, so the <code>ui-details-host</code> mirror and the <code>@dsh-electron/dsh-client-ui-details-host</code> dependency are gone; the old Details-based Git client is no longer shipped.',
+                '<b>Plugin-mutation crash recovery</b>: install and mutation write a <code>packages-pending</code> marker and hold the web profile lock (owned by the Main PID, then the child PID, then Main again); the next launch reconciles read-only and repairs hot-plugin symlinks. A failed reconcile, lock timeout, or Host ready-line timeout no longer quits — Main opens a recovery window offering "disable every manageable plugin" or "reset Desktop management", neither of which deletes profile dependencies.',
+                '<b>Install hardening</b>: startup and every <code>dsh plugin</code> spawn merge <code>strictDepBuilds</code> and a reviewed <code>allowBuilds</code> seed into <code>$DSH_HOME/profiles/web/pnpm-workspace.yaml</code>; an exit-0 command that changed no dependency now fails; startup sweeps symlinks for every hot plugin.',
+                '<b>Manageable-kind gating</b>: a profile <code>runtime-plugin</code> hot-loads only after Desktop recorded installation intent (<code>profileManaged</code> / <code>desktopInstalled</code>), so importable CLI dependencies stay catalogued without entering Electron\'s private roster; removing a package with <code>desktopInstalled === false</code> warns that the CLI or another environment installed it.',
+              ] }
+          ] },
+        { version: '0.1.2-rc.1', date: '2026-09-11', sections: [
+            { title: 'What changed', items: [
+                'First <b>RC</b> of the <code>0.1.2</code> series: promotes <code>0.1.2-beta.5</code> and later Desktop work onto <code>main</code>; still bundles upstream <code>0.1.2-rc.1</code>. (#90)',
+                '<b>Audit recovery</b>: sync Details Host launcher entries and Git plugin Graph / discard / stale-output guards. (#89)',
+                '<b>Desktop capabilities in this series</b> (versus <code>0.1.1-rc.2</code>): Remote gateway and one-time launch-token auth; conversation folding, font size, and token usage; Details Host multi-tab dock and workspace folder picking; Git Changes / Graph / commit-message generation; Theme Studio; Host Cookie hardening and plugin-mutation drain. See the beta notes for details.',
+              ] }
+          ] },
+        { version: '0.1.2-beta.5', date: '2026-09-07', sections: [
+            { title: 'What changed', items: [
+                '<b>Details Host multi-tab dock polish</b>: the tab strip aligns to and pins against the header divider, tabs are bottom-aligned and lift on hover, and hover/active states share the launcher-card fill with a hover wash backed by an explicit theme token; the App Details Toggle header action adopts the shared interactive hover wash; native action hints are refined.',
+                '<b>Workspace folder integration</b>: the Details Host "connect workspace folder" action is now wired through the Electron directory-picker plugin via <code>registerFolderOpener</code> for a real folder dialog; host state allows an <code>undefined</code> workspace path and keeps the typed session identity for workspace lookup.',
+                '<b>Git Changes rebuilt around a commit-first sketch</b>: the Changes area is re-laid-out so the commit split and Changes list stay consistent, the commit-message field grows with content (one row when empty), and Git controls stay inside their frames.',
+                '<b>Git toolbar decluttering</b>: Graph and Diff refresh move to the scope bar / top-right without the now-unused Reveal control, and Graph/Diff/Changes headers are aligned to the same top inset.',
+                '<b>Commit-message generation settings</b>: the generation settings seam is registered under Plugin configuration, Git generation models can be loaded, and discard copy is unified.',
+              ] }
+          ] },
+        { version: '0.1.2-beta.4', date: '2026-09-06', sections: [
+            { title: 'What changed', items: [
+                '<b>Host cookie security fix</b>: new <code>bindHarnessUrl()</code> keeps scheme-relative paths like <code>//host/path</code> from turning into a new authority, so the Main Host cookie never leaves loopback; Host fetches now use <code>redirect: \'manual\'</code> to keep redirects from leaking cookies.',
+                '<b>Plugin mutation draining</b>: on quit/relaunch, <code>plugin-mutation.shutdown()</code> refuses later mutations and awaits the queue, so install/uninstall operations are no longer cut off mid-flight; the runtime startup-output scan gains a 256KB buffer cap and drops output after readiness.',
+                '<b>WebSocket shim fix</b>: native WebSocket instances are now returned directly for non-Host URLs, restoring working <code>send</code>.',
+                '<b>Git plugin fixes</b>: mutations are serialized and stale ones are ignored after workspace rebinding (removing races); <code>GIT_LITERAL_PATHSPECS=1</code> is set so magic pathspecs stay literal; porcelain v2 unmerged (<code>u</code>) record path parsing is fixed.',
+                '<b>Details Host fix</b>: unloaded surfaces are now pruned across all retained sessions, not just the current one, so background sessions no longer keep stale surfaces.',
+                '<b>Docs & tests</b>: bilingual audit notes added (8 defects fixed in this round); new/updated tests for harness-proxy, plugin-mutation, runtime, websocket-shim, Git controller/service/status, and Details Host lifecycle.',
+              ] }
+          ] },
+        { version: '0.1.2-beta.3', date: '2026-09-05', sections: [
+            { title: 'What changed', items: [
+                '<b>Details Host evolves into a multi-tab dock (API v3)</b>: the single-surface details host becomes a multi-tab dock; the "App Details Toggle" ships inside the host as header chrome; launcher cards appear on an empty dock, with tabs retained on close and takeover state persisting.',
+                '<b>Git plugin migrates to Details Host v3 surfaces</b>: the Git panel registers through v3 surfaces and launcher cards; header actions become icon-only, with a new canvas graph rail.',
+                '<b>Git Graph (MVP)</b>: adds a visual commit history — an active-lane graph layout model, bezier-edge rendering, graph scopes in history queries, and a three-lane visible cap; the canvas now renders at design size, fixing the DPR-scaled backing store on high-DPI displays.',
+                '<b>Commit message generator</b>: the Git plugin gains commit-message generation, documented in the pairing and user-experience sections of the plugin README.',
+                '<b>Header alignment</b>: the app publishes a live-measured <code>--app-header-height</code> token (a <code>ResizeObserver</code> plus a <code>MutationObserver</code> following session-driven header mount/unmount); the Details tab bar shares the same height and divider treatment so the two bottom rules form one continuous line. Host chrome is localized through the locale seat, with a new <code>DetailsHeaderAction</code> primitive and a responsive tab strip.',
+                '<b>Packaging and engineering fixes</b>: the builder, runtime validator, and packaging specs now derive the runtime plugin client bundle filename from each plugin\'s <code>./client</code> manifest exports (now <code>lib/client.cjs</code>); refresh details-host fixture integrity and lockfiles; exempt the canonical plugin subtree mirrors from oxlint; align test baselines with the v3 tabbed dock.',
+              ] }
+          ] },
+        { version: '0.1.2-beta.2', date: '2026-09-04', sections: [
+            { title: 'What changed', items: [
+                '<b>Fix launch crash</b>: <code>v0.1.2-beta.1</code> crashed on open because <code>@dsh-electron/dsh-plugin-git</code> was listed in the ecosystem plugin inventory but missing from production <code>dependencies</code>; this release declares it so electron-builder ships the package.',
+                '<b>Packaging guardrails</b>: add packaging and runtime-plugins tests to catch undeclared ecosystem plugin dependencies; extend <code>sync-version-dependencies</code> to keep the dependency list in sync.',
+              ] }
+          ] },
+        { version: '0.1.2-beta.1', date: '2026-09-03', sections: [
+            { title: 'What changed', items: [
+                'Sync upstream Harness to <code>v0.1.2-rc.1</code>; adapt Desktop to the Remote gateway and one-time launch-token authentication (Main-side <code>HarnessProxy.authenticate()</code>, cookie forwarding, and <code>/api/remote.mux</code> event streaming). (#82)',
+                '<b>Conversation UX</b>: fold process details and the System prompt by default; drag-resizable content width; token usage and elapsed time after each answer; full-history turn navigation and font sizing.',
+                '<b>Models and plugins</b>: provider sign-in controls in Models settings; richer subagent model selection; plugins grouped by conversation/global scope with Preset switching.',
+                '<b>Connection and performance</b>: connection status with disconnect retry; faster startup and conversation initialization; incremental streaming code-block highlighting; lower memory and rendering overhead for long conversations.',
+                '<b>Images and tools</b>: show images immediately while compression and upload continue; improved compression and Trajectory image display; enable <code>web_fetch</code> by default with SSRF protection.',
+                '<b>Other fixes</b>: persistent shell output, Windows directory-picker path truncation, queued/added image delivery, and <code>Tab</code> completion in the command menu; rename Code Mode to PTC mode while keeping existing conversation records readable.',
+                'Fix the <code>desktop-promote</code> auto-release workflow.',
+              ] }
+          ] },
+        { version: '0.1.1-rc.2', date: '2026-08-28', sections: [
+            { title: 'What changed', items: [
+                'First <b>RC</b> build of the <code>0.1.1</code> series; bundles upstream <code>0.1.1-rc.2</code> with the same Desktop features as <code>0.1.1-beta.11</code> (Theme Studio, plugin lifecycle, Details Host / Git, and related work).',
+                'Fix the <code>sync-upstream</code> GitHub Actions workflow runtime error. (#79)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.11', date: '2026-08-26', sections: [
+            { title: 'What changed', items: [
+                'Mount <code>@dsh-electron/dsh-theme-studio</code> as a required Electron runtime plugin via <code>runtime/host.patch.yml</code> (subtree: <code>apps/electron/runtime/plugins/dsh-theme-studio</code>); add Settings → General → Themes (<code>id = themes</code>) while keeping Appearance; built-in themes stack <code>:active</code> / <code>:preview</code> via <code>ctx.theme.overrideTokens()</code>, and restoring Default only unloads the overlay. (#72)',
+                'Restart fully after removing <code>profile-restart</code> packages instead of a Renderer soft-refresh that reloads deleted client scripts; mirror install UX for Bundle removal with a success dialog, pending-restart banner, and <b>Restart Now</b>. (#73)',
+                'Sync Details Host so the details header adds top padding on Windows and keeps the close control and title below the Window Controls Overlay. (#74)',
+                'Sync Git plugin: create-branch uses the shared conversation <code>Modal</code>; empty repositories (unborn HEAD) show a clear hint and disable create instead of raw Git object-name errors. (#75)',
+                'Sync Theme Studio Theme Unit cards to Appearance-style compact boxes: small top-left swatch, name/current in the header, Preview/Apply bottom-right. (#76)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.10', date: '2026-08-25', sections: [
+            { title: 'What changed', items: [
+                'Add Registry, GitHub/Git, and Local install entry points in Installed Plugins; write to the web profile via bundled pnpm and unify runtime plugin, Bundle, and dependency recognition and lifecycle; support source switching, failed-residue detection, blocked-build attribution, and Bundle/runtime Host and client entry verification; prevent profile dependencies from shadowing Desktop-bundled packages. (#65)',
+                'Separate plugin activation mode, package health, and pending Host restart state; provide Main-authoritative update checks, source refresh, reinstall/repair, and safe removal through the upstream dsh plugin backend; quiesce active runtime code before package mutation, classify recovery from disk changes, and cache-bust ESM reactivation; expose package lifecycle through Desktop IPC with update, package-menu, removal-confirmation, and restart-banner UI. (#66)',
+                'Sync <code>@dsh-electron/dsh-client-ui-details-host</code> to v0.2 (surface instance / payload routing / descriptor lifecycle / header actions / per-session navigation, dedupe, back); sync <code>dsh-plugin-git</code> dogfood with payload open, <code>registerSurface</code>, Host header actions, and verified session restore / unload remount. (#68)',
+                'Add <code>cordis.patch.yml</code> and <code>dsh.bundle</code> declarations to canonical plugin repos so <code>dsh plugin add</code> activates each plugin without manual <code>cordis.yml</code> edits; sync plugin subtrees and document bundled plugins in the desktop README. (#70)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.9', date: '2026-08-24', sections: [
+            { title: 'What changed', items: [
+                'Mount <code>@dsh-electron/dsh-client-ui-details-host</code> as required portable UI via <code>runtime/host.patch.yml</code> (subtree: <code>apps/electron/runtime/plugins/ui-details-host</code>); idle boot does not seize the third column; takeover happens only on <code>open(id)</code>.',
+                'Sync Git plugin for Details Host migration: Git occupies <code>shell.details.surface</code> and opens via <code>ctx.shellDetails.open(\'git\')</code> instead of an overlay drawer; AppFrame details column, resize handle, and close button are owned by Details Host.',
+                'Switch runtime plugin client builds to automatic JSX so Details Host no longer crashes on a missing <code>React</code> identifier.',
+                'Declare <code>@dsh-electron/dsh-client-ui-details-host/client</code> in Git <code>dsh.client.external</code>; <code>verify-client-packages</code> counts Details Host runtime-plugin manifest in supplier verification so Git factory <code>require</code> does not hit an empty module table.',
+                'Require Details Host before Git client materializes so dependency order is correct. (#62)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.8', date: '2026-08-24', sections: [
+            { title: 'What changed', items: [
+                'Suspend window drag regions while modals are open so the conversation header no longer steals pointer input from settings page chrome and close buttons. (#52)',
+                'Establish the downstream DSH ecosystem plugin path: ship <code>@dsh-electron/dsh-plugin-git</code> as an independently publishable plugin with portable Git service, Connection RPC, source-control UI, and Electron custom-scheme protocol proxying; mount bundled ecosystem plugin artifacts via <code>runtime/host.patch.yml</code>. (#53)',
+                'Rework Git plugin UX: move from sidebar modal to composer controls plus a right drawer (Changes / Diff / Commit), with branch selector and change count on the input bar left; hide the slot when the workspace has no Git repo. (#54)',
+                'Add runtime plugin hot-plug via dynamic Cordis include: express the desired plugin roster in generated config, serialize enable/disable/reload through <code>PluginLifecycleController</code>, and keep Desktop-required adapters non-manageable. (#57)',
+                'Add an Installed Plugins manager (Settings → Plugins → Installed) with lifecycle polling, error rollback, local search, and System Components diagnostics. (#60)',
+                'Make nested pnpm subprocesses portable on Windows so CI Windows builds and Electron tests pass. (#61)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.7', date: '2026-08-23', sections: [
+            { title: 'What changed', items: [
+                'Restore DeepSeek Harness branding via bundled runtime plugin <code>@dsh-electron/dsh-electron-ui-brand</code>: unconditionally fill sidebar brand mark, name, and conversation hero brand mark so Desktop no longer shows the upstream <code>DSH Local Build</code> fallback; reuse <code>FishLogo</code> / <code>BrandWordmark</code> from <code>@deepseek-ai/dsh-client-ui-primitives</code> without modifying upstream <code>packages/</code> source or depending on <code>DSH_CLIENT_BUILD_PROFILE=official</code>. (#51)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.6', date: '2026-08-23', sections: [
+            { title: 'What changed', items: [
+                'Fix frameless window drag hit regions on Windows/Linux: default the sidebar top safe area to <code>0px</code>, keeping macOS-only spacing for traffic lights so sidebar content starts at the window top edge on Windows/Linux; mark full-viewport dialog containers, overlays, Dialog shells, and inner controls as <code>no-drag</code> so underlying window drag regions no longer swallow settings close-button and other interactive events. (#50)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.5', date: '2026-08-23', sections: [
+            { title: 'What changed', items: [
+                'Integrate frameless window drag regions into app chrome: remove the separate top drag strip so the sidebar and session background extend to the native window edge; embed drag targets in sidebar whitespace, empty-session top background, and non-interactive gaps in the active session header while excluding buttons, links, tabs, inputs, and full-viewport dialogs; preserve macOS traffic-light safe areas and Windows/Linux Window Controls Overlay system-button space. (#48)',
+                'Publish downstream Electron packages under the <code>@dsh-electron</code> npm scope: rename the Electron app and runtime plugins (including <code>desktop-capabilities</code> and <code>ui-directory-picker</code>) to <code>@dsh-electron/dsh-electron*</code> while keeping upstream-synced <code>packages/</code> and <code>vendor/</code> packages on <code>@deepseek-ai</code>. (#49)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.4', date: '2026-08-22', sections: [
+            { title: 'What changed', items: [
+                'Build crisp tray icons from tracked SVG source: add <code>build:tray</code> to rasterize black/white/template PNGs at DPI tiers; macOS uses template icons with <code>addRepresentation</code>, and Windows/Linux bind logical DIP sizes on HiDPI displays for sharper menu-bar rendering. (#43)',
+                'Integrate native window chrome with the Harness layout: remove the custom titlebar and <code>#root</code> top-padding model; configure platform-specific hidden title bar / Window Controls Overlay in Main; inject safe-area and drag/no-drag rules for sidebar, header, and hero via a <code>window-chrome</code> renderer adapter, fixing traffic-light spacing and drag-vs-click conflicts. (#44)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.3', date: '2026-08-22', sections: [
+            { title: 'What changed', items: [
+                'Complete the desktop feature-layer plugin architecture: add generic <code>runtime/plugins/</code> build and linking infrastructure, provide desktop capabilities through <code>ctx.desktop</code>, migrate the directory picker to a capability consumer, and fix dependent plugins stalling before the preload bridge is ready. (#40)',
+                'Harden the desktop release and runtime lifecycle: validate release tags, compile every Electron TypeScript face, dispose Host WebSocket bridge resources, await complete Host shutdown, and align the updater interface. (#41)',
+                'Add a bilingual desktop architecture guide covering the current implementation, target architecture, and downstream documentation ownership. (fd2412b)',
+              ] }
+          ] },
+        { version: '0.1.1-beta.2', date: '2026-08-21', sections: [
+            { title: 'What changed', items: [
+                'Fix Electron Host bootstrap parsing: Host index now injects <code>globalThis["__DSH_BOOT__"]</code>, while the desktop scraper still expected <code>window.__DSH_BOOT__</code>, which broke <code>getBootstrap</code> on startup. Align the scraper, tests, and notes with the current Host render marker. (#39)',
+              ] }
+          ] },
         { version: '0.1.1-beta.1', date: '2026-08-21' },
         { version: '0.1.0-beta.5', date: '2026-08-21' },
         { version: '0.1.0-beta.4', date: '2026-08-21' },
@@ -256,9 +461,6 @@ const en = {
         { version: '0.1.0-rc.8', date: '2026-08-20' },
         { version: '0.1.0-beta.2', date: '2026-08-20' },
         { version: '0.1.0-beta.1', date: '2026-08-20' },
-        { version: '0.1.0-rc.7', date: '2026-08-17', tag: 'electron-dsh-v0.1.0-rc.7' },
-        { version: '0.1.0-rc.6', date: '2026-08-17', tag: 'electron-dsh-v0.1.0-rc.6' },
-        { version: '0.1.0-rc.5', date: '2026-08-17', tag: 'electron-dsh-v0.1.0-rc.5' },
       ],
     },
 

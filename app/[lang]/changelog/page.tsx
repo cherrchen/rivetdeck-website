@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ChangelogReleases } from '@/components/changelog/releases'
+import { tagOf } from '@/lib/changelog'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { ButtonLink } from '@/components/ui/button'
@@ -96,7 +97,7 @@ export default async function RivetdeckChangelogPage({ params }: PageProps<'/[la
           <Container className="pt-20 pb-12 sm:pt-28">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[13px] text-fg-muted">
               <span className="text-fg">Rivetdeck</span>
-              <span>{latest ? fmt(c.metaLine, { count: releases.length, version: latest.tag ?? `v${latest.version}` }) : null}</span>
+              <span>{latest ? fmt(c.metaLine, { count: releases.length, version: tagOf(latest) }) : null}</span>
             </div>
             <h1 id="cl-hero-title" className="mt-6 max-w-4xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
               {c.title}
