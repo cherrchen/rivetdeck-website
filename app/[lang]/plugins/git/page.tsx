@@ -144,7 +144,7 @@ export default async function GitPage({ params }: PageProps<'/[lang]/plugins/git
       />
 
       <main id="main">
-        <Hero dict={dict} locale={lang} />
+        <Hero dict={dict} />
         <Features dict={dict} />
         <Design dict={dict} />
         <Install dict={dict} />
@@ -157,20 +157,13 @@ export default async function GitPage({ params }: PageProps<'/[lang]/plugins/git
   )
 }
 
-function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+function Hero({ dict }: { dict: Dictionary }) {
   const t = dict.git.hero
   const newTab = dict.common.opensInNewTab
   return (
     <section aria-labelledby="git-hero-title">
       <Container className="pt-20 pb-6 sm:pt-28">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] text-fg-muted">
-          <a href={`${withBasePath(localePath(locale, `${PATH}/changelog`))}#v${GIT_PLUGIN_VERSION}`} className="font-mono text-fg hover:underline hover:underline-offset-4">
-            v{GIT_PLUGIN_VERSION}
-            <span className="sr-only">{t.changelog}</span>
-          </a>
-          <span>MIT · npm · macOS · Linux · Windows</span>
-        </div>
-        <h1 id="git-hero-title" className="mt-6 max-w-4xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
+        <h1 id="git-hero-title" className="max-w-4xl text-[40px] leading-[1.04] font-medium tracking-[-0.045em] text-balance sm:text-[56px] lg:text-[64px]">
           {t.titleLine1}
           <br />
           <span className="text-fg-subtle">{t.titleLine2}</span>
