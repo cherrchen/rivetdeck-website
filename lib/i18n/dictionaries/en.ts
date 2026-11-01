@@ -219,6 +219,7 @@ const en = {
       compare: 'Compare with the previous release on GitHub',
       releaseNotes: 'Release notes',
       releases: [
+        { version: '0.2.1-beta.3', date: '2026-10-31' },
         { version: '0.2.1-beta.2', date: '2026-10-25' },
         { version: '0.2.1-beta.1', date: '2026-10-23' },
         { version: '0.2.0-beta.5', date: '2026-10-21' },
@@ -376,7 +377,7 @@ const en = {
         body: 'Manage roots from a session with /workspace-folders, or from the Folders dialog at the sidebar foot of the Web GUI. Both go through the same validated registry, persisted per primary root, and both show the true state of every root.',
         points: [
           'Panel authority comes from the live session, never from a client-supplied path',
-          'Only one process per store may grant roots; a contending process fails closed',
+          'One owner holds the store authority — other Hosts share it over local IPC, and background recovery rejoins after contention or a disconnect',
           'The dialog also browses an additional root’s files — expandable directories and text previews',
           'An independent Skills toggle and the stable aliasId namespace are edited per root in the same dialog, under a global setting that defaults on',
           'The Files tab switches to any additional root — a native tree fork keeps rows identical',
@@ -440,7 +441,7 @@ const en = {
         },
         {
           title: 'One authority per store',
-          body: 'A store-wide kernel lease means only one process grants roots. A contending process publishes an empty scope and rejects changes. Panel requests are tied to a live session, not to a client-supplied path.',
+          body: 'A store-wide kernel lease means only one process opens the store; other Hosts read and write through their own Registry facades over kernel-authenticated local IPC, and every mutation is ordered at the owner. A contending or disconnected Host publishes an empty scope until background recovery resynchronizes it. Panel requests are tied to a live session, not to a client-supplied path.',
         },
         {
           title: 'Instructions are context, not authority',
@@ -473,7 +474,7 @@ const en = {
         registryLines: ['validated', 'per primary root', 'one authority'],
         gate: 'Startup compatibility gate',
         gateLine: 'Exact DSH release allowlist. If the release is not listed, the fence, sandbox, registry, instruction, LSP and file-browsing rows do not start.',
-        caption: 'Enforcement path of the released plugin (v0.1.12). The numbered controls below list what each part guarantees and what it does not.',
+        caption: 'Enforcement path of the released plugin (v0.1.13). The numbered controls below list what each part guarantees and what it does not.',
       },
     },
     install: {
@@ -552,6 +553,15 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.13', date: '2026-10-31', sections: [
+            { kind: 'added', items: [
+                '<b>Background recovery for the shared Registry (on by default)</b>: when Hosts share a registry, retryable authority contention, disconnections, and storage-open failures are retried automatically with backoff and jitter. A follower is considered recovered only after it has resynchronized its tracked primary roots. Set <code>backgroundRecovery: false</code> on <code>multi-root-registry</code> to disable background retries; on-demand recovery remains available. Configuration errors and writes with an unknown state still require configuration correction or a restart. Recovery preserves deny boundaries, every new operation still requires admission, and mutations with an unknown result are never replayed automatically. Read-only diagnostics and deduplicated transition logs help diagnose failures (<adr0026>ADR-0026</adr0026>).'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Files tab retains its selected root when opening a file</b>: when opening a file in an additional root unmounts and remounts the Files tab, its selected root, expanded directories, and scroll position are retained. A pending or failed list request no longer resets the selection to the primary root; closing the tab cleans up watches and tree resources.',
+                '<b>Shared-authority recovery safety and consistency</b>: a retry cannot bypass a failed storage-to-lock binding check. Recovery synchronizes root projections and publishes consistent state in a batch; empty snapshots clear stale boundaries, and failed recovery rounds no longer generate repeated notifications. On Windows, the request timer stays active during the connection handshake so the process cannot exit prematurely.'
+              ] }
+          ] },
         { version: '0.1.12', date: '2026-10-30', sections: [
             { kind: 'added', items: [
                 '<b>Multiple Hosts can use additional roots at the same time (on by default)</b>: the bundle now configures a shared storage authority (<code>sharedStorageRoot</code>) — previously only the Host holding the store lease could use additional roots, and a second Host sharing the same registry was fail-closed. Now a single owner opens the storage medium and manages persistence, while the other Hosts read and write through their own Registry facades over kernel-authenticated local IPC; every mutation and each new operation’s admission is ordered at the owner: operations that arrive after a revocation are refused immediately, ones admitted before it may finish, and a disconnect preserves the established deny boundary; when the owner exits or crashes a follower contends, takes over, and recovers under a new epoch, and a lost committed reply is never replayed. Copied exec argv and expired handles cannot stand in for a fresh admission, the synchronous confine/spawn entry points keep their return shape, and every consumer path (fs, sandbox, shell/PTC/agent PTY, LSP, Files/watch, instructions, Skills) goes through admission. Profiles without <code>sharedStorageRoot</code> keep the legacy contended-fail-closed behavior (<adr0024>ADR-0024</adr0024>, <adr0025>ADR-0025</adr0025>, <registryService>shared service architecture</registryService>).',

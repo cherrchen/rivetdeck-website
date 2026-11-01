@@ -128,7 +128,7 @@ describe('external links', () => {
   })
 
   it('pin Multi-root documentation to the released tag', () => {
-    expect(links.multiRoot.architecture).toContain('/blob/v0.1.12/')
-    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.12/')
+    expect(links.multiRoot.architecture).toContain('/blob/v0.1.13/')
+    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.13/')
   })
 })

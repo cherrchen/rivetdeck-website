@@ -210,6 +210,7 @@ const zh: Dictionary = {
       compare: '在 GitHub 上与上一版本对比',
       releaseNotes: '发布说明',
       releases: [
+        { version: '0.2.1-beta.3', date: '2026-10-31' },
         { version: '0.2.1-beta.2', date: '2026-10-25' },
         { version: '0.2.1-beta.1', date: '2026-10-23' },
         { version: '0.2.0-beta.5', date: '2026-10-21' },
@@ -359,7 +360,7 @@ const zh: Dictionary = {
         body: '可以在会话里用 /workspace-folders 管理根目录，也可以在 Web 界面侧边栏底部的“文件夹”对话框里管理。两者都经过同一份经过校验的登记表，按主根目录持久化，并如实显示每个根目录的真实状态。',
         points: [
           '面板的权限来自当前会话，绝不接受客户端提供的路径',
-          '每个存储同一时刻只允许一个进程授予根目录，争用的进程会拒绝（fail closed）',
+          '存储权威由唯一 owner 持有——其余 Host 经本机 IPC 共享，争用或断线后由后台恢复自动重新加入',
           '对话框还可以浏览附加根目录的文件——可展开的目录树和文本预览',
           '同一对话框中可独立开关每个根目录的 Skills、编辑稳定的 aliasId 命名空间；全局开关默认开启',
           '“文件”页可以切到任意附加根目录——分叉的原生目录树逐项保持一致',
@@ -420,7 +421,7 @@ const zh: Dictionary = {
         },
         {
           title: '每个存储只有一个授权者',
-          body: '存储范围的内核租约保证同一时刻只有一个进程授予根目录。争用的进程会发布空范围并拒绝变更。面板请求绑定到存活的会话，而不是客户端提供的路径。',
+          body: '存储范围的内核租约保证只有一个进程打开存储介质；其余 Host 经内核认证的本机 IPC 通过各自的 Registry facade 读写，所有变更在 owner 处统一排序。争用或断线的 Host 在后台恢复重新同步前仍发布空范围。面板请求绑定到存活的会话，而不是客户端提供的路径。',
         },
         {
           title: '指令是上下文，不是权限',
@@ -453,7 +454,7 @@ const zh: Dictionary = {
         registryLines: ['经过校验', '按主根目录保存', '唯一授权者'],
         gate: '启动兼容性门禁',
         gateLine: '确切的 DSH 版本白名单。版本不在名单里时，围栏、沙箱、登记表、指令、LSP 和文件浏览相关组件都不会启动。',
-        caption: '已发布插件（v0.1.12）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
+        caption: '已发布插件（v0.1.13）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
       },
     },
     install: {
@@ -532,6 +533,15 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.13', date: '2026-10-31', sections: [
+            { kind: 'added', items: [
+                '<b>共享 Registry 后台恢复（默认开启）</b>：多个 Host 共享登记表时，可重试的权威争用、断线或存储打开失败会以退避和抖动自动重试；follower 重新同步已跟踪主根后才视为恢复。<code>multi-root-registry</code> 的 <code>backgroundRecovery: false</code> 可关闭后台重试，按需恢复仍可用；配置错误和状态不明的写入仍需修正配置或重启。恢复期间继续保留拒绝边界，每个新操作仍须授权，结果不明的变更不会自动重放。只读诊断信息和去重的状态转换日志有助于排查故障（<adr0026>ADR-0026</adr0026>）。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Files 页签打开文件后保留所选根</b>：打开附加根中的文件导致 Files 页签卸载并重新挂载时，保留该页签所选的根、目录展开状态与滚动位置；列表尚未应答或请求失败不会误将选择切回主根，关闭页签时会清理监听与目录树资源。',
+                '<b>共享权威恢复的安全性和一致性</b>：介质与锁绑定校验失败后重试不能绕过校验；恢复时同步根投影并批量发布一致的状态，空快照能清除过期边界，失败的恢复轮次不再产生重复通知。Windows 连接握手期间保持请求计时器有效，避免进程提前退出。'
+              ] }
+          ] },
         { version: '0.1.12', date: '2026-10-30', sections: [
             { kind: 'added', items: [
                 '<b>多个 Host 可同时使用附加根（默认开启）</b>：bundle 现默认配置共享存储权威（<code>sharedStorageRoot</code>）——此前只有持有 store 租约的 Host 能使用附加根，共享同一登记的第二个 Host 一律 fail-closed。现在唯一 owner 打开存储介质并管理持久化，其余 Host 经内核认证的本机 IPC 通过各自的 Registry facade 读写；所有变更与每个新操作的准入在 owner 处统一排序：撤权后到达的新操作立即被拒，撤权前已准入的操作可以完成，断线/失联保留既有拒绝边界；owner 退出或崩溃时 follower 竞选接管并以新 epoch 恢复，丢失的已提交应答不会重放。已复制的执行参数与过期句柄不能顶替新准入，同步 confine/spawn 入口保持原有返回形状；fs、sandbox、shell/PTC/agent PTY、LSP、Files/watch、指令与 Skills 消费路径全部接入准入。未启用 <code>sharedStorageRoot</code> 的 profile 保留旧的「争用即 fail-closed」行为（<adr0024>ADR-0024</adr0024>、<adr0025>ADR-0025</adr0025>、<registryService>共享服务架构</registryService>）。',

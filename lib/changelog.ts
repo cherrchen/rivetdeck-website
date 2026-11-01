@@ -70,6 +70,7 @@ export const MULTI_ROOT_DOC_LINKS: DocLinks = {
   adr0023: 'docs/decisions/ADR-0023-multi-root-skill-discovery-and-invocation.md',
   adr0024: 'docs/decisions/ADR-0024-registry-operation-admission.md',
   adr0025: 'docs/decisions/ADR-0025-shared-registry-authority.md',
+  adr0026: 'docs/decisions/ADR-0026-registry-background-recovery.md',
   autoReviewReadme: { en: 'src/auto-review/README.en.md', zh: 'src/auto-review/README.md' },
   registryService: 'docs/architecture/registry-authority-service.md',
   tbDependencySecurity: 'docs/troubleshooting/dependency-security-alerts.md',
