@@ -31,7 +31,7 @@ export function pageMetadata({
   // build-pages.mjs exports one stable social image per page under /social/.
   const segments = path.split('/').filter(Boolean)
   const leaf = segments.at(-1)
-  const socialName = path === '/' ? 'rivetdeck' : leaf === 'changelog' ? `${segments.at(-2)}-changelog` : (leaf ?? 'rivetdeck')
+  const socialName = path === '/' ? 'rivetdeck' : leaf === 'changelog' ? `${segments.at(-2) ?? 'rivetdeck'}-changelog` : (leaf ?? 'rivetdeck')
   const images = process.env.GITHUB_PAGES === 'true' ? [withBasePath(`/social/${socialName}.png`)] : undefined
 
   return {
