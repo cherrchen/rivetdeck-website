@@ -65,9 +65,11 @@ describe('recommend', () => {
 })
 
 describe('multi-root compatibility matrix', () => {
-  it('lists the full twenty-release allowlist on the current version, in order', () => {
+  it('lists the full twenty-two-release allowlist on the current version, in order', () => {
     expect(COMPAT_VERSIONS[0]?.release).toBe(`v${COMPAT_PLUGIN_VERSION}`)
     expect(COMPAT_VERSIONS[0]?.dsh).toEqual([
+      '0.2.2-rc.1',
+      '0.2.2-alpha.3',
       '0.2.2-alpha.2',
       '0.2.1-rc.5',
       '0.2.1-rc.4',
@@ -128,7 +130,7 @@ describe('external links', () => {
   })
 
   it('pin Multi-root documentation to the released tag', () => {
-    expect(links.multiRoot.architecture).toContain('/blob/v0.1.13/')
-    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.13/')
+    expect(links.multiRoot.architecture).toContain('/blob/v0.1.14/')
+    expect(links.multiRoot.adr.compat).toContain('/blob/v0.1.14/')
   })
 })

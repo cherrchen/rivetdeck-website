@@ -647,7 +647,7 @@ const zh: Dictionary = {
         registryLines: ['经过校验', '按主根目录保存', '唯一授权者'],
         gate: '启动兼容性门禁',
         gateLine: '确切的 DSH 版本白名单。版本不在名单里时，围栏、沙箱、登记表、指令、LSP 和文件浏览相关组件都不会启动。',
-        caption: '已发布插件（v0.1.13）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
+        caption: '已发布插件（v0.1.14）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
       },
     },
     install: {
@@ -726,6 +726,19 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.14', date: '2026-11-05', sections: [
+            { kind: 'added', items: [
+                '<b>精确支持 DSH <code>0.2.2-alpha.3</code> 与 <code>0.2.2-rc.1</code></b>：支持矩阵扩至 22 个精确版本，开发 pin 提升到 <code>0.2.2-rc.1</code>（cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>）。<code>alpha.3</code> 起上游把 <code>patchText</code> / <code>deleteFile</code> / <code>moveFile</code> 纳入同一文件系统围栏与 Registry admission——移动的源与目标共用同一准入快照——Connection RPC getter 绑定拥有路由的消费 fiber（修复新版 Cordis 下面板通道 HTTP 405）、Files 页签改用宿主提供的文件树 Factory；<code>rc.1</code> 相对 <code>alpha.3</code> 仅有版本号与 vendor 稳定化，没有新接口形状，未新增适配分支。升级脚本的稳定 vendor 选择器改为只取宿主声明 minor 线内的最新稳定 patch，避免旧版 Cordis 混入新 loader。可选 Auto Review 仍钉 <code>0.2.1-rc.2</code> 基线（<dsh022Migration>接口审查</dsh022Migration>）。',
+                '<b>插件详情页「多根 Auto Review」设置开关（实验性，默认关闭）</b>：与插件管理页同名 Loader 行等价，经 <code>remote.pluginManager.setPluginEnabled</code> 持久化并热应用，<code>restart-required</code> 时以 Toast 提示重启；宿主无 pluginManager Remote 或组合未列该可选行时该行不渲染，与附属根 Skills 共用单一 <code>plugins.bundle.config</code> 设置单元格。',
+                '<b>插件管理页富文本详情</b>：本地化 <code>meta.detail</code>（<code>locale/en|zh.json</code> 经 <code>./locale/*.json</code> 导出）与 640×300 自包含预览图（<code>detail/</code>），遵循上游插件详情页惯例。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b><code>profile-core-mixed</code> / <code>profile-core-copy</code> 启动器告警（Issue #30）</b>：<code>schemastery</code> 与 <code>node-addon-system</code> 移入 <code>peerDependencies</code>——两个共享上游单例改由宿主 <code>dsh-sandbox-local</code> 供给唯一副本；此前它们作为 <code>dependencies</code> 会让包管理器在 profile 里装出第二份（<code>^3.18.2</code> 不匹配宿主 prerelease，装出 <code>3.18.5</code> 连带 <code>cosmokit@1.8.6</code>）。<code>compat:check</code> 与测试现在硬性拒绝 <code>dependencies</code> / <code>optionalDependencies</code> 里的任何 <code>@deepseek-ai/*</code>；已装旧版的 profile 需 remove + add 重建 <code>node_modules</code>（<tbProfileCoreMixed>排查</tbProfileCoreMixed>）。',
+                '<b>darwin-arm64 上安装副本无声 SIGBUS 退出</b>：<code>koffi</code> 一律经 <code>loadHostKoffi()</code>（<code>src/compat/koffi.ts</code>，以必需 peer <code>dsh-fs-local</code> 为锚）解析宿主副本——profile 安装会再装一份私有 koffi，与宿主已加载的 <code>koffi.node</code> 构成同进程第二个原生镜像，在指针校验下直接 SIGBUS；解析不到宿主副本时才回退包内自带。',
+                '<b>设置卡并发刷新竞态</b>：<code>plugin-manager/changed</code> 刷新与 <code>setEnabled()</code> 后的刷新并发时，旧响应后到会覆盖新快照、开关停留在写入前的值；新增 <code>refreshSeq</code> 代际计数，非最新的 <code>listPlugins()</code> 响应直接丢弃。',
+                '<b>设置卡错误反馈改 Toast 横幅</b>：Auto Review 与 Skills 设置行的内联 <code>role=alert</code> 文案改为顶部 Toast 提示，状态源消失时自动撤下。'
+              ] }
+          ] },
         { version: '0.1.13', date: '2026-10-31', sections: [
             { kind: 'added', items: [
                 '<b>共享 Registry 后台恢复（默认开启）</b>：多个 Host 共享登记表时，可重试的权威争用、断线或存储打开失败会以退避和抖动自动重试；follower 重新同步已跟踪主根后才视为恢复。<code>multi-root-registry</code> 的 <code>backgroundRecovery: false</code> 可关闭后台重试，按需恢复仍可用；配置错误和状态不明的写入仍需修正配置或重启。恢复期间继续保留拒绝边界，每个新操作仍须授权，结果不明的变更不会自动重放。只读诊断信息和去重的状态转换日志有助于排查故障（<adr0026>ADR-0026</adr0026>）。'

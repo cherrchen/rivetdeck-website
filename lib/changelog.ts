@@ -72,9 +72,11 @@ export const MULTI_ROOT_DOC_LINKS: DocLinks = {
   adr0025: 'docs/decisions/ADR-0025-shared-registry-authority.md',
   adr0026: 'docs/decisions/ADR-0026-registry-background-recovery.md',
   autoReviewReadme: { en: 'src/auto-review/README.en.md', zh: 'src/auto-review/README.md' },
+  dsh022Migration: 'docs/reference/dsh-0.2.2-migration.md',
   registryService: 'docs/architecture/registry-authority-service.md',
   tbDependencySecurity: 'docs/troubleshooting/dependency-security-alerts.md',
   tbInstallApproval: 'docs/troubleshooting/install-stops-at-build-approval.md',
+  tbProfileCoreMixed: 'docs/troubleshooting/profile-core-mixed.md',
   tbRegistryOwner: 'docs/troubleshooting/registry-owned-by-another-process.md',
   tbUnsupported: 'docs/troubleshooting/unsupported-dsh-release.md',
 }

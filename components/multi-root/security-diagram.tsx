@@ -1,6 +1,6 @@
 /**
  * Architecture figure for the security section. It mirrors §3–§7 of
- * docs/architecture/multi-root-workspace.md at plugin tag v0.1.13.
+ * docs/architecture/multi-root-workspace.md at plugin tag v0.1.14.
  */
 
 import type { Dictionary } from '@/lib/i18n/dictionaries'
