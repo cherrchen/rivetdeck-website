@@ -647,7 +647,7 @@ const zh: Dictionary = {
         registryLines: ['经过校验', '按主根目录保存', '唯一授权者'],
         gate: '启动兼容性门禁',
         gateLine: '确切的 DSH 版本白名单。版本不在名单里时，围栏、沙箱、登记表、指令、LSP 和文件浏览相关组件都不会启动。',
-        caption: '已发布插件（v0.1.14）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
+        caption: '已发布插件（v0.1.17）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
       },
     },
     install: {
@@ -726,6 +726,41 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.17', date: '2026-11-11', sections: [
+            { kind: 'added', items: [
+                '<b>Worktree 附加根建议（实验性，默认关闭）</b>：当主根本身是 Git main checkout 或 linked worktree 时，插件会发现与该仓库共享同一 common git dir 的其他 worktree——包括会话开始前就存在、由终端、IDE、forge 或其他 DSH 实例创建的——并在用户确认后把其源码树登记为 <code>inherit</code> 附加根。发现只读取插件自己打开并解析的 Git 元数据（<code>.git</code> 指针、admin、common 的 config/HEAD/index 与完整祖先链），<b>不启动任何 Git 子进程、不解析 commit 对象，也永不自动添加或删除</b>。可见候选恰好一个时显示确认对话框，两个及以上时显示可勾选列表并一次确认多个目录；登记是 workspace 级的，其他读写会话也会获得该目录的写权限，对话框会明确披露。worktree 被删除或移动后，面板显示徽标并只提供显式清理（要求登记路径确认缺失且 <code>rootId + path + addedAt</code> 仍匹配），缺失根继续占用 <code>maxAdditionalRoots</code>；submodule、bare 派生、<code>--separate-git-dir</code>、<code>worktreeConfig</code>、仓库格式版本 1 与 split/sparse index 等一律不提示。开关位于插件详情卡（与附属根 Skills 同卡、独立生效），默认关闭，关闭后已有登记根仍按普通根管理（<adr0039>ADR-0039</adr0039>）。',
+                '<b>Linked worktree 的主 checkout 授权</b>：当 session 的 workspace 本身是 linked worktree 且当前为 <code>workspace-write</code> 时，插件还会提示把该仓库的主 checkout 根 &lt;main&gt;（共享 common 的父目录）登记为 <code>inherit</code> 附加根，补上受限会话执行 <code>git add</code> / <code>git commit</code> 的共享 Git 元数据写入缺口；对话框会显示实际路径与范围（主 checkout 源码树、共享 config/hooks/refs/objects 与所有 worktree 的 admin 数据）。提示只在完整快照证明 common 身份、双向指针、admin HEAD、主根身份与 <code>&lt;main&gt;/.git</code> 均一致时出现，等待确认期间任何变化都会以 <code>worktree/prompt-stale</code> 使该项失效。默认 pool 因 <code>primary-overlap</code> 不提供该项；<code>read-only</code> / <code>danger-full-access</code> 与关闭开关后不提示。它不进入 worktree 清理映射，撤回使用普通 Remove（<adr0039>ADR-0039</adr0039>）。',
+                '<b>新会话页工作区行的 Workspace Folders 入口</b>：DSH <code>0.2.1-alpha.3</code> 及更新的运行时上，blank session 工作区行右端（<code>conversation.hero.options</code>）新增 <code>Folders</code> 入口。它与相邻的工作区/模式选择器同高、同字号、同 hover/展开底色，单击打开与侧栏入口同一个对话框（同一套 RPC、错误码与文案）；因为打开的是对话框而不是下拉菜单，它<b>没有 chevron</b>，图标使用 workspace tree（旧运行时回退 folder 字形），并按右对齐行的顺序把文字放在左、icon 放在右。该入口不 grow、不绝对定位，可与同槽其他条目并存。窗口宽度 <code>≤560px</code> 时只显示 28×28 图标，名称保留在 <code>aria-label</code> 与悬停提示中；<code>≥561px</code> 恢复文字并允许 label 省略号收缩。首条消息发出后 hero 行随整行消失，侧栏底部 <code>Folders</code> 入口与其行为完全不变；旧运行时没有该槽，注册静默不触发，行为与今天一致（<adr0037>ADR-0037</adr0037>）。',
+                '<b>工作区 <code>...</code> 菜单的「管理工作区目录…」入口</b>：工作区行菜单与右键菜单在「重命名」与「在 Finder 中显示」之间新增一项，图标使用 workspace tree。当前会话已属于该工作区时直接打开 Workspace Folders 对话框；否则先经上游 <code>openWorkspace</code> 打开/复用该工作区的空白页，确认它成为当前会话后，再以该会话打开对话框。导航失败、被后续切换取代或目标没有成为当前会话时不弹窗；宿主通道、工作区记录、<code>uiWorkspace.openWorkspace</code> 或 footer 对话框任一缺失时该项置灰，<code>contextMenus</code> 缺席时整个入口不存在。菜单复用 footer 的现有对话框（经 <code>apply()</code> 作用域的 controller），不新增对话框实例；Files 页签的根选择器与服务端管理行为均不变。入口以 <code>contextMenu.icon</code> 槽位为门：该槽位自 DSH <code>0.2.2-alpha.3</code> 起才存在，更早的受支持版本上本次 UI 修改完全不出现（<adr0038>ADR-0038</adr0038>）。'
+              ] },
+            { kind: 'changed', items: [
+                '<b>已批准的一次性 Full-access 提权现在按批准语义执行</b>：当用户在一次工具调用上批准 <code>sandbox_permissions: danger-full-access</code> 的升级（上游 <code>approveEscalation</code> → <code>approval.request</code> 返回 <code>allowed-once</code>）后，该调用不再被插件的两条负授权否决——显式 <code>read-only</code> 附加根（含 standing mode 下只读的 <code>inherit</code> 根）与 <code>toolAccess</code> per-tool 封顶（含非法配置的 cap-everything）仅对该调用解除。<code>$DSH_HOME</code> 恰在无提权时本应被拒的同一条件下保持拒绝，Registry 权威 unavailable 的主根钳制照旧，standing Full-access 会话、并发/嵌套/后续调用、已运行进程、持久终端、面板终端与 OPS 派发均不受影响（<adr0036>ADR-0036</adr0036>）。'
+              ] }
+          ] },
+        { version: '0.1.16', date: '2026-11-08', sections: [
+            { kind: 'added', items: [
+                '<b>预览页 Folder 导航树支持附加根</b>：上游 <code>0.2.2-alpha.3</code> 引入的文档预览 Folder 导航树原本固定以会话 cwd 为树根，预览附加根中的文件时点开 Folder 看到的仍是主根目录、也不会定位当前文件。插件现在把该导航树的树体接管到被预览文件所在的最长前缀附加根，并复刻原生 reveal 契约：逐层展开祖先、以当前行标记与 <code>aria-current</code> 高亮并把该行滚动到可见位置；树内打开文件沿用 <code>replaceTab</code> 语义；关闭再打开 Folder 时恢复展开集合与滚动位置。没有匹配的附加根（含主根文件）、跨会话地址或宿主未挂载该导航树时，原生导航树完全不受影响（<adr0015>ADR-0015</adr0015>、<adr0016>ADR-0016</adr0016>）。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>第三方插件的准入外受限 spawn 恢复为主根钳制启动（forge bundle）</b>：自 <code>v0.1.12</code> 的逐操作准入起，不经过本插件包装接缝、直接 <code>ctx.sandbox.confine(...)</code> 后 <code>ctx.subprocess.spawn(...)</code> 的第三方消费者（如实验性 forge bundle 的面板 Git 检查与 worktrees 服务）会被进程围栏当作来源不明的受限 argv 硬性拒绝。现在 scope 维护按铸造时发布代次键控的有界铸造台账：只有本进程铸出的主根形态 profile（<code>clamped</code> / <code>read-only</code>）在铸造发布仍然有效时可无准入启动，根表内容变化或权威可用性翻转即失效；可到达的 <code>worktrees</code> / <code>forgePanel</code> Session 入口改经真实有序准入包装，准入不可达时退回无准入执行并告警。伪造 argv、他进程 argv、被超越发布或过期准入帧遗留的 profile 继续拒绝，OPS 保护窗口仍把台账 mint 按无归属 spawn 处理。已知局限：Session 仓库位于附加根时，面板的 worktree 创建/恢复仍以主根钳制 profile 执行，附加根路径的写入会被内核拒绝；模型的 worktree 工具不受影响（<adr0035>ADR-0035</adr0035>）。',
+                '<b>面板区分「会话存在但未在本实例激活」</b>：会话被另一个 DSH 实例持有（跨进程 writer 锁）、仍在恢复或等待格式迁移时不会进入本进程的 SessionStore，面板此前一律报 <code>session-not-found</code>（「找不到该会话」）——会话明明就在屏幕上，提示的重试动作也不适用。现在 <code>dispatchPanelRequest</code> 在失败处复跑 resolver 并探测 <code>sessionPersistence.stat</code>，只在能证明持久化快照存在时改报 <code>session-not-live</code>，并给出可操作的双语提示；活会话仍无法给出主根以及探测无法证明存在的情况保持 <code>session-not-found</code>。授权合同不变：仍然只有本进程的 live 会话能解析主根（ADR-0008 修订）。'
+              ] }
+          ] },
+        { version: '0.1.15', date: '2026-11-06', sections: [
+            { kind: 'changed', items: [
+                '<b>自定义组合升级注意：Registry 只保留共享模式</b>。<code>multi-root-registry</code> 必须配置 <code>sharedStorageRoot</code>；缺失时以 <code>config-invalid</code> 拒绝启动，不再打开单进程存储或授予附加根。默认 bundle 自 <code>v0.1.12</code> 起已配置共享模式，无需另行修改。主根登记表改为按上游 Session 原始目录拼写查找，升级时迁移旧 canonical key；清空后的空表会持久保留，防止刷新或重启复活旧登记（<adr0028>ADR-0028</adr0028>）。'
+              ] },
+            { kind: 'added', items: [
+                '<b><code>/add-dirs</code> 命令别名</b>：<code>/add-dirs [absolute path] [--inherit|--read-only|--read-write]</code> 复用 <code>/workspace-folders add</code> 的路径解析、目录选择器、访问选项和校验，不接管 dsh-TUI 的内置 <code>/add-dir</code>。',
+                '<b>OPS 兼容模式（实验性，默认关闭）</b>：在插件设置卡中显式开启 <code>multi-root-ops-compatibility.enabled</code>，仅适用于现有精确支持矩阵内的 DSH <code>0.2.*</code>；<code>0.1.*</code> 不提供该设置入口，手工写入 <code>true</code> 也不启用。从 UI 开启须先在宿主风险弹窗中勾选并确认，每次重新开启都需确认；关闭直接保存，OPS 与 Auto Review 开关独立。',
+                '<b>启用 OPS 模式后的保守执行保护与上下文</b>：macOS/Linux 的 Full-access 有只读或 tool-cap 拒写边界时，以内核围栏保护 Worker；Windows 有拒写边界、WW/RO 有不可写根或 cap，以及所有模式 Registry 失权时，执行调用在准备前保守拒绝，读取也可能被拒。可证明的实时成功文件目标可触发附属目录指令发现；Auto Review 仍仅支持精确 DSH <code>0.2.1-rc.2</code>，缺少历史证据、动态待审目标或快照变化时技术失败。<b>不声明完整 OPS 兼容</b>：合法操作误拒、后台清理与缓存残留、无持久活动等限制保留，完整兼容恢复无限期延后；关闭模式后 OPS 仍可能写入显式只读附加根（<adr0029>ADR-0029</adr0029>）。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>重新登记不再把旧授权转移到新目标（BYP-02）</b>：只有目录恢复到原 grant 目标时才能 revive；目标已改变的记录必须先移除再显式新增。面板只为 missing 记录提供重新登记，不为 redirected/invalid 记录提供该动作。',
+                '<b>附加根登记拒绝覆盖受保护目录</b>：新增与 revive 不得等于、包含或位于 <code>$DSH_HOME</code>、Registry 物理介质或 lease 目录；重叠存量记录 withheld 并保留拒写边界。共享 follower 在每次 fs/进程准入时同样按自己的保护集合收窄；Windows 网络/设备路径在本地解析和转发前拒绝（<adr0027>ADR-0027</adr0027>）。',
+                '<b>主根目录置换不再丢失已有拒写边界（MRW-01）</b>：Registry/scope 使用上游主根拼写作为身份，canonical 路径只用于几何判断，拒写边界优先于主根重叠。主根本身的写授权继续遵循上游语义；根管理的可信人工确认（BYP-01）仍是已知残余风险，不在本版修复范围。'
+              ] }
+          ] },
         { version: '0.1.14', date: '2026-11-05', sections: [
             { kind: 'added', items: [
                 '<b>精确支持 DSH <code>0.2.2-alpha.3</code> 与 <code>0.2.2-rc.1</code></b>：支持矩阵扩至 22 个精确版本，开发 pin 提升到 <code>0.2.2-rc.1</code>（cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>）。<code>alpha.3</code> 起上游把 <code>patchText</code> / <code>deleteFile</code> / <code>moveFile</code> 纳入同一文件系统围栏与 Registry admission——移动的源与目标共用同一准入快照——Connection RPC getter 绑定拥有路由的消费 fiber（修复新版 Cordis 下面板通道 HTTP 405）、Files 页签改用宿主提供的文件树 Factory；<code>rc.1</code> 相对 <code>alpha.3</code> 仅有版本号与 vendor 稳定化，没有新接口形状，未新增适配分支。升级脚本的稳定 vendor 选择器改为只取宿主声明 minor 线内的最新稳定 patch，避免旧版 Cordis 混入新 loader。可选 Auto Review 仍钉 <code>0.2.1-rc.2</code> 基线（<dsh022Migration>接口审查</dsh022Migration>）。',
