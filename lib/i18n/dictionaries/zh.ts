@@ -647,7 +647,7 @@ const zh: Dictionary = {
         registryLines: ['经过校验', '按主根目录保存', '唯一授权者'],
         gate: '启动兼容性门禁',
         gateLine: '确切的 DSH 版本白名单。版本不在名单里时，围栏、沙箱、登记表、指令、LSP 和文件浏览相关组件都不会启动。',
-        caption: '已发布插件（v0.1.17）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
+        caption: '已发布插件（v0.1.18）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
       },
     },
     install: {
@@ -726,6 +726,14 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.18', date: '2026-11-12', sections: [
+            { kind: 'added', items: [
+                '<b>精确支持 DSH <code>0.2.2-rc.2</code></b>：支持矩阵扩至 23 个精确版本，开发 pin 提升到 <code>0.2.2-rc.2</code>（cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>）。<code>rc.2</code> 新增的 <code>workspaceFiles.search</code> 与插件已有的文件访问走同一共享 Registry 逐操作准入与根边界；上游在 Windows ACL 进程 profile 中改为忽略额外根（文件工具仍按额外根放行），插件以组合用例钉住该语义；未新增适配分支（<dsh022Migration>接口审查</dsh022Migration>、<adr0009>ADR-0009</adr0009>）。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Files 页签搜索遵守根边界</b>：<code>workspaceFiles.search</code> 与 <code>list</code> / <code>stat</code> / <code>read</code> 一样取共享 Registry 的 <code>files</code> 准入；搜索根（Session cwd）落在在册但未授权的边界下时，在启动 <code>rg</code> 前直接拒绝。<code>list</code> 与目录 <code>changes</code> 按路径解析后的所选目录判断，显式路径读取仍按词法规则。原生搜索没有附加根入口，接管附加根浏览时隐藏导航器新增的搜索条、状态行与页签搜索开关，避免展示主根结果；主根浏览与更早的受支持版本保持上游原样。'
+              ] }
+          ] },
         { version: '0.1.17', date: '2026-11-11', sections: [
             { kind: 'added', items: [
                 '<b>Worktree 附加根建议（实验性，默认关闭）</b>：当主根本身是 Git main checkout 或 linked worktree 时，插件会发现与该仓库共享同一 common git dir 的其他 worktree——包括会话开始前就存在、由终端、IDE、forge 或其他 DSH 实例创建的——并在用户确认后把其源码树登记为 <code>inherit</code> 附加根。发现只读取插件自己打开并解析的 Git 元数据（<code>.git</code> 指针、admin、common 的 config/HEAD/index 与完整祖先链），<b>不启动任何 Git 子进程、不解析 commit 对象，也永不自动添加或删除</b>。可见候选恰好一个时显示确认对话框，两个及以上时显示可勾选列表并一次确认多个目录；登记是 workspace 级的，其他读写会话也会获得该目录的写权限，对话框会明确披露。worktree 被删除或移动后，面板显示徽标并只提供显式清理（要求登记路径确认缺失且 <code>rootId + path + addedAt</code> 仍匹配），缺失根继续占用 <code>maxAdditionalRoots</code>；submodule、bare 派生、<code>--separate-git-dir</code>、<code>worktreeConfig</code>、仓库格式版本 1 与 split/sparse index 等一律不提示。开关位于插件详情卡（与附属根 Skills 同卡、独立生效），默认关闭，关闭后已有登记根仍按普通根管理（<adr0039>ADR-0039</adr0039>）。',
@@ -1162,6 +1170,14 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.2.10', date: '2026-11-12', sections: [
+            { kind: 'changed', items: [
+                '将 DSH 兼容范围扩展至 <code>0.2.2-alpha.3</code> 与 <code>0.2.2-rc.1</code>（含可选 credentials seam），接受其 Cordis <code>4.0.6-alpha.2</code> / <code>4.1.0</code> 与 schemastery <code>3.18.6-alpha.2</code> / <code>3.19.0</code> 副本。',
+                'composer 内的 Tooltip 在宿主支持时挂到 document.body：DSH <code>0.2.2-alpha.3</code> 让停靠 composer seat 成为 fixed 后代的包含块，而 <code>0.1.5</code> / <code>0.1.6</code> 的 Tooltip 不引用该参数。',
+                '所有 <code>0.2.2</code> CI 车道改用 Node <code>24.9.0</code>，与这些宿主声明的 <code>&gt;=24.9.0</code> engines 一致。',
+                '将 DSH 兼容范围扩展至 <code>0.2.2-rc.2</code>。其 <code>Menu</code> 移除 <code>getAnchorRect</code> 回调、改用 CSS <code>anchorRef</code>，提交信息下拉因此经新增 <code>src/compat/dsh-menu.tsx</code> 按已装 Menu 的签名提供该宿主读取的锚点输入；Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> 副本已落在既有声明范围内。'
+              ] }
+          ] },
         { version: '0.2.9', date: '2026-10-30', sections: [
             { kind: 'added', items: [
                 '插件设置页新增「平台账号」分区，可查看并管理 GitHub/GitLab 登录。'
@@ -1491,6 +1507,19 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.8', date: '2026-11-12', sections: [
+            { kind: 'added', items: [
+                '支持 DSH <code>0.2.2-alpha.3</code>、<code>0.2.2-rc.1</code> 与 <code>0.2.2-rc.2</code>，开发基线同步提升至 <code>0.2.2-rc.2</code>（Cordis <code>4.1.0</code>、Schemastery <code>3.19.0</code>）。',
+                '派生 token 新增悬浮预览卡、上下文图表与 JSON 树共 15 项（<code>--dsw-alias-hovercard-*</code>、<code>--dsw-alias-chart-*</code>、<code>--dsw-alias-json-tree-*</code>），覆盖 DSH <code>0.2.2-rc.2</code> 的界面新增 surface；旧版本把它们当作未引用的多余 override 安全忽略。手动编辑器的可编辑 token 面因此由每 scheme 152 项扩为 167 项。'
+              ] },
+            { kind: 'fixed', items: [
+                '适配 Cordis 4.1 收窄的 <code>ctx.on</code> 事件键类型：Host 设置订阅的结构面不再把事件名限定为 <code>string</code>，新版宿主上构建不再报 TS2345。',
+                '颜色选择器定位不再依赖 <code>@deepseek-ai/dsh-client-ui-primitives</code> 的 <code>useAnchoredPosition</code>：DSH <code>0.2.2-rc.2</code> 删除了该导出，现在按导出存在性复用宿主实现，缺失时使用同契约本地实现，面板照常贴住触发器并受视口约束。',
+                '悬浮预览卡的次要/三级文字改从卡片气泡底色派生，恢复“次要强于三级”的层级，并把两条文字/气泡配对纳入默认对比度诊断。',
+                'JSON 树字符串改用按明暗 scheme 向黑/白收敛的 success 文本色，Nordic 浅色等主题不再出现低于 2:1 的浅绿字符串；该角色纳入默认对比度诊断。',
+                '颜色选择器浮层消费定位 hook 发布的 <code>--dsh-anchored-max-width</code>/<code>--dsh-anchored-max-height</code>，移动键盘缩小 visualViewport 时在可用区域内滚动，不再把下部控件留在键盘后。'
+              ] }
+          ] },
         { version: '0.1.7', date: '2026-10-30', sections: [
             { kind: 'added', items: [
                 '支持 DSH <code>0.2.1-rc.4</code> 与 <code>0.2.2-alpha.2</code>，开发基线同步提升至 <code>0.2.2-alpha.2</code>。',

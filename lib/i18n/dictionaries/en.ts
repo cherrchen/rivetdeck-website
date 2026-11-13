@@ -666,7 +666,7 @@ const en = {
         registryLines: ['validated', 'per primary root', 'one authority'],
         gate: 'Startup compatibility gate',
         gateLine: 'Exact DSH release allowlist. If the release is not listed, the fence, sandbox, registry, instruction, LSP and file-browsing rows do not start.',
-        caption: 'Enforcement path of the released plugin (v0.1.17). The numbered controls below list what each part guarantees and what it does not.',
+        caption: 'Enforcement path of the released plugin (v0.1.18). The numbered controls below list what each part guarantees and what it does not.',
       },
     },
     install: {
@@ -745,6 +745,14 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.18', date: '2026-11-12', sections: [
+            { kind: 'added', items: [
+                '<b>Exact support for DSH <code>0.2.2-rc.2</code></b>: the support matrix grows to 23 exact releases and the development pin moves to <code>0.2.2-rc.2</code> (cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>). The <code>workspaceFiles.search</code> surface introduced in <code>rc.2</code> now passes through the same shared-Registry per-operation admission and root boundaries as the plugin\'s existing file access; upstream\'s Windows ACL process profile now ignores extra roots (the file tools still honor them), and a combination test pins that semantics. No new adapter branch was needed (<dsh022Migration>interface review</dsh022Migration>, <adr0009>ADR-0009</adr0009>).'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Files-tab search honors the root boundary</b>: <code>workspaceFiles.search</code> now takes the shared Registry\'s <code>files</code> admission like <code>list</code> / <code>stat</code> / <code>read</code>, and refuses before starting <code>rg</code> when the search root (the session cwd) sits under a registered but withheld boundary. <code>list</code> and directory <code>changes</code> judge the resolved selected directory, while explicit paths keep the lexical rule. Because the native search has no additional-root entry, retargeting an additional root hides the navigator\'s search bar, status line, and tab search toggle so primary-root results are not shown; primary-root browsing and earlier supported releases keep upstream behavior.'
+              ] }
+          ] },
         { version: '0.1.17', date: '2026-11-11', sections: [
             { kind: 'added', items: [
                 '<b>Worktree root suggestions (experimental, off by default)</b>: when the primary root is itself a Git main checkout or a linked worktree, the plugin discovers the other worktrees that share the same common Git directory — including those that existed before the session and those created by a terminal, an IDE, forge, or another DSH instance — and, after the user confirms, registers their source trees as <code>inherit</code> additional roots. Discovery only reads Git metadata that the plugin opens and parses itself (<code>.git</code> pointers, the admin directory, the common config/HEAD/index, and the full ancestor chain); <b>it starts no Git subprocess, parses no commit objects, and never adds or removes anything automatically</b>. Exactly one visible candidate shows the confirmation dialog; two or more show a checkbox list that confirms several directories at once. A registration is workspace-wide, so other read-write sessions gain write access to that directory too — the dialog says so explicitly. After a worktree is deleted or moved, the panel shows a badge and offers only an explicit cleanup (the registered path must be confirmed missing and <code>rootId + path + addedAt</code> must still match); missing roots keep consuming <code>maxAdditionalRoots</code>. Submodules, bare-derived worktrees, <code>--separate-git-dir</code>, <code>worktreeConfig</code>, repository format version 1, and split/sparse indexes are never suggested. The switch lives on the plugin-detail card (same card as additional-root Skills, independent), defaults to off, and existing registered roots stay managed as ordinary roots when it is off (<adr0039>ADR-0039</adr0039>).',
@@ -1193,6 +1201,14 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.2.10', date: '2026-11-12', sections: [
+            { kind: 'changed', items: [
+                'Extend DSH compatibility to <code>0.2.2-alpha.3</code> and <code>0.2.2-rc.1</code>, including the optional credentials seam, and accept their Cordis <code>4.0.6-alpha.2</code> / <code>4.1.0</code> and schemastery <code>3.18.6-alpha.2</code> / <code>3.19.0</code> copies.',
+                'Portal composer tooltips to the document body where the host supports it: DSH <code>0.2.2-alpha.3</code> makes the docked composer seat a containing block for fixed descendants, and the older <code>0.1.5</code> / <code>0.1.6</code> Tooltip ignores the prop.',
+                'Run every <code>0.2.2</code> CI lane on Node <code>24.9.0</code>, matching the <code>&gt;=24.9.0</code> engines those hosts declare.',
+                'Extend DSH compatibility to <code>0.2.2-rc.2</code>. Its <code>Menu</code> removes the <code>getAnchorRect</code> callback in favor of a CSS <code>anchorRef</code>, so the commit-options dropdown now goes through <code>src/compat/dsh-menu.tsx</code>, which probes the installed Menu signature and supplies whichever anchor input that host reads. Its Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> copies already fall inside the declared ranges.'
+              ] }
+          ] },
         { version: '0.2.9', date: '2026-10-30', sections: [
             { kind: 'added', items: [
                 'The plugin settings page gains a "Platform accounts" section for viewing and managing GitHub/GitLab sign-in.'
@@ -1532,6 +1548,19 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.8', date: '2026-11-12', sections: [
+            { kind: 'added', items: [
+                'Support DSH <code>0.2.2-alpha.3</code>, <code>0.2.2-rc.1</code> and <code>0.2.2-rc.2</code>, moving the development baseline to <code>0.2.2-rc.2</code> (Cordis <code>4.1.0</code>, Schemastery <code>3.19.0</code>).',
+                'Fifteen new derived tokens cover hover cards, the context chart and the JSON tree (<code>--dsw-alias-hovercard-*</code>, <code>--dsw-alias-chart-*</code>, <code>--dsw-alias-json-tree-*</code>), the surfaces DSH <code>0.2.2-rc.2</code> adds. Older releases safely ignore them as unreferenced overrides. The manual editor\'s editable surface grows from 152 to 167 tokens per scheme.'
+              ] },
+            { kind: 'fixed', items: [
+                'Adapt to the narrower <code>ctx.on</code> event-key type in Cordis 4.1: the Host settings subscription face no longer requires the event name to be <code>string</code>, so newer hosts no longer fail the build with TS2345.',
+                'Color-picker placement no longer depends on <code>useAnchoredPosition</code> from <code>@deepseek-ai/dsh-client-ui-primitives</code>: DSH <code>0.2.2-rc.2</code> dropped that export, so the plugin now reuses the host hook when it exists and otherwise uses a local implementation of the same contract, keeping the panel anchored and viewport-clamped.',
+                'Hover-card secondary and tertiary copy now derives from the card bubble, restoring the secondary-above-tertiary hierarchy; both text/bubble pairs join the default contrast diagnostics.',
+                'JSON-tree strings now use a scheme-specific success ink pulled toward black or white, removing the sub-2:1 pale-green strings in Nordic light; the role joins the default contrast diagnostics.',
+                'The color-picker popover consumes the placement hook\'s <code>--dsh-anchored-max-width</code>/<code>--dsh-anchored-max-height</code>, so it scrolls within the visual viewport instead of leaving lower controls behind a mobile keyboard.'
+              ] }
+          ] },
         { version: '0.1.7', date: '2026-10-30', sections: [
             { kind: 'added', items: [
                 'Support DSH <code>0.2.1-rc.4</code> and <code>0.2.2-alpha.2</code>, moving the development baseline to <code>0.2.2-alpha.2</code>.',
