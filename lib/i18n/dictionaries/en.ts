@@ -666,7 +666,7 @@ const en = {
         registryLines: ['validated', 'per primary root', 'one authority'],
         gate: 'Startup compatibility gate',
         gateLine: 'Exact DSH release allowlist. If the release is not listed, the fence, sandbox, registry, instruction, LSP and file-browsing rows do not start.',
-        caption: 'Enforcement path of the released plugin (v0.1.18). The numbered controls below list what each part guarantees and what it does not.',
+        caption: 'Enforcement path of the released plugin (v0.1.19). The numbered controls below list what each part guarantees and what it does not.',
       },
     },
     install: {
@@ -745,6 +745,11 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.19', date: '2026-11-14', sections: [
+            { kind: 'added', items: [
+                '<b>Exact support for DSH <code>0.2.2-rc.3</code></b>: the support matrix grows to 24 exact releases and the development pin moves to <code>0.2.2-rc.3</code> (cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>). Everything <code>rc.3</code> adds over <code>rc.2</code> is additive — a New-session HOC slot, the <code>workspace.picker</code> Factory and a third directory-flow hole, upload icons, the optional experimental <code>dsh-deepseek-chat-import</code> bundle that is not mounted by default, and an attachment-missing fallback for session export — while the sandbox, fs, tools, session, storage, Skills, LSP, workspace-files and Connection runtime sources the plugin consumes are unchanged. No adapter branch was added, and the open-in-app and files-tree fork baselines stay put (<dsh022Migration>interface review</dsh022Migration>, <adr0009>ADR-0009</adr0009>).'
+              ] }
+          ] },
         { version: '0.1.18', date: '2026-11-12', sections: [
             { kind: 'added', items: [
                 '<b>Exact support for DSH <code>0.2.2-rc.2</code></b>: the support matrix grows to 23 exact releases and the development pin moves to <code>0.2.2-rc.2</code> (cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>). The <code>workspaceFiles.search</code> surface introduced in <code>rc.2</code> now passes through the same shared-Registry per-operation admission and root boundaries as the plugin\'s existing file access; upstream\'s Windows ACL process profile now ignores extra roots (the file tools still honor them), and a combination test pins that semantics. No new adapter branch was needed (<dsh022Migration>interface review</dsh022Migration>, <adr0009>ADR-0009</adr0009>).'

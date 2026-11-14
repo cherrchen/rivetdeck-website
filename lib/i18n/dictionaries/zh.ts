@@ -647,7 +647,7 @@ const zh: Dictionary = {
         registryLines: ['经过校验', '按主根目录保存', '唯一授权者'],
         gate: '启动兼容性门禁',
         gateLine: '确切的 DSH 版本白名单。版本不在名单里时，围栏、沙箱、登记表、指令、LSP 和文件浏览相关组件都不会启动。',
-        caption: '已发布插件（v0.1.18）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
+        caption: '已发布插件（v0.1.19）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
       },
     },
     install: {
@@ -726,6 +726,11 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.19', date: '2026-11-14', sections: [
+            { kind: 'added', items: [
+                '<b>精确支持 DSH <code>0.2.2-rc.3</code></b>：支持矩阵扩至 24 个精确版本，开发 pin 提升到 <code>0.2.2-rc.3</code>（cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>）。<code>rc.3</code> 相对 <code>rc.2</code> 的差异全为新增——新会话行 HOC 槽、<code>workspace.picker</code> Factory 与第三个 directory-flow 洞、上传图标、默认不挂载的可选实验 bundle <code>dsh-deepseek-chat-import</code>，以及会话导出的附件缺失降级——而插件消费的沙箱、fs、tools、session、storage、Skills、LSP、workspace-files 与 Connection 运行时源码均未变。因此未新增适配分支，open-in-app 与 files-tree 的复刻基线也保持不变（<dsh022Migration>接口审查</dsh022Migration>、<adr0009>ADR-0009</adr0009>）。'
+              ] }
+          ] },
         { version: '0.1.18', date: '2026-11-12', sections: [
             { kind: 'added', items: [
                 '<b>精确支持 DSH <code>0.2.2-rc.2</code></b>：支持矩阵扩至 23 个精确版本，开发 pin 提升到 <code>0.2.2-rc.2</code>（cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>）。<code>rc.2</code> 新增的 <code>workspaceFiles.search</code> 与插件已有的文件访问走同一共享 Registry 逐操作准入与根边界；上游在 Windows ACL 进程 profile 中改为忽略额外根（文件工具仍按额外根放行），插件以组合用例钉住该语义；未新增适配分支（<dsh022Migration>接口审查</dsh022Migration>、<adr0009>ADR-0009</adr0009>）。'
