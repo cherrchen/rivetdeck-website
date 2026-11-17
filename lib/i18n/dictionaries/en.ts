@@ -553,7 +553,7 @@ const en = {
           'bash and the PTY keep the primary root as their default working directory',
           'Language servers treat each additional root as a separate workspace',
           'Skills found in a root’s .dsh/skills and .agents/skills reach the model as /alias-id:name through the native skill tool — read-only roots default off',
-          'Optional Auto Review is off by default; enable the /auto-review row in Plugin Manager on DSH 0.2.1-rc.2 to give the reviewer root topology, access levels and live instructions',
+          'Optional Auto Review is off by default; once enabled it is jointly verified on DSH 0.2.1-rc.2–rc.5 and 0.2.2-alpha.2–rc.3, and gives the reviewer root topology, access levels and live instructions',
           'The additional-root topology reaches the model as part of the sandbox policy context, so it needs no introspection tool',
           'Sandbox modes still apply to inherited roots: read-only grants none of them',
           'On DSH 0.2.1 the session can move its working directory — grants and the registry stay keyed to the session origin',
@@ -572,7 +572,7 @@ const en = {
           'One owner holds the store authority — other Hosts share it over local IPC, and background recovery rejoins after contention or a disconnect',
           'The dialog also browses an additional root’s files — expandable directories and text previews',
           'An independent Skills toggle and the stable aliasId namespace are edited per root in the same dialog, under a global setting that defaults on',
-          'The Files tab switches to any additional root — a native tree fork keeps rows identical',
+          'The Files tab switches to any additional root — a native tree fork keeps rows identical, including row context menus and workspace search where the host provides them',
           'The panel is bilingual and follows the interface language',
         ],
         codeTitle: 'session',
@@ -666,7 +666,7 @@ const en = {
         registryLines: ['validated', 'per primary root', 'one authority'],
         gate: 'Startup compatibility gate',
         gateLine: 'Exact DSH release allowlist. If the release is not listed, the fence, sandbox, registry, instruction, LSP and file-browsing rows do not start.',
-        caption: 'Enforcement path of the released plugin (v0.1.19). The numbered controls below list what each part guarantees and what it does not.',
+        caption: 'Enforcement path of the released plugin (v0.1.21). The numbered controls below list what each part guarantees and what it does not.',
       },
     },
     install: {
@@ -676,14 +676,14 @@ const en = {
       step1: { title: 'Install the package', body: 'Run this with a supported DSH runtime. Replace the profile for Electron desktop.' },
       tabs: {
         label: 'Install source',
-        npm: { label: 'npm', note: 'Recommended. Pre-built artifacts; the first add needs one allowBuilds answer.' },
-        tarball: { label: 'tarball', note: 'Pre-built offline package. You can also download the same tgz from the GitHub Release.' },
-        github: { label: 'GitHub', note: 'Pulls source and builds it through prepare. Needs two allowBuilds answers; pin a tag.' },
-        local: { label: 'local', note: 'Links a local checkout for development. Without a TTY, export CI=true first.' },
+        npm: { label: 'npm', note: 'Recommended. Pre-built artifacts; no build approval needed.' },
+        tarball: { label: 'tarball', note: 'Pre-built offline package; no build approval needed. The same tgz is on the GitHub Release.' },
+        github: { label: 'GitHub', note: 'Pulls source and builds it through prepare. Needs one allowBuilds answer; pin a tag.' },
+        local: { label: 'local', note: 'Links a local checkout for development; no build approval needed. Without a TTY, export CI=true first.' },
       },
       step2: {
-        title: 'Approve the one-time build step',
-        body: 'The first install stops with <code>ERR_PNPM_IGNORED_BUILDS</code>. The plugin carries one native dependency, <code>koffi</code>, and pnpm 10 and later does not run dependency scripts unless you allow them. Set it to <code>true</code> in that profile’s <code>pnpm-workspace.yaml</code>, then run the install again. This lets that script run on your machine, outside the agent’s sandbox.',
+        title: 'Build approval is only needed for git installs',
+        body: 'npm, tarball and local-path installs need no build approval: the plugin ships no production dependency with a build script, and <code>koffi</code> is supplied by the host as an optional peer. A GitHub install still builds the package through its own <code>prepare</code> script, so pnpm prints one exact key — copy that line into the profile’s <code>pnpm-workspace.yaml</code> and run the install again.',
       },
       step3: {
         title: 'Add a folder',
@@ -692,7 +692,7 @@ const en = {
       },
       other: {
         title: 'Other sources and notes',
-        tarball: 'Commands above use the web profile. For Electron desktop, replace <code>--profile web</code> with <code>--profile desktop</code>. GitHub installs need two <code>allowBuilds</code> answers. See the <readme>README</readme>.',
+        tarball: 'Commands above use the web profile. For Electron desktop, replace <code>--profile web</code> with <code>--profile desktop</code>. GitHub installs need one <code>allowBuilds</code> answer for <code>prepare</code>. See the <readme>README</readme>.',
         source: 'Running DSH from a source checkout? Use <code>pnpm dsh</code> instead of <code>dsh</code>.',
         rivetdeck: 'The plugin is not bundled with Rivetdeck. It installs separately and appears in the app’s Installed plugins.',
       },
@@ -701,7 +701,7 @@ const en = {
       eyebrow: 'Compatibility',
       title: 'An exact list, not a range.',
       lead: 'The plugin replaces sandbox providers whose internals carry no semver promise, so it supports exact DSH releases that CI has run — each row lists the releases a published plugin version accepts; the current package is v{version}.',
-      footnote: 'Status is declared per release and never inferred from version order. A green CI run on an unlisted release is evidence, not support. Read <contract>the compatibility contract</contract> for the rules. Optional Auto Review is supported only on DSH 0.2.1-rc.2 and ships disabled.',
+      footnote: 'Status is declared per release and never inferred from version order. A green CI run on an unlisted release is evidence, not support. Read <contract>the compatibility contract</contract> for the rules. Optional Auto Review is jointly verified on nine exact releases across the 0.2.1 and 0.2.2 lines and ships disabled.',
       region: 'DSH release support matrix',
       caption: 'DSH releases supported by each published plugin version',
       columns: { version: 'Plugin version', supported: 'Supported DSH releases' },
@@ -745,6 +745,38 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.21', date: '2026-11-17', sections: [
+            { kind: 'added', items: [
+                '<b>Workspace search in the additional-root document-preview navigator</b>: when the previewed file sits in an additional root, the Folder navigator could previously browse but not search — the native search root is fixed to the session cwd. The navigator now reuses the Files page’s single workspace-search surface and the same <code>search</code> endpoint in a preview mode: the bar stays visible, the result tree highlights matches, the previewed file is marked as the current row, opening a result replaces the preview tab in place, and Escape unwinds settings → query → close. Search records are keyed by pane and root, so expansion and scroll survive a body remount or <code>replaceTab</code>; earlier hosts and primary-root previews keep the native navigator (<adr0043>ADR-0043</adr0043>).',
+                '<b>A visible notice when a third-party plugin takes over the whole Files page (issue #47)</b>: when a plugin registers the <code>files</code> kind with <code>priority: "extension"</code>, the host stops rendering its built-in Files page and the root switcher never mounts, so users only saw “the plugin is not working”. The plugin now reads the effective definition from <code>ctx.sidebarRightTabs.get(\'files\')</code> and, on a confirmed takeover, shows one official info-level Toast explaining that the root switcher is temporarily unavailable and that roots can still be managed from the sidebar Folders entry and <code>/workspace-folders</code>. A missing service or definition stays silent, and older hosts show nothing.',
+                '<b>A circular close control on the worktree notice</b>: the persistent worktree notice regains an 18px circular close button at its top-right corner. Its semantics are pure dismissal: it sends no <code>snooze</code> / <code>resolve</code>, writes no sidecar or Registry state, keeps this Host from prompting again for its lifetime, and lets candidates reappear after a restart — distinct from the persistent-delay “Remind me later” and the ignore-writing “Never ask again” (<adr0039>ADR-0039</adr0039>).'
+              ] },
+            { kind: 'changed', items: [
+                '<b><code>koffi</code> is now supplied by the host as an optional peer, so npm, tarball and local-path installs need no build approval</b>: the FFI wrapper behind Windows Registry Authority and worktree Git-metadata reads leaves <code>dependencies</code> and becomes an optional <code>peerDependencies</code> entry with a development pin. pnpm never installs an optional peer, so the first <code>dsh plugin add</code> no longer stops at <code>[ERR_PNPM_IGNORED_BUILDS]</code>. At run time the loader tries <code>DSH_KOFFI_PATH</code>, the <code>dsh-fs-local</code> anchor, the host entry and DSH Desktop’s runtime directories, loading only the host’s copy so a second <code>koffi.node</code> image cannot SIGBUS on darwin-arm64. Git sources still need approval for the package’s own <code>prepare</code> (<adr0007>ADR-0007 revision</adr0007>).',
+                '<b>Worktree cleanup UX converges</b>: the batch cleanup entry moves from the footer to the Additional roots section title; the delete confirmation becomes a host <code>Modal</code> layered over the panel, shared by single and batch cleanup, with its own error ownership; <code>cleanupEligible</code> rows collapse to name, access badge, path, red delete and a <code>…</code> menu, with disclosure moving into the confirmation layer; an empty manual discovery shows the official info Toast; and the root-limit hint takes its own footer line. Authorization, cleanup eligibility, owner re-validation and endpoint shapes are unchanged (<adr0045>ADR-0045</adr0045>).',
+                '<b>The sidebar footer entry aligns with the host’s settings row and coexists in its slot</b>: the footer occupant swaps its gear glyph for the workspace-tree glyph, takes host token geometry with legacy fallbacks so it is pixel-identical to the settings trigger row across both geometry generations, follows the visible settings-row height, and turns the <code>sidebar.footer.action</code> slot anchor into a vertical column so a second occupant gets a full row. The host layout stays untouched when the plugin is not mounted (<adr0044>ADR-0044</adr0044>).',
+                '<b>README overview rewritten and known limitations restructured</b>: the introduction becomes a user-facing capability list (enforced permissions, Files-page browsing, Skills, Auto Review, worktree suggestions, and “not registered means not installed”), and the known limitations split into “plugin behavior” and “OPS adaptation”, adding the Files-page takeover notice, the footer row geometry and the worktree close control.'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Two v0.1.20 additional-root search defects</b>: switching the Files-page root left a transition frame that sent the old root’s query and filters with the new root’s <code>rootId</code> and left the old root’s record pending; <code>RootSwitcher</code> and the preview takeover now both commit a per-root takeover record that carries <code>rootId</code>. The keyboard focus sequence also omitted the listed tree rows, and settings drafts leaked across roots; both are fixed in the same search surface alongside the preview mode.'
+              ] }
+          ] },
+        { version: '0.1.20', date: '2026-11-15', sections: [
+            { kind: 'added', items: [
+                '<b>Additional-root Files parity: row context menus and workspace search</b>: the additional-root file tree gains the native row-level context menu — the plugin contributes only the file/directory target and the trigger binding, while menu items come from host contributors, and the target carries the additional-root absolute path so the host resolves it through <code>workspaceFiles.stat</code> / <code>readBytes</code> — plus a plugin-owned workspace search with exclusion rules, hidden items, a <code>.gitignore</code> switch, match highlighting, empty/truncated/incomplete notes with retry, keyboard handling and per-root preferences. Search uses the plugin channel’s <code>search</code> endpoint under one shared admission with authorization rechecked inside the frame, so results stay root-bounded. Two structural gates apply: <code>useContextMenu</code> (DSH <code>0.2.2-alpha.3</code> and later) and <code>remote.workspaceFiles.search</code> (<code>0.2.2-rc.2</code> and later); older hosts keep the previous view (<adr0041>ADR-0041</adr0041>, <adr0042>ADR-0042</adr0042>).',
+                '<b>Optional Auto Review joint support grows to two generations across nine exact releases</b>: the joint contract expands from the single <code>0.2.1-rc.2</code> baseline to two frozen upstream source baselines — <code>0.2.1-rc.2</code>–<code>rc.5</code> (legacy fork) and <code>0.2.2-alpha.2</code>–<code>rc.3</code> (current fork) — each with its own verbatim upstream copy, reviewed fork, compile pin and execution-copy check. The Loader entry loads the bundle matching the installed exact release, so the other generation’s imports never enter the host module graph. Builds, type checks, the differential gate, the joint smoke and the CI lanes all run per baseline (<adr0040>ADR-0040</adr0040>, <autoReviewMigration>interface review</autoReviewMigration>).',
+                '<b>Worktree confirmation dialog rebuild with per-row access selection</b>: the dialog widens to <code>min(860px, calc(100vw - 48px))</code>, candidates become a continuous list with hairline separators and row hover, and each row shows the detected Git branch plus a registration-access selector (default <code>inherit</code>, per-row <code>read-only</code> / <code>read-write</code>) whose value is validated by the wire contract and recorded in the Registry grant. The follower <code>addNew</code> IPC accepts all three levels, and reused candidate records refresh the main checkout’s displayed branch (<code>mainHead</code> still never participates in authorization) (<adr0039>ADR-0039</adr0039>).'
+              ] },
+            { kind: 'changed', items: [
+                '<b>Worktree discovery converges to one read-only check per session activation plus a non-modal notice</b>: the always-on long poll is gone. Each time a session becomes the active one, the client makes exactly one <code>worktreePrompt(..., { fresh: true })</code> call — a pure query that installs no watcher, schedules no owner reconcile and writes no sidecar; a non-empty answer shows a persistent non-modal notice, and only pressing View opens the confirmation dialog and starts the wait. Closing the dialog writes nothing. The notice supports Remind me later (until a new worktree appears / 7 days / 30 days), merging deadlines per key across Hosts. Authorization semantics are unchanged: nothing is added or removed automatically, and <code>addNew</code> remains the only write path (<adr0039>ADR-0039</adr0039>).',
+                '<b>The worktree notice becomes a page-aware centered card</b>: it moves from the bottom-right corner to the content column — above the composer on the Hero page, below the header on the conversation page — adapts to the theme from host <code>--dsw-*</code> tokens, uses primitive <code>Button</code> / <code>Menu</code> controls, drops the close button in favor of “Remind me later” (text half plus menu half), switches to a two-row 32px form for coarse pointers or narrow widths, and shifts down while the upstream transient Toast is visible. The Workspace Folders panel gains a manual Worktree suggestions entry so the dialog stays reachable (<adr0039>ADR-0039</adr0039>).',
+                '<b>The install troubleshooting doc documents the DSH Desktop Plugins-page recovery path (issue #57)</b>: the Plugins page install only writes <code>dependencies</code>, while <code>dsh.profile.bundles</code> is written separately by the following “enable now” step, so the profile can sit in an intermediate state. The entry gives the recovery steps — fully quit Desktop, run <code>remove</code> + <code>add</code> with the bundled CLI, confirm <code>dsh.profile.bundles</code>, then start cold — and records that hot-enabling collides with still-running old providers while a cold start is unaffected (<tbDesktopInstall>troubleshooting</tbDesktopInstall>).'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>The New Session hero entry no longer pushes the workspace row past the composer</b>: the entry used its full label width and was pure addition, so a narrow column pushed it past the composer’s right edge. A probe now measures the room the row leaves for the group, clamps the button with <code>max-width</code> and ellipsizes the label; below 88px it degrades to a 28×28 icon. When the row structure cannot be identified it keeps the previous viewport fallback, without an error or a blank surface (<adr0037>ADR-0037 amendment</adr0037>).',
+                '<b>Worktree reminder cross-Host and lifecycle fixes</b>: expiry, eviction, merging and residual records release the “offered” claims by delay identity, avoiding repeated notices or permanent hiding; a late <code>snooze</code> / <code>resolve</code> completion from another session no longer overwrites a newer notice; and <code>seen</code> / <code>snooze</code> / <code>resolve</code> send more than 64 ids in batches, with no response length cap (<adr0039>ADR-0039</adr0039>).'
+              ] }
+          ] },
         { version: '0.1.19', date: '2026-11-14', sections: [
             { kind: 'added', items: [
                 '<b>Exact support for DSH <code>0.2.2-rc.3</code></b>: the support matrix grows to 24 exact releases and the development pin moves to <code>0.2.2-rc.3</code> (cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>). Everything <code>rc.3</code> adds over <code>rc.2</code> is additive — a New-session HOC slot, the <code>workspace.picker</code> Factory and a third directory-flow hole, upload icons, the optional experimental <code>dsh-deepseek-chat-import</code> bundle that is not mounted by default, and an attachment-missing fallback for session export — while the sandbox, fs, tools, session, storage, Skills, LSP, workspace-files and Connection runtime sources the plugin consumes are unchanged. No adapter branch was added, and the open-in-app and files-tree fork baselines stay put (<dsh022Migration>interface review</dsh022Migration>, <adr0009>ADR-0009</adr0009>).'

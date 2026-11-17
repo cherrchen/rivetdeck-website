@@ -537,7 +537,7 @@ const zh: Dictionary = {
           'bash 和 PTY 仍以主根目录作为默认工作目录',
           '语言服务器把每个附加根目录视为独立的工作区',
           '根目录的 .dsh/skills 与 .agents/skills 中发现的 skills 以 /alias-id:name 经原生 skill 工具到达模型——read-only 根默认关闭',
-          '可选 Auto Review 默认关闭；仅在 DSH 0.2.1-rc.2 上可通过插件管理器启用 /auto-review 行，为审查器提供根目录拓扑、访问级别和实时指令',
+          '可选 Auto Review 默认关闭；启用后在 DSH 0.2.1-rc.2–rc.5 与 0.2.2-alpha.2–rc.3 上联合验证，为审查器提供根目录拓扑、访问级别和实时指令',
           '附加根目录的拓扑作为沙箱策略上下文的一部分传给模型，不需要额外的查询工具',
           '沙箱模式对继承的根目录依然生效：只读模式不授予它们',
           '在 DSH 0.2.1 上会话可以移动工作目录——授权和登记表仍以会话起点为键',
@@ -556,7 +556,7 @@ const zh: Dictionary = {
           '存储权威由唯一 owner 持有——其余 Host 经本机 IPC 共享，争用或断线后由后台恢复自动重新加入',
           '对话框还可以浏览附加根目录的文件——可展开的目录树和文本预览',
           '同一对话框中可独立开关每个根目录的 Skills、编辑稳定的 aliasId 命名空间；全局开关默认开启',
-          '“文件”页可以切到任意附加根目录——分叉的原生目录树逐项保持一致',
+          '“文件”页可以切到任意附加根目录——分叉的原生目录树逐项保持一致，包括宿主提供时的行右键菜单与工作区搜索',
           '面板支持中英双语，并跟随界面语言',
         ],
         codeTitle: '会话',
@@ -647,7 +647,7 @@ const zh: Dictionary = {
         registryLines: ['经过校验', '按主根目录保存', '唯一授权者'],
         gate: '启动兼容性门禁',
         gateLine: '确切的 DSH 版本白名单。版本不在名单里时，围栏、沙箱、登记表、指令、LSP 和文件浏览相关组件都不会启动。',
-        caption: '已发布插件（v0.1.19）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
+        caption: '已发布插件（v0.1.21）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
       },
     },
     install: {
@@ -657,14 +657,14 @@ const zh: Dictionary = {
       step1: { title: '安装插件包', body: '在受支持的 DSH 运行时中执行。Electron 桌面版请替换 profile。' },
       tabs: {
         label: '安装来源',
-        npm: { label: 'npm', note: '推荐。安装预构建产物，首次 add 需要回答一次 allowBuilds。' },
-        tarball: { label: 'tarball', note: '预构建离线包，适合内网。也可从 GitHub Release 下载同名 tgz。' },
-        github: { label: 'GitHub', note: '拉取源码并由 prepare 现场构建。需要两次 allowBuilds，请锁定标签。' },
-        local: { label: '本地源码', note: '链接本地 checkout，适合开发调试。无 TTY 时需要 export CI=true。' },
+        npm: { label: 'npm', note: '推荐。安装预构建产物，无需构建授权。' },
+        tarball: { label: 'tarball', note: '预构建离线包，无需构建授权，适合内网。也可从 GitHub Release 下载同名 tgz。' },
+        github: { label: 'GitHub', note: '拉取源码并由 prepare 现场构建。需要一次 allowBuilds 授权，请锁定标签。' },
+        local: { label: '本地源码', note: '链接本地 checkout，适合开发调试，无需构建授权。无 TTY 时需要 export CI=true。' },
       },
       step2: {
-        title: '批准一次性的构建步骤',
-        body: '首次安装会以 <code>ERR_PNPM_IGNORED_BUILDS</code> 停止。插件带有一个原生依赖 <code>koffi</code>，而 pnpm 10 及以后默认不运行依赖脚本，除非你允许。请在该 profile 的 <code>pnpm-workspace.yaml</code> 中把它设为 <code>true</code>，然后重新安装。这会让该脚本在你的机器上、智能体沙箱之外运行。',
+        title: '只有源码安装才需要批准构建步骤',
+        body: 'npm、tarball 与本地路径安装都不需要构建授权：插件没有带构建脚本的生产依赖，<code>koffi</code> 由宿主作为可选 peer 提供。GitHub 安装仍会通过插件自身的 <code>prepare</code> 现场构建，pnpm 会打印一个确切的 key——把那一行复制到该 profile 的 <code>pnpm-workspace.yaml</code>，然后重新安装。',
       },
       step3: {
         title: '添加文件夹',
@@ -673,7 +673,7 @@ const zh: Dictionary = {
       },
       other: {
         title: '其他来源与说明',
-        tarball: '以上命令以 web profile 为例。Electron 桌面版把 <code>--profile web</code> 换成 <code>--profile desktop</code>。从 GitHub 安装需要回答两次 <code>allowBuilds</code>。详见 <readme>README</readme>。',
+        tarball: '以上命令以 web profile 为例。Electron 桌面版把 <code>--profile web</code> 换成 <code>--profile desktop</code>。从 GitHub 安装需要为 <code>prepare</code> 回答一次 <code>allowBuilds</code>。详见 <readme>README</readme>。',
         source: '从源码检出运行 DSH？请用 <code>pnpm dsh</code> 代替 <code>dsh</code>。',
         rivetdeck: '该插件没有随 Rivetdeck 一同打包。它需要单独安装，并显示在应用的“已安装插件”中。',
       },
@@ -682,7 +682,7 @@ const zh: Dictionary = {
       eyebrow: '兼容性',
       title: '一份确切的清单，而不是一个范围。',
       lead: '插件替换的沙箱提供者，其内部实现没有语义化版本承诺，所以只支持 CI 实际跑过的确切 DSH 版本——表中每行列出一个已发布插件版本接受的集合，当前包为 v{version}。',
-      footnote: '状态按版本逐项声明，绝不按版本号顺序推断。未列出的版本即使 CI 全绿，也只是证据，而不是支持。规则请阅读<contract>兼容性约定</contract>。可选 Auto Review 仅支持 DSH 0.2.1-rc.2，默认关闭。',
+      footnote: '状态按版本逐项声明，绝不按版本号顺序推断。未列出的版本即使 CI 全绿，也只是证据，而不是支持。规则请阅读<contract>兼容性约定</contract>。可选 Auto Review 在 0.2.1 与 0.2.2 两条线上共 9 个精确版本联合验证，默认关闭。',
       region: 'DSH 版本支持矩阵',
       caption: '各已发布插件版本支持的 DSH 版本',
       columns: { version: '插件版本', supported: '支持的 DSH 版本' },
@@ -726,6 +726,38 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.21', date: '2026-11-17', sections: [
+            { kind: 'added', items: [
+                '<b>附加根文件预览导航树的工作区搜索</b>：预览文件位于附加根时，Folder 导航树此前只能浏览、不能搜索——原生搜索根固定为会话 cwd。现在导航树以 preview 模式复用 Files 页唯一的工作区搜索面与同一个 <code>search</code> 端点：搜索栏常显、命中高亮结果树、被预览文件标为当前行、点击结果原位替换预览页签、Escape 依次关闭设置 → 清空查询 → 关闭导航树；搜索记录按 pane 与根键控，body 重挂载或 <code>replaceTab</code> 后仍保留展开与滚动。更早的宿主与主根预览保持原生导航树（<adr0043>ADR-0043</adr0043>）。',
+                '<b>Files 页被第三方整页接管时的可见提示（Issue #47）</b>：第三方插件以 <code>priority: "extension"</code> 注册 <code>files</code> kind 时，宿主不再渲染内置 Files 页，根切换器也不会挂载，此前用户只看到「插件没生效」。现在插件读取 <code>ctx.sidebarRightTabs.get(\'files\')</code> 的生效定义，确认被接管时弹一次官方 info 级瞬时 Toast，说明根切换器暂不可用、仍可从侧栏「工作区目录」入口与 <code>/workspace-folders</code> 管理根；服务或定义缺失时静默，旧宿主不提示。',
+                '<b>Worktree 提示的圆形关闭按钮</b>：常驻 Worktree 提示右上角加回 18px 正圆关闭按钮。语义为纯关闭：不发送 <code>snooze</code> / <code>resolve</code>、不写 sidecar 与 Registry，本 Host 生命周期内不再自动提示，重启后候选重新可见——与写持久延迟的「稍后提醒」和写 ignore 的「永久不再提示」三分（<adr0039>ADR-0039</adr0039>）。'
+              ] },
+            { kind: 'changed', items: [
+                '<b><code>koffi</code> 改由宿主提供（可选 peer），npm / tarball / 本地路径安装不再需要构建授权</b>：Windows Registry Authority 与 Worktree Git 元数据读取所用的 FFI 封装移出 <code>dependencies</code>，改为 optional <code>peerDependencies</code> 加开发 pin。pnpm 不会安装可选 peer，因此首次 <code>dsh plugin add</code> 不再停在 <code>[ERR_PNPM_IGNORED_BUILDS]</code>。运行时加载器依次尝试 <code>DSH_KOFFI_PATH</code>、<code>dsh-fs-local</code> 锚点、宿主入口与 DSH Desktop 运行时目录，只加载宿主那份副本，避免第二个 <code>koffi.node</code> 镜像在 darwin-arm64 上触发 SIGBUS。git 来源仍需为插件自身的 <code>prepare</code> 授权（<adr0007>ADR-0007 修订</adr0007>）。',
+                '<b>Workspace Folders 面板的 Worktree 清理 UX 收敛</b>：批量清理入口从 footer 移到「附属工作目录」标题行；删除确认改为覆盖面板的宿主 <code>Modal</code>，单行与批量共用并拥有独立错误归属；<code>cleanupEligible</code> 行收敛为名称、权限徽标、路径、红色删除与 <code>…</code> 菜单，披露移入确认层；手动发现无候选时弹官方 info Toast；根上限提示独占 footer 一行。授权、清理资格、owner 复验与端点形状不变（<adr0045>ADR-0045</adr0045>）。',
+                '<b>侧栏 footer 入口与宿主设置行对齐并同槽共存</b>：footer occupant 的图标由齿轮改为 workspace tree，行几何采用宿主 token 加旧值 fallback，在两代几何版本上都与宿主设置触发行逐像素一致，高度跟随可见的设置行 occupant，并把 <code>sidebar.footer.action</code> 的 slot anchor 变成纵向列，使同槽第二个 occupant 各占一整行。未挂载时宿主布局原样（<adr0044>ADR-0044</adr0044>）。',
+                '<b>README 重写功能概览并重组已知限制</b>：简介改为面向使用者的能力清单（权限真正生效、Files 页浏览、Skills、Auto Review、Worktree 建议、不登记等于没装），已知限制拆为「插件功能」与「OPS 适配」两节，并补充 Files 页接管提示、footer 行几何与 Worktree 关闭按钮。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>v0.1.20 附加根搜索的两个遗留缺陷</b>：Files 页换根时，过渡帧会以新根的 <code>rootId</code> 发送旧根的查询与筛选，并把旧根记录留在 pending；<code>RootSwitcher</code> 与预览接管现在都把 <code>rootId</code> 并入按根原子落定的接管记录。键盘焦点序列遗漏列出的树行，设置草稿也会跨根残留；两项随 preview 模式在同一搜索面修正。'
+              ] }
+          ] },
+        { version: '0.1.20', date: '2026-11-15', sections: [
+            { kind: 'added', items: [
+                '<b>附加根 Files 对齐主根：行右键菜单与工作区搜索</b>：附加根文件树补齐原生行级右键菜单——插件只提供 file/directory target 与触发绑定，菜单项来自宿主贡献方，target 携带附加根绝对路径，宿主经 <code>workspaceFiles.stat</code> / <code>readBytes</code> 解析——并新增插件自绘的工作区搜索：排除规则、隐藏项、<code>.gitignore</code> 开关、命中高亮、空结果/截断/不完整提示与重试、键盘操作与按根偏好。搜索走插件通道的 <code>search</code> 端点，在单次共享准入下执行并在帧内复核授权，结果受根边界约束。两个结构门控为 <code>useContextMenu</code>（DSH <code>0.2.2-alpha.3</code> 起）与 <code>remote.workspaceFiles.search</code>（<code>0.2.2-rc.2</code> 起）；更早宿主保持原视图（<adr0041>ADR-0041</adr0041>、<adr0042>ADR-0042</adr0042>）。',
+                '<b>可选 Auto Review 联合支持扩至两代共 9 个精确发布</b>：联合合同从单一 <code>0.2.1-rc.2</code> 基线扩为两个冻结上游源码基线——<code>0.2.1-rc.2</code>–<code>rc.5</code>（legacy fork）与 <code>0.2.2-alpha.2</code>–<code>rc.3</code>（current fork）——每个基线各带逐字节上游副本、审阅过的 fork、编译 pin 与执行副本校验。Loader 入口按安装的精确发布加载对应基线的 bundle，另一代的导入不会进入宿主模块图。构建、类型检查、差分门禁、联合冒烟与 CI 车道均按基线运行（<adr0040>ADR-0040</adr0040>、<autoReviewMigration>接口审查</autoReviewMigration>）。',
+                '<b>Worktree 确认 Dialog 重构与逐行权限选择</b>：Dialog 加宽到 <code>min(860px, calc(100vw - 48px))</code>，候选由独立卡片改为连续列表（细分隔线、行内 hover），每行显示检测到的 Git 分支与登记访问级别选择器（默认 <code>inherit</code>，可逐行选 <code>read-only</code> / <code>read-write</code>），选择经线协议校验后记录进 Registry grant。follower 的 <code>addNew</code> IPC 接受三档访问级别；复用候选记录时刷新主 checkout 的分支展示（<code>mainHead</code> 仍不参与授权）（<adr0039>ADR-0039</adr0039>）。'
+              ] },
+            { kind: 'changed', items: [
+                '<b>Worktree 发现收敛为「会话激活时一次只读检查 + 非模态提示」</b>：不再常驻长轮询。会话每次成为有效会话时只调用一次 <code>worktreePrompt(..., { fresh: true })</code>——纯查询，不安装 watcher、不调度 owner reconcile、不写 sidecar；有候选则显示常驻非模态提示，只有点「查看」才打开确认 Dialog 并启动 wait，关闭 Dialog 不写任何状态。提示支持「稍后提醒」（直到出现新 worktree / 7 天 / 30 天），多个 Host 的期限按 key 合并。授权语义不变：不自动添加或删除，<code>addNew</code> 仍是唯一写路径（<adr0039>ADR-0039</adr0039>）。',
+                '<b>Worktree 提示改为页面感知的居中卡片</b>：提示从右下角移到内容列——Hero 页在输入卡上方，对话页在 Header 下方——随主题使用宿主 <code>--dsw-*</code> token 自适应，控件改用 primitives <code>Button</code> / <code>Menu</code>，删除「×」关闭按钮，改由「稍后提醒」承担关闭（文字半 + 下拉半），粗指针或窄宽时改为两行 32px 形态，并在官方瞬时 Toast 可见时临时下移避让。Workspace Folders 面板新增「Worktree 建议」手动入口，提示关闭后仍可打开 Dialog（<adr0039>ADR-0039</adr0039>）。',
+                '<b>安装排查文档补充 DSH Desktop 插件页安装恢复路径（issue #57）</b>：插件页安装只写 <code>dependencies</code>，<code>dsh.profile.bundles</code> 由随后的「立即启用」单独写入，因此 profile 可能停在中间态。文档给出恢复步骤——完全退出 Desktop、用自带 CLI 执行 <code>remove</code> + <code>add</code>、确认 <code>dsh.profile.bundles</code> 后冷启动——并记录「热启用会撞上仍在运行的旧 provider、冷启动不受影响」（<tbDesktopInstall>排查文档</tbDesktopInstall>）。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>新会话 Hero 入口不再把工作区行撑出输入卡</b>：入口此前按 label 全宽纯加法，列宽不足时越过输入卡右缘。现在探针测量行内余量，以 <code>max-width</code> 夹取并让 label 省略号收缩；余量低于 88px 退化为 28×28 图标。认不出行结构时保持原视口回退形态，不报错、不空白（<adr0037>ADR-0037 修订</adr0037>）。',
+                '<b>Worktree 提醒的跨 Host 与生命周期修复</b>：到期、淘汰、合并与残余记录都按延迟身份精确释放「已展示」认领，避免重复提示或永久隐藏；跨会话迟到的 <code>snooze</code> / <code>resolve</code> 完成不再覆盖新提示；<code>seen</code> / <code>snooze</code> / <code>resolve</code> 超过 64 个 id 时按批发送，响应列表不再被长度上限拒绝（<adr0039>ADR-0039</adr0039>）。'
+              ] }
+          ] },
         { version: '0.1.19', date: '2026-11-14', sections: [
             { kind: 'added', items: [
                 '<b>精确支持 DSH <code>0.2.2-rc.3</code></b>：支持矩阵扩至 24 个精确版本，开发 pin 提升到 <code>0.2.2-rc.3</code>（cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>）。<code>rc.3</code> 相对 <code>rc.2</code> 的差异全为新增——新会话行 HOC 槽、<code>workspace.picker</code> Factory 与第三个 directory-flow 洞、上传图标、默认不挂载的可选实验 bundle <code>dsh-deepseek-chat-import</code>，以及会话导出的附件缺失降级——而插件消费的沙箱、fs、tools、session、storage、Skills、LSP、workspace-files 与 Connection 运行时源码均未变。因此未新增适配分支，open-in-app 与 files-tree 的复刻基线也保持不变（<dsh022Migration>接口审查</dsh022Migration>、<adr0009>ADR-0009</adr0009>）。'

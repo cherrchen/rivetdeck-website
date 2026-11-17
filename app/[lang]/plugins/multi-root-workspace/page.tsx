@@ -391,7 +391,16 @@ function Install({ dict }: { dict: Dictionary }) {
           <InstallTabs spec={INSTALL_SPEC} t={t.tabs} copy={dict.common.copy} />
         </Step>
         <Step n="2" title={t.step2.title} body={<Rich text={t.step2.body} tags={code} />}>
-          <CodeBlock title="pnpm-workspace.yaml" prompt="" lines={['allowBuilds:', '  koffi: true']} copyText={'allowBuilds:\n  koffi: true'} copy={dict.common.copy} />
+          <CodeBlock
+            title="pnpm-workspace.yaml"
+            prompt=""
+            lines={[
+              'allowBuilds:',
+              "  '@dsh-electron/dsh-plugin-multi-root-workspace@github:cherrchen/dsh-plugin-multi-root-workspace#<commit>': true",
+            ]}
+            copyText={"allowBuilds:\n  '@dsh-electron/dsh-plugin-multi-root-workspace@github:cherrchen/dsh-plugin-multi-root-workspace#<commit>': true"}
+            copy={dict.common.copy}
+          />
         </Step>
         <Step n="3" title={t.step3.title} body={t.step3.body}>
           <CodeBlock
