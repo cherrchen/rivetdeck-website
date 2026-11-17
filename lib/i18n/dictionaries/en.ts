@@ -1238,6 +1238,11 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.2.11', date: '2026-11-17', sections: [
+            { kind: 'changed', items: [
+                'Extend DSH compatibility to <code>0.2.2-rc.3</code>, an additive release: the only plugin-facing change is two new <code>upload-outline</code> primitives glyphs, while its new <code>workspace.picker</code> / <code>sidebar.session.action</code> slots and the chat-import bundle stay outside this plugin\'s surface. Its Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> copies still fall inside the declared ranges and the <code>Menu</code> anchor interface is unchanged.'
+              ] }
+          ] },
         { version: '0.2.10', date: '2026-11-12', sections: [
             { kind: 'changed', items: [
                 'Extend DSH compatibility to <code>0.2.2-alpha.3</code> and <code>0.2.2-rc.1</code>, including the optional credentials seam, and accept their Cordis <code>4.0.6-alpha.2</code> / <code>4.1.0</code> and schemastery <code>3.18.6-alpha.2</code> / <code>3.19.0</code> copies.',
@@ -1585,6 +1590,11 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.9', date: '2026-11-17', sections: [
+            { kind: 'added', items: [
+                'Support DSH <code>0.2.2-rc.3</code>, moving the development baseline to <code>0.2.2-rc.3</code> (Cordis <code>4.1.0</code>, Schemastery <code>3.19.0</code>).'
+              ] }
+          ] },
         { version: '0.1.8', date: '2026-11-12', sections: [
             { kind: 'added', items: [
                 'Support DSH <code>0.2.2-alpha.3</code>, <code>0.2.2-rc.1</code> and <code>0.2.2-rc.2</code>, moving the development baseline to <code>0.2.2-rc.2</code> (Cordis <code>4.1.0</code>, Schemastery <code>3.19.0</code>).',

@@ -41,17 +41,17 @@ export const links = {
   git: {
     repo: gitRepo,
     npm: 'https://www.npmjs.com/package/@dsh-electron/dsh-plugin-git',
-    readme: `${gitRepo}/blob/v0.2.10/README.md`,
-    architecture: `${gitRepo}/blob/v0.2.10/docs/architecture/overview.md`,
-    compatDoc: `${gitRepo}/blob/v0.2.10/docs/reference/dsh-compatibility.md`,
+    readme: `${gitRepo}/blob/v0.2.11/README.md`,
+    architecture: `${gitRepo}/blob/v0.2.11/docs/architecture/overview.md`,
+    compatDoc: `${gitRepo}/blob/v0.2.11/docs/reference/dsh-compatibility.md`,
     issues: `${gitRepo}/issues`,
   },
   themeStudio: {
     repo: themeStudioRepo,
     npm: 'https://www.npmjs.com/package/@dsh-electron/dsh-theme-studio',
-    readme: `${themeStudioRepo}/blob/v0.1.8/README.en.md`,
-    tokens: `${themeStudioRepo}/blob/v0.1.8/docs/reference/theme-tokens.md`,
-    compatDoc: `${themeStudioRepo}/blob/v0.1.8/docs/development/dsh-compatibility.md`,
+    readme: `${themeStudioRepo}/blob/v0.1.9/README.en.md`,
+    tokens: `${themeStudioRepo}/blob/v0.1.9/docs/reference/theme-tokens.md`,
+    compatDoc: `${themeStudioRepo}/blob/v0.1.9/docs/development/dsh-compatibility.md`,
     issues: `${themeStudioRepo}/issues`,
   },
   multiRoot: {

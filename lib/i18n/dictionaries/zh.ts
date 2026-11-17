@@ -1207,6 +1207,11 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.2.11', date: '2026-11-17', sections: [
+            { kind: 'changed', items: [
+                '将 DSH 兼容范围扩展至 <code>0.2.2-rc.3</code>：该版本只新增两个 <code>upload-outline</code> primitives 图标，新增的 <code>workspace.picker</code> / <code>sidebar.session.action</code> 插槽与对话导入 bundle 都在本插件表面之外；Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> 副本仍落在既有声明范围内，<code>Menu</code> 锚点接口不变。'
+              ] }
+          ] },
         { version: '0.2.10', date: '2026-11-12', sections: [
             { kind: 'changed', items: [
                 '将 DSH 兼容范围扩展至 <code>0.2.2-alpha.3</code> 与 <code>0.2.2-rc.1</code>（含可选 credentials seam），接受其 Cordis <code>4.0.6-alpha.2</code> / <code>4.1.0</code> 与 schemastery <code>3.18.6-alpha.2</code> / <code>3.19.0</code> 副本。',
@@ -1544,6 +1549,11 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.9', date: '2026-11-17', sections: [
+            { kind: 'added', items: [
+                '支持 DSH <code>0.2.2-rc.3</code>，开发基线同步提升至 <code>0.2.2-rc.3</code>（Cordis <code>4.1.0</code>、Schemastery <code>3.19.0</code>）。'
+              ] }
+          ] },
         { version: '0.1.8', date: '2026-11-12', sections: [
             { kind: 'added', items: [
                 '支持 DSH <code>0.2.2-alpha.3</code>、<code>0.2.2-rc.1</code> 与 <code>0.2.2-rc.2</code>，开发基线同步提升至 <code>0.2.2-rc.2</code>（Cordis <code>4.1.0</code>、Schemastery <code>3.19.0</code>）。',

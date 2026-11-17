@@ -95,8 +95,9 @@ describe('ChangelogReleases', () => {
   it('renders version headings and section headings without diff links', () => {
     render(<ChangelogReleases releases={t.releases} repo={links.git.repo} docs={GIT_DOC_LINKS} locale="en" newTab={newTab} t={t} />)
 
-    const latest = screen.getByRole('heading', { name: /v0\.2\.10/ })
-    expect(latest.querySelector('a')?.getAttribute('href')).toBe(releaseUrl(links.git.repo, 'v0.2.10'))
+    const latestTag = `v${GIT_PLUGIN_VERSION}`
+    const latest = screen.getByRole('heading', { name: new RegExp(latestTag.replace(/\./g, '\\.')) })
+    expect(latest.querySelector('a')?.getAttribute('href')).toBe(releaseUrl(links.git.repo, latestTag))
     expect(latest.textContent).toContain('Latest')
 
     expect(document.querySelector('a[href*="compare"]')).toBeNull()
