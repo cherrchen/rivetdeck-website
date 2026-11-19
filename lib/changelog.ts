@@ -85,6 +85,7 @@ export const MULTI_ROOT_DOC_LINKS: DocLinks = {
   adr0043: 'docs/decisions/ADR-0043-additional-root-preview-navigator-search.md',
   adr0044: 'docs/decisions/ADR-0044-sidebar-footer-row-alignment-and-coexistence.md',
   adr0045: 'docs/decisions/ADR-0045-worktree-cleanup-panel-ui.md',
+  adr0046: 'docs/decisions/ADR-0046-files-header-rootswitch-shrink-priority.md',
   autoReviewReadme: { en: 'src/auto-review/README.en.md', zh: 'src/auto-review/README.md' },
   autoReviewMigration: 'docs/reference/auto-review-0.2.2-migration.md',
   dsh022Migration: 'docs/reference/dsh-0.2.2-migration.md',

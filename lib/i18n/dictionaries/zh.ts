@@ -537,7 +537,7 @@ const zh: Dictionary = {
           'bash 和 PTY 仍以主根目录作为默认工作目录',
           '语言服务器把每个附加根目录视为独立的工作区',
           '根目录的 .dsh/skills 与 .agents/skills 中发现的 skills 以 /alias-id:name 经原生 skill 工具到达模型——read-only 根默认关闭',
-          '可选 Auto Review 默认关闭；启用后在 DSH 0.2.1-rc.2–rc.5 与 0.2.2-alpha.2–rc.3 上联合验证，为审查器提供根目录拓扑、访问级别和实时指令',
+          '可选 Auto Review 默认关闭；启用后在 DSH 0.2.1-rc.2–rc.5 与 0.2.2-alpha.2–rc.5 上联合验证，为审查器提供根目录拓扑、访问级别和实时指令',
           '附加根目录的拓扑作为沙箱策略上下文的一部分传给模型，不需要额外的查询工具',
           '沙箱模式对继承的根目录依然生效：只读模式不授予它们',
           '在 DSH 0.2.1 上会话可以移动工作目录——授权和登记表仍以会话起点为键',
@@ -557,7 +557,7 @@ const zh: Dictionary = {
           '对话框还可以浏览附加根目录的文件——可展开的目录树和文本预览',
           '同一对话框中可独立开关每个根目录的 Skills、编辑稳定的 aliasId 命名空间；全局开关默认开启',
           '“文件”页可以切到任意附加根目录——分叉的原生目录树逐项保持一致，包括宿主提供时的行右键菜单与工作区搜索',
-          '面板支持中英双语，并跟随界面语言',
+          '面板、插件详情页与预览图已本地化为 DSH 随附的八种界面语言',
         ],
         codeTitle: '会话',
         commands: ['# 列出主根目录和附加根目录', '# 登记、命名、设置访问级别或在文件管理器中显示根目录'],
@@ -647,7 +647,7 @@ const zh: Dictionary = {
         registryLines: ['经过校验', '按主根目录保存', '唯一授权者'],
         gate: '启动兼容性门禁',
         gateLine: '确切的 DSH 版本白名单。版本不在名单里时，围栏、沙箱、登记表、指令、LSP 和文件浏览相关组件都不会启动。',
-        caption: '已发布插件（v0.1.21）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
+        caption: '已发布插件（v0.1.23）的强制路径。下方编号的控制项列出了每个部分保证什么、不保证什么。',
       },
     },
     install: {
@@ -682,7 +682,7 @@ const zh: Dictionary = {
       eyebrow: '兼容性',
       title: '一份确切的清单，而不是一个范围。',
       lead: '插件替换的沙箱提供者，其内部实现没有语义化版本承诺，所以只支持 CI 实际跑过的确切 DSH 版本——表中每行列出一个已发布插件版本接受的集合，当前包为 v{version}。',
-      footnote: '状态按版本逐项声明，绝不按版本号顺序推断。未列出的版本即使 CI 全绿，也只是证据，而不是支持。规则请阅读<contract>兼容性约定</contract>。可选 Auto Review 在 0.2.1 与 0.2.2 两条线上共 9 个精确版本联合验证，默认关闭。',
+      footnote: '状态按版本逐项声明，绝不按版本号顺序推断。未列出的版本即使 CI 全绿，也只是证据，而不是支持。规则请阅读<contract>兼容性约定</contract>。可选 Auto Review 在 0.2.1 与 0.2.2 两条线上共 11 个精确版本联合验证，默认关闭。',
       region: 'DSH 版本支持矩阵',
       caption: '各已发布插件版本支持的 DSH 版本',
       columns: { version: '插件版本', supported: '支持的 DSH 版本' },
@@ -726,6 +726,27 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.23', date: '2026-11-19', sections: [
+            { kind: 'added', items: [
+                '<b>面板、插件详情页与预览图现覆盖 DSH 全部八种界面语言</b>：此前面板文案只有中英两种，现在 DSH 的每种界面语言（<code>zh</code>、<code>en</code>、<code>ja</code>、<code>es</code>、<code>fr</code>、<code>de</code>、<code>ru</code>、<code>pt</code>）都有独立字典。中文为基准，其余七种经类型约束钉住键集与 <code>{count}</code> / <code>{access}</code> / <code>{tools}</code> 占位符，八种字典在一次 <code>ctx.locale.register</code> 调用中注册。详情页新增本地化 <code>meta.title</code> / <code>meta.description</code> / <code>meta.detail</code>，并为六种新语言提供对应的 <code>DETAIL.*.md</code> 与 <code>preview.*.svg</code>；<code>pnpm preview:gen</code> 用同一布局渲染全部预览，把文字转为轮廓、按文种选字体、把受限文本缩进实测槽位，仍溢出时构建失败。更早的宿主仍只显示自身内置语言——新字典作为惰性资源存在，不改变其语言菜单。',
+                '<b>仓库 README 扩展为八种语言，并新增按功能划分的用户指南</b>：README 与 DSH 的八种界面语言对齐（中文为基准，其余七种互相链接并保持相同标题层级与代码块语言），<code>docs:check</code> 校验每个版本；<code>docs/guide/user/</code> 新增命令、访问级别、附加根 Skills、Worktree 建议、Auto Review、UI 入口与模型上下文的中英双语指南。',
+                '<b>贡献与安全治理</b>：双语 <code>CONTRIBUTING</code> 与 <code>SECURITY</code> 文档、Pull Request 模板，以及缺陷与功能请求的 issue 表单；<code>THIRD_PARTY_LICENSE</code> 由声明的依赖、构建后的客户端 source map 与仓库内上游 fork 清单生成，并由 <code>pack:check</code>、开发 pin 的 CI 车道、<code>verify:all</code> 与发布工作流共同把关。'
+              ] },
+            { kind: 'changed', items: [
+                '<b>精确支持 DSH <code>0.2.2-rc.5</code></b>：支持矩阵扩至 26 个精确版本，开发 pin 提升到 <code>0.2.2-rc.5</code>（cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>）。<code>rc.5</code> 是 433 个文件上的五个提交，其中 380 个 manifest 只替换版本串；净变化是 DeepSeek 内置 Web 搜索按模型请求路由选择提供方（<code>dsh-web</code>、<code>dsh-tool-web</code>、<code>dsh-web-search-deepseek</code> 与设置卡），以及上游文档、e2e 测试与会话快照。插件消费的沙箱、fs、session、storage、client 与审查器源码树均逐字节一致，因此未新增适配分支，open-in-app 与 files-tree 的复刻基线也保持不变；可选 Auto Review 联合合同纳入 <code>rc.5</code> 并把当前编译 pin 移到该版本（审查器源码树与 <code>rc.4</code> 逐字节一致），联合集合扩至 11 个精确发布（<dsh022Migration>接口审查</dsh022Migration>、<adr0009>ADR-0009</adr0009>）。'
+              ] }
+          ] },
+        { version: '0.1.22', date: '2026-11-18', sections: [
+            { kind: 'added', items: [
+                '<b>Files 页头部的根名称改为按切换器自身宽度实测的三级收缩</b>：在窄列、双栏右侧或浮动面板中，触发器不再依赖纯 CSS 的右侧省略号，而是依次显示完整名称、「头…尾」与「头…」。中间档最大化可见字符，并优先在 <code>-</code>、<code>_</code>、<code>.</code>、空格与 <code>/</code> 处断行，因此共享前缀、尾部不同的根（<code>…-workspace</code> / <code>…-experiment</code> / <code>…-ssh</code>）仍可区分。测量输入是切换器宽度，与文本无关，缩短文本不会反过来影响档位判定；异步到达的 <code>open-in-app</code> 控件也会触发重排。完整显示名始终保留在 <code>aria-label</code>（<adr0046>ADR-0046 修订</adr0046>）。'
+              ] },
+            { kind: 'changed', items: [
+                '<b>精确支持 DSH <code>0.2.2-rc.4</code></b>：支持矩阵扩至 25 个精确版本，开发 pin 提升到 <code>0.2.2-rc.4</code>（cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>）。<code>rc.4</code> 为八个提交，其中 380 个 manifest 只替换版本串；净变化是 DeepSeek 内容安全拒绝处理（共享的 <code>dsh-llm</code> 新增宿主拥有的 <code>LLM_FAILURE_CODES.CONTENT_REFUSED</code>，而插件不按任何 LLM 错误码路由）、实验性包中的 liveshare tunnel-worker 修复，以及上游文档与会话快照。插件消费的沙箱、fs、tools、session、storage、client 与审查器源码树均逐字节一致，因此未新增适配分支，open-in-app 与 files-tree 的复刻基线保持不变；可选 Auto Review 联合合同纳入 <code>rc.4</code> 并把当前编译 pin 移到该版本（审查器源码树与 <code>rc.3</code> 逐字节一致），联合集合扩至 10 个精确发布（<dsh022Migration>接口审查</dsh022Migration>、<adr0009>ADR-0009</adr0009>）。'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>Files 页头部的 <code>RootSwitcher</code> 在窄宽度下不再覆盖相邻控件</b>：页面宽 299px 时触发器分别压住刷新与搜索 28px、压住 <code>open-in-app</code> 14.59px；220px 浮动面板中则完全覆盖 <code>open-in-app</code> 的 43px。原因是收缩能力挂在内部按钮上：外层 flex 项是 <code>Menu</code> 渲染的锚点包装，其默认 <code>min-width: auto</code> 把宽度钉在根名称的 min-content（实测 249.59px），一旦路径被压到 0 就没有其他让位者。修复采用单一优先级——固定控件、完整路径、根名称、触发器图标：刷新 / 搜索 / <code>open-in-app</code> 保持原生几何且永不移动，路径以零基收缩到 0，未被钉住的锚点省略名称，最后才由触发器裁切自身图标。写决策时已对支持的 24 个版本逐一核对 <code>Menu.className</code>，因此该规则没有版本分支（<adr0046>ADR-0046</adr0046>）。'
+              ] }
+          ] },
         { version: '0.1.21', date: '2026-11-17', sections: [
             { kind: 'added', items: [
                 '<b>附加根文件预览导航树的工作区搜索</b>：预览文件位于附加根时，Folder 导航树此前只能浏览、不能搜索——原生搜索根固定为会话 cwd。现在导航树以 preview 模式复用 Files 页唯一的工作区搜索面与同一个 <code>search</code> 端点：搜索栏常显、命中高亮结果树、被预览文件标为当前行、点击结果原位替换预览页签、Escape 依次关闭设置 → 清空查询 → 关闭导航树；搜索记录按 pane 与根键控，body 重挂载或 <code>replaceTab</code> 后仍保留展开与滚动。更早的宿主与主根预览保持原生导航树（<adr0043>ADR-0043</adr0043>）。',
@@ -1207,6 +1228,21 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.2.14', date: '2026-11-19', sections: [
+            { kind: 'changed', items: [
+                '将 DSH 兼容范围扩展至 <code>0.2.2-rc.5</code>：这是 Web 搜索版本，随包组合不再固定 <code>web.searchProvider</code>，改由 <code>dsh-web</code> 按模型路由选择搜索提供方（DeepSeek 路由使用 Messages 搜索，其余使用 DeepSeek Search API），设置页把它标为「自动」，<code>web-search-deepseek</code> 支持逐条 snippet。本插件不导入 Web seam，消费的每个包都是仅改版本的 manifest 重发，Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> 副本仍落在声明范围内，<code>Menu</code> 锚点接口不变。'
+              ] }
+          ] },
+        { version: '0.2.13', date: '2026-11-18', sections: [
+            { kind: 'fixed', items: [
+                '修复较新 DSH 宿主上 <code>/git/discover</code> 返回 HTTP 405 导致 Git 仓库发现、分支选择器与 Git 侧栏视图不可用的问题。'
+              ] }
+          ] },
+        { version: '0.2.12', date: '2026-11-18', sections: [
+            { kind: 'changed', items: [
+                '将 DSH 兼容范围扩展至 <code>0.2.2-rc.4</code>：这是内容安全版本，<code>dsh-llm</code> 新增 <code>CONTENT_REFUSED</code> 失败码——DeepSeek 适配器在产生已计费 usage 后遇到 <code>refusal</code> 停止原因时改报该码（此前为 <code>MALFORMED_RESPONSE</code>），实验性 liveshare tunnel worker 继承 Host 的 Electron Node 模式。提交信息生成不区分任何 LLM 失败码，拒绝仍走通用生成失败路径；其余消费包均为仅改版本的 manifest 重发，Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> 副本仍落在声明范围内。'
+              ] }
+          ] },
         { version: '0.2.11', date: '2026-11-17', sections: [
             { kind: 'changed', items: [
                 '将 DSH 兼容范围扩展至 <code>0.2.2-rc.3</code>：该版本只新增两个 <code>upload-outline</code> primitives 图标，新增的 <code>workspace.picker</code> / <code>sidebar.session.action</code> 插槽与对话导入 bundle 都在本插件表面之外；Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> 副本仍落在既有声明范围内，<code>Menu</code> 锚点接口不变。'
@@ -1549,6 +1585,11 @@ const zh: Dictionary = {
         upgrade: '升级注意',
       },
       releases: [
+        { version: '0.1.10', date: '2026-11-18', sections: [
+            { kind: 'added', items: [
+                '支持 DSH <code>0.2.2-rc.4</code>，开发基线同步提升至 <code>0.2.2-rc.4</code>（Cordis <code>4.1.0</code>、Schemastery <code>3.19.0</code>）。'
+              ] }
+          ] },
         { version: '0.1.9', date: '2026-11-17', sections: [
             { kind: 'added', items: [
                 '支持 DSH <code>0.2.2-rc.3</code>，开发基线同步提升至 <code>0.2.2-rc.3</code>（Cordis <code>4.1.0</code>、Schemastery <code>3.19.0</code>）。'

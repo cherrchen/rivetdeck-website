@@ -553,7 +553,7 @@ const en = {
           'bash and the PTY keep the primary root as their default working directory',
           'Language servers treat each additional root as a separate workspace',
           'Skills found in a root’s .dsh/skills and .agents/skills reach the model as /alias-id:name through the native skill tool — read-only roots default off',
-          'Optional Auto Review is off by default; once enabled it is jointly verified on DSH 0.2.1-rc.2–rc.5 and 0.2.2-alpha.2–rc.3, and gives the reviewer root topology, access levels and live instructions',
+          'Optional Auto Review is off by default; once enabled it is jointly verified on DSH 0.2.1-rc.2–rc.5 and 0.2.2-alpha.2–rc.5, and gives the reviewer root topology, access levels and live instructions',
           'The additional-root topology reaches the model as part of the sandbox policy context, so it needs no introspection tool',
           'Sandbox modes still apply to inherited roots: read-only grants none of them',
           'On DSH 0.2.1 the session can move its working directory — grants and the registry stay keyed to the session origin',
@@ -573,7 +573,7 @@ const en = {
           'The dialog also browses an additional root’s files — expandable directories and text previews',
           'An independent Skills toggle and the stable aliasId namespace are edited per root in the same dialog, under a global setting that defaults on',
           'The Files tab switches to any additional root — a native tree fork keeps rows identical, including row context menus and workspace search where the host provides them',
-          'The panel is bilingual and follows the interface language',
+          'The panel, plugin detail page and preview artwork are localized into all eight UI languages DSH ships',
         ],
         codeTitle: 'session',
         commands: [
@@ -666,7 +666,7 @@ const en = {
         registryLines: ['validated', 'per primary root', 'one authority'],
         gate: 'Startup compatibility gate',
         gateLine: 'Exact DSH release allowlist. If the release is not listed, the fence, sandbox, registry, instruction, LSP and file-browsing rows do not start.',
-        caption: 'Enforcement path of the released plugin (v0.1.21). The numbered controls below list what each part guarantees and what it does not.',
+        caption: 'Enforcement path of the released plugin (v0.1.23). The numbered controls below list what each part guarantees and what it does not.',
       },
     },
     install: {
@@ -701,7 +701,7 @@ const en = {
       eyebrow: 'Compatibility',
       title: 'An exact list, not a range.',
       lead: 'The plugin replaces sandbox providers whose internals carry no semver promise, so it supports exact DSH releases that CI has run — each row lists the releases a published plugin version accepts; the current package is v{version}.',
-      footnote: 'Status is declared per release and never inferred from version order. A green CI run on an unlisted release is evidence, not support. Read <contract>the compatibility contract</contract> for the rules. Optional Auto Review is jointly verified on nine exact releases across the 0.2.1 and 0.2.2 lines and ships disabled.',
+      footnote: 'Status is declared per release and never inferred from version order. A green CI run on an unlisted release is evidence, not support. Read <contract>the compatibility contract</contract> for the rules. Optional Auto Review is jointly verified on eleven exact releases across the 0.2.1 and 0.2.2 lines and ships disabled.',
       region: 'DSH release support matrix',
       caption: 'DSH releases supported by each published plugin version',
       columns: { version: 'Plugin version', supported: 'Supported DSH releases' },
@@ -745,6 +745,27 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.23', date: '2026-11-19', sections: [
+            { kind: 'added', items: [
+                '<b>The panel, plugin detail page and preview artwork now cover all eight UI languages DSH ships</b>: panel copy previously existed only in Chinese and English; every DSH UI language (<code>zh</code>, <code>en</code>, <code>ja</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>ru</code>, <code>pt</code>) now has its own dictionary. Chinese is canonical; the other seven pin the key set and the <code>{count}</code> / <code>{access}</code> / <code>{tools}</code> placeholders through type constraints, and all eight register in one <code>ctx.locale.register</code> call. The detail page gains localized <code>meta.title</code> / <code>meta.description</code> / <code>meta.detail</code> plus <code>DETAIL.*.md</code> and <code>preview.*.svg</code> for the six new languages; <code>pnpm preview:gen</code> renders every preview from one layout, converts text to outlines, picks fonts per script, shrinks each constrained run to its measured slot and fails when text still overflows. Earlier hosts keep showing only their own built-in languages — the new dictionaries exist as inert resources and do not change their language menu.',
+                '<b>The repository README now exists in eight languages, with new per-feature user guides</b>: the README matches the eight UI languages DSH ships (Chinese is canonical; the other seven cross-link one another and keep the same heading levels and fenced-code languages), and <code>docs:check</code> validates every edition; <code>docs/guide/user/</code> adds bilingual guides for the command, access levels, additional-root Skills, worktree suggestions, Auto Review, UI entries and model context.',
+                '<b>Contribution and security governance</b>: bilingual <code>CONTRIBUTING</code> and <code>SECURITY</code> documents, a pull-request template, and bug-report and feature-request issue forms; <code>THIRD_PARTY_LICENSE</code> is generated from the declared dependencies, the built client source map and the checked-in upstream fork inventory, and is gated by <code>pack:check</code>, the development-pin CI lane, <code>verify:all</code> and the release workflow.'
+              ] },
+            { kind: 'changed', items: [
+                '<b>Exact support for DSH <code>0.2.2-rc.5</code></b>: the support matrix grows to 26 exact releases and the development pin moves to <code>0.2.2-rc.5</code> (cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>). <code>rc.5</code> is five commits over 433 files, 380 of whose manifests only replace version strings; the net change is that DeepSeek’s built-in web search selects its provider by the model request route (<code>dsh-web</code>, <code>dsh-tool-web</code>, <code>dsh-web-search-deepseek</code> and the settings card), plus upstream docs, e2e tests and session snapshots. Every sandbox, fs, session, storage, client and reviewer source tree the plugin consumes is byte-identical, so no adapter branch was added and the open-in-app and files-tree fork baselines stay put; the optional Auto Review joint contract includes <code>rc.5</code> with the current compile pin moved to it (its reviewer source tree is byte-identical to <code>rc.4</code>), growing the joint set to eleven exact releases (<dsh022Migration>interface review</dsh022Migration>, <adr0009>ADR-0009</adr0009>).'
+              ] }
+          ] },
+        { version: '0.1.22', date: '2026-11-18', sections: [
+            { kind: 'added', items: [
+                '<b>The Files header root name now renders in three tiers measured against the switcher’s own width</b>: in a narrow column, a two-column right side or a floating panel, the trigger no longer relies on CSS-only right ellipsis; it shows the full name, then “head…tail”, then “head…”. The middle tier maximizes the visible characters and prefers breaking at <code>-</code>, <code>_</code>, <code>.</code>, spaces and <code>/</code>, so roots sharing a prefix but differing at the tail (<code>…-workspace</code> / <code>…-experiment</code> / <code>…-ssh</code>) stay distinguishable. The measurement input is the switcher width, which is independent of the text, so shorter text cannot feed back into the tier decision; the <code>open-in-app</code> control arriving asynchronously triggers a refit as well. The full display name always stays on <code>aria-label</code> (<adr0046>ADR-0046 revision</adr0046>).'
+              ] },
+            { kind: 'changed', items: [
+                '<b>Exact support for DSH <code>0.2.2-rc.4</code></b>: the support matrix grows to 25 exact releases and the development pin moves to <code>0.2.2-rc.4</code> (cordis <code>4.1.0</code> / Schemastery <code>3.19.0</code>). <code>rc.4</code> is eight commits, 380 of whose manifests only replace version strings; the net change is DeepSeek content-safety refusal handling (the shared <code>dsh-llm</code> gains <code>LLM_FAILURE_CODES.CONTENT_REFUSED</code>, which the host owns, and the plugin routes on no LLM error code), a liveshare tunnel-worker fix in an experimental package, and upstream docs and session snapshots. Every sandbox, fs, tools, session, storage, client and reviewer source tree the plugin consumes is byte-identical, so no adapter branch was added and the open-in-app and files-tree fork baselines stay put; the optional Auto Review joint contract includes <code>rc.4</code> with the current compile pin moved to it (its reviewer source tree is byte-identical to <code>rc.3</code>), growing the joint set to ten exact releases (<dsh022Migration>interface review</dsh022Migration>, <adr0009>ADR-0009</adr0009>).'
+              ] },
+            { kind: 'fixed', items: [
+                '<b>The Files header <code>RootSwitcher</code> no longer covers its neighbours at narrow widths</b>: at a 299px page width the trigger overlapped reload and search by 28px each and <code>open-in-app</code> by 14.59px; in a 220px floating panel it covered all 43px of <code>open-in-app</code>. The cause was the shrink capability sitting on the inner button: the outer flex item is the anchor wrapper rendered by <code>Menu</code>, whose default <code>min-width: auto</code> pins it to the root name’s min-content (249.59px measured), and once the path had been compressed to 0 there was no other yielder. The fix applies one priority — fixed controls, then the full path, then the root name, then the trigger icon: reload / search / <code>open-in-app</code> keep their native geometry and never move, the path yields to 0 with a zero basis, the unpinned anchor ellipsizes the name, and only then does the trigger clip its own icon. <code>Menu.className</code> was checked per tag across the 24 releases supported when the decision was written, so the rule has no version branch (<adr0046>ADR-0046</adr0046>).'
+              ] }
+          ] },
         { version: '0.1.21', date: '2026-11-17', sections: [
             { kind: 'added', items: [
                 '<b>Workspace search in the additional-root document-preview navigator</b>: when the previewed file sits in an additional root, the Folder navigator could previously browse but not search — the native search root is fixed to the session cwd. The navigator now reuses the Files page’s single workspace-search surface and the same <code>search</code> endpoint in a preview mode: the bar stays visible, the result tree highlights matches, the previewed file is marked as the current row, opening a result replaces the preview tab in place, and Escape unwinds settings → query → close. Search records are keyed by pane and root, so expansion and scroll survive a body remount or <code>replaceTab</code>; earlier hosts and primary-root previews keep the native navigator (<adr0043>ADR-0043</adr0043>).',
@@ -1238,6 +1259,21 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.2.14', date: '2026-11-19', sections: [
+            { kind: 'changed', items: [
+                'Extend DSH compatibility to <code>0.2.2-rc.5</code>, a web-search release: the shipped composition no longer pins <code>web.searchProvider</code>, <code>dsh-web</code> selects the search provider per model route (DeepSeek Messages search on the DeepSeek routes, the DeepSeek Search API elsewhere), the settings page labels that as Automatic, and <code>web-search-deepseek</code> now accepts per-item snippets. This plugin does not import the web seam, every package it consumes is a manifest-only re-issue, its Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> copies stay inside the declared ranges, and the <code>Menu</code> anchor interface is unchanged.'
+              ] }
+          ] },
+        { version: '0.2.13', date: '2026-11-18', sections: [
+            { kind: 'fixed', items: [
+                'Restore Git repository discovery, the branch selector and the Git sidebar views on newer DSH hosts where <code>/git/discover</code> returned HTTP 405.'
+              ] }
+          ] },
+        { version: '0.2.12', date: '2026-11-18', sections: [
+            { kind: 'changed', items: [
+                'Extend DSH compatibility to <code>0.2.2-rc.4</code>, a content-safety release: <code>dsh-llm</code> adds the <code>CONTENT_REFUSED</code> failure code that the DeepSeek adapter now reports for a <code>refusal</code> stop reason (previously <code>MALFORMED_RESPONSE</code>) after yielding the billed usage, and the experimental liveshare tunnel worker inherits the Host’s Electron Node mode. Commit-message generation classifies no LLM failure code, so a refusal still surfaces through the generic generation-failure path; every other consumed package is a manifest-only re-issue, and the Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> copies stay inside the declared ranges.'
+              ] }
+          ] },
         { version: '0.2.11', date: '2026-11-17', sections: [
             { kind: 'changed', items: [
                 'Extend DSH compatibility to <code>0.2.2-rc.3</code>, an additive release: the only plugin-facing change is two new <code>upload-outline</code> primitives glyphs, while its new <code>workspace.picker</code> / <code>sidebar.session.action</code> slots and the chat-import bundle stay outside this plugin\'s surface. Its Cordis <code>4.1.0</code> / schemastery <code>3.19.0</code> copies still fall inside the declared ranges and the <code>Menu</code> anchor interface is unchanged.'
@@ -1590,6 +1626,11 @@ const en = {
         upgrade: 'Upgrade notes',
       },
       releases: [
+        { version: '0.1.10', date: '2026-11-18', sections: [
+            { kind: 'added', items: [
+                'Support DSH <code>0.2.2-rc.4</code>, moving the development baseline to <code>0.2.2-rc.4</code> (Cordis <code>4.1.0</code>, Schemastery <code>3.19.0</code>).'
+              ] }
+          ] },
         { version: '0.1.9', date: '2026-11-17', sections: [
             { kind: 'added', items: [
                 'Support DSH <code>0.2.2-rc.3</code>, moving the development baseline to <code>0.2.2-rc.3</code> (Cordis <code>4.1.0</code>, Schemastery <code>3.19.0</code>).'
